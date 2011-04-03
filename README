@@ -1,0 +1,33 @@
+Scalios is a scalable embedded RTOS for resource-constrained embedded
+systems. It was developed between 2004 and 2008 by JK Energy Ltd.
+and held in the SourceForge Enterprise Edition system. This repository
+is a snapshot of that repository.
+
+The project is contained here as follows:
+
+README.TXT	This file
+wiki		A snapshot of the development wiki. Open index.html in a
+		browser. This wiki contains design documentation for
+		the entire system, including rationale.
+embedded	The embedded systems code, for the dsPIC and ARM. This includes
+		target code and tests. Written in embedded C.
+host		Source code for the host tool that builds application-specific
+		data structures for the run-time system. Written in Java.
+closed.csv	Requirements (implemented and tested) in CSV.
+open.csv	Requirements (open). The requirements are cited from the wiki
+		as 'artefacts' (SourceForge terminology) in CSV.
+
+The code and documentation of Scalios is copyright JK Energy Ltd.
+and hereby licensed under the GPL v3 (see
+http://www.gnu.org/licenses/gpl.html for details).  Under the terms
+of this license any application code linked to the Scalios RTOS is
+included in the definition of a "covered work".  Particular attention
+should be paid to sections 15 and 16 of the GPL v3 license ("Disclaimer
+of Warranty" and "Limitation of Liability").
+
+If the GPLv3 license is not acceptable then please email info@jkenergy.com
+to discuss alternative licensing that may be possible.
+
+------
+JK Energy Ltd., registered in England and Wales, company number 04910462
+3rd April 2011
