@@ -1,0 +1,64 @@
+/* Test2 OIL File. See main.c for details of test.
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-01-27 02:14:38 +0000 (Sun, 27 Jan 2008) $
+ * $LastChangedRevision: 590 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/test2/main.oil $
+ */
+
+OIL_VERSION="2.5";
+
+CPU TestApp {
+	OS TestOS {
+		/* Fragment of OIL file shared across all tests to select OS-wide configuration
+		 * parameters.
+		 */
+#include <os.oil>
+	};
+	 
+	EVENT Dummy {
+		MASK = AUTO;
+	};
+	
+	TASK TaskA {
+		PRIORITY = 0;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+
+	TASK TaskB {
+		PRIORITY = 3;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	
+	TASK TaskC {
+		PRIORITY = 2;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = Dummy;
+#include <stacksize.oil>
+ 	};
+	
+	TASK TaskD {
+		PRIORITY = 13;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = Dummy;
+#include <stacksize.oil>
+	};		
+	
+	ISR ISRX {
+#include <isr.oil>
+		CATEGORY = 2;
+#include <stacksize.oil>
+	};
+};

@@ -1,0 +1,73 @@
+TARGET=dsPIC
+
+include $(WORKSPACE)/embedded/builds/common/$(TARGET)/target.mf
+
+SRCDIR=$(WORKSPACE)/embedded/src
+
+# Three libraries are build:
+# 
+# Level 1: standard status and no stack checking
+# Level 2: standard status with stack checking
+# Level 3: extended status with stack checking
+#
+# Usually overridden by invoking environment
+LIBRARYLEVEL=2
+
+# Assertion checking enabled/disabled (usually overridden by invoking environment)
+ASSERTS=$(D)ASSERTION_CHECKS
+
+# Global build options:
+#
+# EXTENDED_STATUS			Set if library built to support Extended Status checks
+# STACKCHECKING				Set if the library to perform stack overflow checking
+# ASSERTION_CHECKS			Set if the library is to perform assertion checks (warning: makes code much bigger and slower)
+CLEVEL1DEFS=
+CLEVEL2DEFS=$(D)STACKCHECKING
+CLEVEL3DEFS=$(D)EXTENDED_STATUS $(D)STACKCHECKING
+ASMLEVEL1DEFS=
+ASMLEVEL2DEFS=$(AD)STACKCHECKING$(ADPOST)
+ASMLEVEL3DEFS=$(AD)EXTENDED_STATUS$(ADPOST) $(AD)STACKCHECKING$(ADPOST)
+
+VPATH=$(SRCDIR) $(SRCDIR)/$(TARGET) $(SRCDIR)/counters $(SRCDIR)/events $(SRCDIR)/hooks $(SRCDIR)/interrupts $(SRCDIR)/kernel $(SRCDIR)/resources $(SRCDIR)/tasks
+	
+CPPFLAGS=$(CLEVEL$(LIBRARYLEVEL)DEFS) $(ASSERTS)
+CFLAGS=$(I)$(SRCDIR) $(I)$(SRCDIR)/$(TARGET) $(TARGETCFLAGS) $(CPPFLAGS)
+AFLAGS=$(TARGETAFLAGS) $(ASMLEVEL$(LIBRARYLEVEL)DEFS)
+
+LIBRARYNAME=lib$(LIBRARYLEVEL).$(LIB)
+
+OBJS=shutdown.$(OBJ) ishutdown.$(OBJ) slihs.$(OBJ) slihns.$(OBJ) dispet.$(OBJ) dispbt.$(OBJ) dispmix.$(OBJ) queueopt.$(OBJ) queuestd.$(OBJ)\
+act.$(OBJ) allsusp.$(OBJ) chain.$(OBJ) clearev.$(OBJ) getev.$(OBJ) idle.$(OBJ) kernel.$(OBJ) lock.$(OBJ) ossusp.$(OBJ) reinit.$(OBJ) schedule.$(OBJ)\
+setev.$(OBJ) startos.$(OBJ) taskstate.$(OBJ) term.$(OBJ) unlock.$(OBJ) waitev.$(OBJ) compiler.$(OBJ) target.$(OBJ) herror.$(OBJ) hpret.$(OBJ)\
+hpostt.$(OBJ) hstartup.$(OBJ) hshutd.$(OBJ) serviceid.$(OBJ) count.$(OBJ) alarmact.$(OBJ) alarmcb.$(OBJ) alarmincrc.$(OBJ) alarmsetev.$(OBJ) setabsal.$(OBJ)\
+setrelal.$(OBJ) sramulti.$(OBJ) srasingle.$(OBJ) saasingle.$(OBJ) saamulti.$(OBJ) cancelalarm.$(OBJ) camulti.$(OBJ) casingle.$(OBJ) countexp.$(OBJ) cexpmulti.$(OBJ) cexpsingle.$(OBJ) $(EXTRAOBJS)
+
+$(LIBRARYNAME): $(OBJS)
+	$(AR) r $@ $?
+	
+ASMS=
+HDRS=counter.h kernel.h task.h hook.h resource.h icounter.h ikernel.h itask.h ihook.h ios.h icore.h itarget.h icompiler.h core.h target.h compiler.h apicore.h apitarget.h apicompiler.h fsetjmp.h $(EXTRAHDRS)
+
+slihs.$(OBJ) slihns.$(OBJ): slih.h
+
+dispet.$(OBJ) dispbt.$(OBJ) dispmix.$(OBJ): disp.h
+
+queueopt.$(OBJ) queuestd.$(OBJ): queue.h
+
+setabsal.$(OBJ) setrelal.$(OBJ): setalarm.h
+
+sramulti.$(OBJ) saamulti.$(OBJ): samulti.h
+
+srasingle.$(OBJ) saasingle.$(OBJ): sasingle.h
+
+all: $(LIBRARYNAME)
+
+clean:
+	rm -f $(OBJS)
+	rm -f lib*.$(LIB)
+
+%.$(OBJ): %.c $(HDRS)
+	$(CC) $(CFLAGS) $(C) $<
+	
+%.$(OBJ): %.$(ASM) 
+	$(AS) ${AFLAGS} $(I)$(SRCDIR) $(I)$(SRCDIR)/$(TARGET) $< $(O) $@

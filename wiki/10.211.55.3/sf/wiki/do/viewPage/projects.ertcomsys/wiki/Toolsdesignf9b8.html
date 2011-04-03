@@ -1,0 +1,622 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<!-- Mirrored from 10.211.55.3/sf/wiki/do/viewPage/projects.ertcomsys/wiki/Toolsdesign?showDetails=true&wikiPageVersion=13 by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 03 Apr 2011 20:44:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+  <title>SourceForge : View Wiki Page: Toolsdesign</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  
+  <link rel="stylesheet" type="text/css" href="http://10.211.55.3/css/styles_new.css" />
+  <link rel="shortcut icon" href="http://10.211.55.3/sf-images/icons/favicon.ico" />
+  <script language="JavaScript" src="http://10.211.55.3/sf/js/sf_functions.js" type="text/javascript"></script>
+  
+  
+  
+  
+</head>
+
+  <body>
+
+
+<!-- SourceForge masthead begin -->
+
+
+<script type="text/javascript" src="http://10.211.55.3/sf-help/RoboHelp_CSH.js"></script>
+<script type="text/javascript">
+                      var helpRoot = '/sf-help/en/index.htm>HelpWin';
+    
+    // show help for a topic
+    function showTopicHelp(topicId) {
+	// First, close the help menu
+	closeMenu(activeButton);
+	RH_ShowHelp(0, helpRoot, HH_HELP_CONTEXT, topicId);
+    }
+
+    // show help for a topic
+    function showTopicHelpDirectly(topicId) {
+	RH_ShowHelp(0, helpRoot, HH_HELP_CONTEXT, topicId);
+    }
+
+    // show the help table of contents
+    function showHelpContents() {
+	// First, close the help menu
+	closeMenu(activeButton);
+	RH_ShowHelp(0, helpRoot, HH_DISPLAY_TOC, 0);
+    }
+
+    // show the help index
+    function showHelpIndex() {
+	// First, close the help menu
+	closeMenu(activeButton);
+	RH_ShowHelp(0, helpRoot, HH_DISPLAY_INDEX, 0);
+    }
+
+    // show the help index (not from a menu)
+    function showHelpIndexFromLink() {
+	RH_ShowHelp(0, helpRoot, HH_DISPLAY_INDEX, 0);
+    }
+</script>
+
+<div id="ProjectMenu" class="menu">
+      <a class="menuItem" href="http://10.211.55.3/sf/projects/ertcomsys">Scalios</a>
+      <div class="menuItemSep"></div>
+    <a class="menuItem" href="http://10.211.55.3/sf/sfmain/do/myProjects?selectedTab=my">My Projects</a>
+    <a class="menuItem" href="http://10.211.55.3/sf/sfmain/do/myProjects?selectedTab=all">All Projects</a>
+</div>
+
+<div id="SearchMenu" class="menu">
+  <a class="menuItem" href="http://10.211.55.3/sf/search/do/quickJump" onClick="window.open('/sf/search/do/quickJump', 'quickjumpwindow', 'width=540,height=263'); closeMenu(activeButton); return false">Quick Jump</a>
+  <a class="menuItem" id="search" href="http://10.211.55.3/sf/search/do/search">Search</a>
+</div>
+
+<div id="HelpMenu2" class="menu">
+    <a class="menuItem" href="javascript:showTopicHelp(16)">Help for this Page</a>
+<a class="menuItem" href="javascript:showHelpContents()">Help Contents</a>
+<a class="menuItem" href="javascript:showHelpIndex()">Help Index</a>
+<a class="menuItem" href="http://10.211.55.3/sf-help/en/doc/User_Guide.pdf">User Guide</a>
+<div class="menuItemSep"></div>
+<a class="menuItem" href="http://10.211.55.3/sf/global/do/about" onclick="javascript:closeMenu(activeButton); window.open('/sf/global/do/about','sfpabout','height=450,width=600'); return false;">About SourceForge</a>
+</div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="mastHeadBackground">
+ <tr>
+  <td>
+   <table width="300" border="0" cellpadding="0" cellspacing="0" class="mastHeadLink">
+     <tr class="mastHeadLinkSpacing">
+       <td nowrap="nowrap" valign="middle"><a href="http://10.211.55.3/sf/sfmain/do/home" target="_top"><img src="http://10.211.55.3/sf-images/masthead/logo-custom.gif" border="0" align="absmiddle"><img src="http://10.211.55.3/sf-images/masthead/logo.gif" border="0" align="absmiddle"></a></td>
+                    <td nowrap="nowrap" class="mastHeadLink"><a href="http://10.211.55.3/sf/sfmain/do/home" target="_top">Home</a></td>
+       <td nowrap="nowrap" class="mastHeadLinkSpacing"> </td>
+
+                          <td nowrap="nowrap" class="mastHeadLink"><a href="http://10.211.55.3/sf/categorization/do/browse/projects/categorization.root" target="_top">Project Categories</a></td>
+         <td nowrap="nowrap" class="mastHeadLinkSpacing"> </td>
+       
+               <td nowrap="nowrap" class="mastHeadLink"><a href="http://10.211.55.3/sf/sfmain/do/myPage" target="_top">My&nbsp;Workspace</a></td>
+       <td nowrap="nowrap" class="mastHeadLinkSpacing"> </td>
+       
+               <td nowrap="nowrap" class="mastHeadLinkSelected"><a href="#" onclick="return buttonClick(this, 'ProjectMenu');">Projects<img src="http://10.211.55.3/sf-images/masthead/dropdown.gif" width="7" height="4" hspace="2" border="0"></a></td>
+       <td nowrap="nowrap" class="mastHeadLinkSpacing"> </td>
+               <td nowrap="nowrap" class="mastHeadLink"><a href="#" onclick="return buttonClick(this, 'SearchMenu');">Search<img src="http://10.211.55.3/sf-images/masthead/dropdown.gif" width="7" height="4" hspace="2" border="0"></a></td>
+
+     
+                          <td nowrap="nowrap" class="mastHeadLinkSpacing"> </td>
+         <td nowrap="nowrap" class="mastHeadLink"><a href="https://sourceforge-enterprise.com" target="_blank">Community Support</a></td>
+            
+                 
+     </tr>
+   </table>
+  </td>
+  <td align="right">
+    <table border="0" cellspacing="0" cellpadding="0" class="mastHeadLink">
+      <tr class="mastHeadLink">
+                  <td nowrap="nowrap" id="UserLoggedIn">Logged In:&nbsp;JK Energy&nbsp;<div id="CurrentUsername" style="display: none;">jkenergy</div></td>
+          <td nowrap="nowrap"><img src="http://10.211.55.3/sf-images/masthead/vertical_line.gif" width="1" height="19" hspace="4"></td>
+          <td nowrap="nowrap">&nbsp;<a href="#" onclick="return buttonClick(this, 'HelpMenu2');"><img src="http://10.211.55.3/sf-images/masthead/help.gif" width="21" height="21" border="0"></a></td>
+          <td nowrap="nowrap">&nbsp;<a href="http://10.211.55.3/sf/sfmain/do/logout" target="_top"><img src="http://10.211.55.3/sf-images/masthead/logout.gif" alt="Logout" width="19" height="21" border="0"></a></td>
+              </tr>
+    </table>
+  </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="black"><img src="http://10.211.55.3/sf-images/misc/pixel.gif" width="1" height="1"></td>
+  </tr>
+</table>
+
+<!-- SourceForge masthead end -->
+
+<!-- SourceForge buttonbar begin -->
+<table class="TopMenu">
+    <tr class="ButtonRow">
+        <td class="VerticalSeparatorNoBorder"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                   <td class="Button " onclick="window.location = '/sf/projects/ertcomsys'; return false;"><a href="http://10.211.55.3/sf/projects/ertcomsys" target="_top"><img src="http://10.211.55.3/sf-images/project/project-homeicon.gif" width="25" height="20" border="0"><br>Project&nbsp;Home</a></td>
+                  <td class="VerticalSeparator"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '/sf/tracker/do/listTrackers/projects.ertcomsys/tracker'; return false;"><a href="http://10.211.55.3/sf/tracker/do/listTrackers/projects.ertcomsys/tracker" target="_top"><img src="http://10.211.55.3/sf-images/project/project-trackericon.gif" width="25" height="20" border="0"><br>Tracker</a></td>
+                  <td class="VerticalSeparator"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '/sf/docman/do/listDocuments/projects.ertcomsys/docman.root'; return false;"><a href="http://10.211.55.3/sf/docman/do/listDocuments/projects.ertcomsys/docman.root" target="_top"><img src="http://10.211.55.3/sf-images/project/project-documentsicon.gif" width="25" height="20" border="0"><br>Documents</a></td>
+                  <td class="VerticalSeparator"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '/sf/taskmgr/do/viewSummary/projects.ertcomsys/taskmgr'; return false;"><a href="http://10.211.55.3/sf/taskmgr/do/viewSummary/projects.ertcomsys/taskmgr" target="_top"><img src="http://10.211.55.3/sf-images/project/project-tasksicon.gif" width="25" height="20" border="0"><br>Tasks</a></td>
+                  <td class="VerticalSeparator"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '/sf/scm/do/listRepositories/projects.ertcomsys/scm'; return false;"><a href="http://10.211.55.3/sf/scm/do/listRepositories/projects.ertcomsys/scm" target="_top"><img src="http://10.211.55.3/sf-images/project/project-scmicon.gif" width="25" height="20" border="0"><br>Source&nbsp;Code</a></td>
+                  <td class="VerticalSeparator"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '/sf/discussion/do/listForums/projects.ertcomsys/discussion'; return false;"><a href="http://10.211.55.3/sf/discussion/do/listForums/projects.ertcomsys/discussion" target="_top"><img src="http://10.211.55.3/sf-images/project/project-forumsicon.gif" width="25" height="20" border="0"><br>Discussions</a></td>
+                  <td class="VerticalSeparator"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '/sf/reporting/do/listReports/projects.ertcomsys/reporting'; return false;"><a href="http://10.211.55.3/sf/reporting/do/listReports/projects.ertcomsys/reporting" target="_top"><img src="http://10.211.55.3/sf-images/project/project-reportsicon.gif" width="25" height="20" border="0"><br>Reports</a></td>
+                  <td class="VerticalSeparator"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '/sf/frs/do/viewSummary/projects.ertcomsys/frs'; return false;"><a href="http://10.211.55.3/sf/frs/do/viewSummary/projects.ertcomsys/frs" target="_top"><img src="http://10.211.55.3/sf-images/project/project-releasesicon.gif" width="25" height="20" border="0"><br>File Releases</a></td>
+                                    <td class="SelectedLeft"><img src="http://10.211.55.3/sf-images/misc/pixel.gif" border="0" height="1" width="4"></td>
+           <td class="Button Selected" onclick="window.location = '/sf/wiki/do/viewPage/projects.ertcomsys/wiki/HomePage'; return false;"><a href="HomePage.html" target="_top"><img src="http://10.211.55.3/sf-images/project/project-wikiicon.gif" width="25" height="20" border="0"><br>Wiki</a></td>
+           <td class="SelectedRight"><img src="http://10.211.55.3/sf-images/misc/pixel.gif" border="0" height="1" width="4"/></td>
+                  <td class="VerticalSeparatorNoBorder"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '/sf/sfmain/do/projectAdmin/projects.ertcomsys'; return false;"><a href="http://10.211.55.3/sf/sfmain/do/projectAdmin/projects.ertcomsys" target="_top"><img src="http://10.211.55.3/sf-images/project/project-projectadminicon.gif" width="25" height="20" border="0"><br>Project&nbsp;Admin</a></td>
+                  <td class="VerticalSeparator"><img src="http://10.211.55.3/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                           <td class="ButtonEnd"></td>
+             </tr>
+
+  <tr class="ShadowRow">
+        
+                  <td colspan="16"></td>
+            <td class="SelectedLeft"></td>
+      <td class="Selected"></td>
+      <td class="SelectedRight"></td>
+              <td colspan="4"></td>
+  </tr>
+  </table>
+
+<!-- SourceForge buttonbar end -->
+
+<!-- SourceForge content-area begin -->
+<div class="contentArea">
+
+<!-- SourceForge crumbs begin -->
+<div style="padding-bottom: 2px;">
+    <span class="searchlink">
+        <a href="http://10.211.55.3/sf/wiki/do/searchWikiPages/projects.ertcomsys/wiki/Toolsdesign" id="searchWikiPagesLink">Search Wiki Pages</a>
+      </span>
+    <span class="mainnavHeader"><strong class="ProjectProminent">Project: Scalios</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://10.211.55.3/sf/go/projects.ertcomsys/wiki">Wiki</a>&nbsp;&gt;&nbsp;</span><a href="Toolsdesign.html">Toolsdesign</a>&nbsp;&gt;&nbsp;<strong>View Wiki Page</strong>
+  </div>
+<!-- SourceForge crumbs end -->
+
+<!-- SourceForge messages begin -->
+
+
+
+
+
+
+
+<div style="padding-bottom: 2px; padding-top: 6px;">
+
+
+
+</div>
+<!-- SourceForge messages end -->
+
+<!-- SourceForge content begin -->
+<div style="padding-top: 10px; width: auto;">
+    <table class="ItemDetailContainer">
+      <tr class="ContainerHeader">
+        <td>
+          
+
+
+
+
+
+          wiki1075: Toolsdesign
+          
+            (Version 13)
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="ItemDetailContainerCell">
+          <h4 id='section-Toolsdesign-Overview'>Overview</h4>
+<p>The off-line configuration tool has been developed using the Java programming language supported by the Unified Modelling Language (UML) as a design notation. Javadoc style comments have been used in order to allow the generation of standard java API documentation.
+</p>
+<p>Java was selected due to its high level nature, good tool and debugging support and its platform independence.  Eclipse was used as the IDE and ANT based builder is included within the source distribution. Standard Java style conventions are applied to all source code.
+</p>
+<p>There is extensive use of type safe collection within the source code hence the code includes use of Java 5 generics and annotations.  Therefore the configuration tool should be compiled using Java 6 language compliance, although earlier JVM bytecode (e.g. 1.4.2 may be targeted if required).
+</p>
+<h4 id='section-Toolsdesign-ToolArchitecture'>Tool architecture</h4>
+<p>The off-line configuration tool has several distinct functions to perform when used within an AUTOSAR/OSEK style application tool chain.  Such distinct functionality combined with the desire to support multiple existing and future standards has led to the development of a loosely coupled architecture made up of several Java packages.
+</p>
+<p>The configuration tool source code packages are as follows:
+</p>
+<ol>
+<li> <a class="wikipage" href="OSModel.html">OSModel</a> (<tt>com.jkenergy.rtos.config.osmodel</tt>)
+</li>
+<li> <a class="wikipage" href="OILModel.html">OILModel</a> (<tt>com.jkenergy.rtos.config.oilmodel</tt>)
+</li>
+<li> <a class="wikipage" href="Generator.html">Generator</a> (<tt>com.jkenergy.rtos.config.generator</tt>)
+</li>
+<li> <a class="wikipage" href="Parser.html">Parser</a> (<tt>com.jkenergy.rtos.config.parser</tt>)
+</li>
+<li> <a class="wikipage" href="Serializers.html">Serializers</a> (<tt>com.jkenergy.rtos.config.serializers</tt>)
+</li>
+</ol>
+<h4 id='section-Toolsdesign-KeyConfigurationToolClasses'>Key configuration tool classes</h4>
+<p>The key classes within the configuration tool implementation are:
+</p>
+<ul>
+<li> <tt>com.jkenergy.rtos.config.generator.OSGen</tt>: the entry point and central control of the system import and generation process.
+</li>
+</ul>
+<ul>
+<li> <tt>com.jkenergy.rtos.config.generator.<a class="editpage" title="Create 'TargetCpu'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetCpu&amp;referrerPageName=Toolsdesign">TargetCpu</a></tt>: the root class of a <a class="editpage" title="Create 'TargetModel'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetModel&amp;referrerPageName=Toolsdesign">TargetModel</a> instantiation, i.e. the container for the other primary <a class="editpage" title="Create 'TargetModel'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetModel&amp;referrerPageName=Toolsdesign">TargetModel</a> objects, such as <a class="editpage" title="Create 'TargetTasks'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetTasks&amp;referrerPageName=Toolsdesign">TargetTasks</a>, <a class="editpage" title="Create 'TargetISRs'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetISRs&amp;referrerPageName=Toolsdesign">TargetISRs</a>, <a class="editpage" title="Create 'TargetEvents'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetEvents&amp;referrerPageName=Toolsdesign">TargetEvents</a>, <a class="editpage" title="Create 'TargetResources'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetResources&amp;referrerPageName=Toolsdesign">TargetResources</a>, <a class="editpage" title="Create 'TargetCounters'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetCounters&amp;referrerPageName=Toolsdesign">TargetCounters</a>, <a class="editpage" title="Create 'TargetAlarms'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetAlarms&amp;referrerPageName=Toolsdesign">TargetAlarms</a>, <a class="editpage" title="Create 'TargetScheduleTables'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetScheduleTables&amp;referrerPageName=Toolsdesign">TargetScheduleTables</a> etc.
+</li>
+</ul>
+<ul>
+<li> <tt>com.jkenergy.rtos.config.generator.<a class="editpage" title="Create 'OSAnsiCGenerator'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=OSAnsiCGenerator&amp;referrerPageName=Toolsdesign">OSAnsiCGenerator</a></tt>: the main abstract OSGenerator type class that contains the majority of the C generation code. A concrete generator class is typically derived from this to provide target specific code generation.
+</li>
+</ul>
+<ul>
+<li> <tt>com.jkenergy.rtos.config.generator.<a class="editpage" title="Create 'DriverManager'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=DriverManager&amp;referrerPageName=Toolsdesign">DriverManager</a></tt>: managers the loading and containments of <a class="editpage" title="Create 'TargetDriver'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetDriver&amp;referrerPageName=Toolsdesign">TargetDriver</a> related classes which are responsible for generation of target driver specific code.
+</li>
+</ul>
+<ul>
+<li> <tt>com.jkenergy.rtos.config.serializers.OILSerializer</tt>: the class that coordinates the loading, parsing, OILModel population and OSModel population processes. Also includes OIL exporting mechanisms.
+</li>
+</ul>
+<ul>
+<li> <tt>com.jkenergy.rtos.config.serializers.XMLSerializer</tt>: the class the coordinates the loading, parsing and OSModel population processes. Also includes XML exporting mechanisms.
+</li>
+</ul>
+<ul>
+<li> <tt>com.jkenergy.rtos.config.oilmodel.OILDefinition</tt>: the root class of an OILModel instantiation. i.e. container for the top level  Implementation (OIL parameter meta-data) and Application (OIL data).
+</li>
+</ul>
+<ul>
+<li> <tt>com.jkenergy.rtos.config.osmodel.Cpu</tt>: the root class of an OSModel instantiation, i.e. the container for the other primary OSModel objects, such as Tasks, ISRs, Events, Resources, Counters, Alarms, <a class="editpage" title="Create 'ScheduleTables'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=ScheduleTables&amp;referrerPageName=Toolsdesign">ScheduleTables</a>, OS, COM, Messages etc.
+</li>
+</ul>
+<h4 id='section-Toolsdesign-FlowOfOperationWithinTheConfigurationTool'>Flow of operation within the configuration tool</h4>
+<p>The <a class="wikipage" href="Toolflow.html">flow of operations within the configuration tool</a> is discussed elsewhere. A flow diagram of how these packages relate to each other is shown in the architecture flow diagram <a class="sfobject" href="http://10.211.55.3/sf/sfmain/do/go/doc1012">doc1012</a>.
+</p>
+<h4 id='section-Toolsdesign-DeclaredInterfacesAndTheirUsage.'>Declared Interfaces and their usage.</h4>
+<p>Java interfaces are used to declare a “Checkable” interface and a “Generator” interface. The Checkable interface declares a single doModelCheck() method which allows model checking. The Generator interface declares a single generate() method which allows system generation to be performed.
+</p>
+<p>All classes that constitute the OILModel, OSModel and <a class="editpage" title="Create 'TargetModel'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetModel&amp;referrerPageName=Toolsdesign">TargetModel</a> implement the “Checkable” interface. This allows the contents of a populated model to be fully constraint checked using a common interface.  Within each of the three models a common base class is used from which all other model classes are derived. i.e. OILElement, <a class="editpage" title="Create 'OSModelElement'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=OSModelElement&amp;referrerPageName=Toolsdesign">OSModelElement</a> and <a class="editpage" title="Create 'TargetElement'" href="http://10.211.55.3/sf/wiki/do/createPage/projects.ertcomsys/wiki?pageName=TargetElement&amp;referrerPageName=Toolsdesign">TargetElement</a>. The base classes are declared as implementing the “Checkable” interface, thus all derived classes also implement the “Checkable” interface. The doModelCheck() reports constraint failures via a list of Problem instances, which are accumulated during the model checking operation. It is the severity level of these problems that determine whether the system generation process is to continue through to the final phases. Any identified “fatal” constraint failures usually stop full system generation taking place.
+</p>
+<p>All OSGenerator derived classes implement the “Generator” interface (through inheritance of the abstract OSGenerator base class).
+</p>
+<h4 id='section-Toolsdesign-PortabilityIssues.'>Portability issues.</h4>
+<p>The design of the architecture minimises the amount of effort required to generate system code for different microcontrollers.  A number of Generator classes are provided that allow for the output of the majority of the code. (e.g. an ANSI C Generator generates all standard non-target specific code).  Target specific generation support is added by deriving from the standard generator classes and overriding methods where required. Also a Platform Information class is used to allow common target specific parameters to be specified during target specific generator instantiation, allowing much of the target specific generation to be handled by existing generation classes.
+</p>
+<p>The generation infrastructure also provides underlying support for code generation via an API designed to allow for simple file output and text formatting functionality.
+</p>
+<p>Device driver generation classes are dynamically loaded and instantiated when requested from the OS configuration. This allows for future support of specific devices to be handled simply by distributing the device specific class only.  This dynamical loading model will also eventually be applied to the target specific generator classes allowing for seamless support for multiple targets.
+</p>
+<p></p>
+
+          
+            
+          
+
+
+
+
+
+
+
+        </td>
+      </tr>
+      <tr class="ContainerFooter">
+        <td>
+          <div class="AlignRight">
+            
+            
+            
+              <div class="Button"><div class="Left">&nbsp;</div><div class="Middle"><a href="http://10.211.55.3/sf/wiki/do/editPage/projects.ertcomsys/wiki/Toolsdesign?wikiPageVersion=13" id="view_wiki_page.edit">Edit</a></div><div class="Right">&nbsp;</div></div>
+
+            
+            
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+
+    
+        
+    
+
+    
+      
+        <div class="Button" id="_SfButton_hidePageDetails"><div class="Left">&nbsp;</div><div class="Middle">
+          <img src="http://10.211.55.3/sf-images/icons/plus_minus_open.gif" style="vertical-align: middle;">
+          <a href="Toolsdesign89a7.html?showDetails=false&amp;wikiPageVersion=13">Hide Details</a>
+        </div><div class="Right">&nbsp;</div></div>
+
+      
+      <br/><br/>
+
+      
+        
+      
+
+      <table class="TabTable" cellpadding="0" cellspacing="0" border="0">
+ <tr><td><img src="http://10.211.55.3/sf-images/tabs/first_active_tab.gif" width="9" height="21"></td><td width="0" background="http://10.211.55.3/sf-images/tabs/tab_active_middle.gif" class="TabBody"><a href="Toolsdesign714a.html?selectedTab=versions&amp;wikiPageVersion=13">Versions</a></td>
+<td><img src="http://10.211.55.3/sf-images/tabs/active_inactive_tab.gif" width="19" height="21"></td><td width="0" background="http://10.211.55.3/sf-images/tabs/tab_inactive_middle.gif" class="TabBody"><a href="Toolsdesign541c.html?selectedTab=associations&amp;wikiPageVersion=13">Associations</a></td>
+<td><img src="http://10.211.55.3/sf-images/tabs/inactive_inactive_tab.gif" width="19" height="21"></td><td width="0" background="http://10.211.55.3/sf-images/tabs/tab_inactive_middle.gif" class="TabBody"><a href="Toolsdesign4828.html?selectedTab=attachments&amp;wikiPageVersion=13">Attachments</a></td>
+<td><img src="http://10.211.55.3/sf-images/tabs/inactive_inactive_tab.gif" width="19" height="21"></td><td width="0" background="http://10.211.55.3/sf-images/tabs/tab_inactive_middle.gif" class="TabBody"><a href="Toolsdesignb109.html?selectedTab=backlinks&amp;wikiPageVersion=13">Back Links</a></td><td><img src="http://10.211.55.3/sf-images/tabs/inactive_last_tab.gif" width="19" height="21"></td>
+<td width="100%" background="http://10.211.55.3/sf-images/tabs/horiz_notab_background.gif">&nbsp;</td></tr><tr class="TabHeader"><td colspan="11" nowrap><img src="http://10.211.55.3/sf-images/misc/pixel.gif" width="1" height="1"></td></tr></table>
+          
+
+
+
+
+
+
+<form action="http://10.211.55.3/sf/wiki/do//projects.ertcomsys/wiki/Toolsdesign" name="listTasksSelect" method="POST">
+<INPUT type="HIDDEN" name="sfsubmit" />
+<INPUT type="HIDDEN" name="_submitterURL" value="http://localhost:8080/sf/wiki/do/viewPage/projects.ertcomsys/wiki/Toolsdesign?showDetails=true&amp;wikiPageVersion=13" />
+  <table id="wikiPageVersionsTable" class="ItemListTable" width="100%">
+    <tr class="ItemListHeader">
+
+      <td>Version</td>
+      <td>Version Comment</td>
+      <td>Created By</td>
+    </tr>
+
+    
+
+    
+      <tr class="OddRow">
+
+        <td width="75">
+          
+          
+          <a href="Toolsdesignd41d.html?">Version 14</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/27/2008</td>
+      </tr>
+    
+      <tr class="EvenRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesign93a9.html?wikiPageVersion=13"><strong>Version 13</strong></a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/27/2008</td>
+      </tr>
+    
+      <tr class="OddRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesign74ab.html?wikiPageVersion=12">Version 12</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/27/2008</td>
+      </tr>
+    
+      <tr class="EvenRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesignfce8.html?wikiPageVersion=11">Version 11</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/markdixon">Mark Dixon</a>&nbsp;-&nbsp;01/26/2008</td>
+      </tr>
+    
+      <tr class="OddRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesign49ac.html?wikiPageVersion=10">Version 10</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/markdixon">Mark Dixon</a>&nbsp;-&nbsp;01/26/2008</td>
+      </tr>
+    
+      <tr class="EvenRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesigna36a.html?wikiPageVersion=9">Version 9</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/25/2008</td>
+      </tr>
+    
+      <tr class="OddRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesigne7bf.html?wikiPageVersion=8">Version 8</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/25/2008</td>
+      </tr>
+    
+      <tr class="EvenRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesigncd5e.html?wikiPageVersion=7">Version 7</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/25/2008</td>
+      </tr>
+    
+      <tr class="OddRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesign5f42.html?wikiPageVersion=6">Version 6</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/25/2008</td>
+      </tr>
+    
+      <tr class="EvenRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesignb8ab.html?wikiPageVersion=5">Version 5</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/25/2008</td>
+      </tr>
+    
+      <tr class="OddRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesign9700.html?wikiPageVersion=4">Version 4</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/25/2008</td>
+      </tr>
+    
+      <tr class="EvenRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesignd48a.html?wikiPageVersion=3">Version 3</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/25/2008</td>
+      </tr>
+    
+      <tr class="OddRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesign610b.html?wikiPageVersion=2">Version 2</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/25/2008</td>
+      </tr>
+    
+      <tr class="EvenRow">
+
+        <td width="75">
+          
+          
+            
+          
+          <a href="Toolsdesign411d.html?wikiPageVersion=1">Version 1</a>
+        </td>
+        <td></td>
+        <td width="200" style="white-space: nowrap;"><a href="http://10.211.55.3/sf/global/do/viewUser/kentindell">Ken Tindell</a>&nbsp;-&nbsp;01/25/2008</td>
+      </tr>
+    
+  </table>
+</form>
+        
+    
+
+    <br/>
+    
+
+    <div class="AlignRight">
+      
+      
+
+
+
+
+
+
+
+    
+    <div class="Button"><div class="Left">&nbsp;</div><div class="Middle">
+	<a href="javascript:NewWindow('http://10.211.55.3/sf/sfmain/do/listMonitoringUsers/projects.ertcomsys/wiki/?objid=wiki1075', 'monusers', 540, 425, 'no');" class="menuItem">Users Monitoring</a>
+    </div><div class="Right">&nbsp;</div></div>
+
+    
+	
+	
+	    <div class="Button"><div class="Left">&nbsp;</div><div class="Middle"><a href="http://10.211.55.3/sf/sfmain/do/monitor/projects.ertcomsys/wiki/Toolsdesign?monitorReturnTo=http%3A%2F%2Flocalhost%3A8080%2Fsf%2Fwiki%2Fdo%2FviewPage%2Fprojects.ertcomsys%2Fwiki%2FToolsdesign%3FshowDetails%3Dtrue%26wikiPageVersion%3D13" id="button_monitor_object">Monitor</a></div><div class="Right">&nbsp;</div></div>
+
+	
+    
+
+    </div>
+  </div>
+<!-- SourceForge content end -->
+
+</div>
+<!-- SourceForge content-area end -->
+
+<div id="PageLoaded" style="display: none;"></div>
+
+
+</body>
+
+<!-- Mirrored from 10.211.55.3/sf/wiki/do/viewPage/projects.ertcomsys/wiki/Toolsdesign?showDetails=true&wikiPageVersion=13 by HTTrack Website Copier/3.x [XR&CO'2010], Sun, 03 Apr 2011 20:44:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>
+

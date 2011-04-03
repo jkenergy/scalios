@@ -1,0 +1,3 @@
+date	size'/'remotesize	flags(request:Update,Range state:File response:Modified,Chunked,gZipped)	statuscode	status ('servermsg')	MIME	Etag|Date	URL	localfile	(from URL)
+21:25:47	285/285	---M--	404	error ('Not%20Found')	text/html	date:Mon,%2004%20Apr%202011%2003:25:45%20GMT	http://10.211.55.3/robots.txt		(from )
+21:25:48	16490/16490	U--MC-	200	updated ('OK')	text/html	date:Mon,%2004%20Apr%202011%2003:25:46%20GMT	http://10.211.55.3/sf/projects/ertcomsys	10.211.55.3/sf/projects/ertcomsys.html	(from )

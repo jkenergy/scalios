@@ -1,0 +1,22 @@
+# Makefile for building calib1.
+
+INSTALL=../..
+TARGET=dsPIC
+
+# These are the parameters for the test build to determine what the OIL configuration looks like
+#
+INCLUDE_HANDLE_NAME_MAP=NO_INCLUDE_HANDLE_NAME_MAP
+
+# The test code in main.c will automatically adapt to these settings (consistent with the OIL
+# settings). This can be used to test that the OIL is properly handled to call hooks, etc.
+USERESSCHEDULER=USERESSCHEDULER
+USEPRETASKHOOK=NO_USEPRETASKHOOK
+USEPOSTTASKHOOK=NO_USEPOSTTASKHOOK
+USESTARTUPHOOK=NO_USESTARTUPHOOK
+USESHUTDOWNHOOK=NO_USESHUTDOWNHOOK
+USEERRORHOOK=USEERRORHOOK
+
+# Brings in standard makefile for building all four library variants of a test (generic
+# across all tests).
+-include $(INSTALL)/builds/common/makeall.mf
+

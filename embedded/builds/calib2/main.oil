@@ -1,0 +1,72 @@
+/* Test1 OIL File 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-03-11 23:35:25 +0000 (Tue, 11 Mar 2008) $
+ * $LastChangedRevision: 677 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/calib2/main.oil $
+ */
+
+OIL_VERSION="2.5";
+
+CPU TestApp {
+	
+	OS TestOS {
+#include <os.oil>
+	};
+	
+	EVENT E1 {
+		MASK = AUTO;
+	};
+	
+	EVENT Dummy {
+		MASK = AUTO;
+	};
+	
+	TASK TaskA {
+		PRIORITY = 1;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		STACKSIZE = 180;
+	};
+	
+	TASK TaskB {
+		PRIORITY = 2;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = Dummy;
+		STACKSIZE = 180;
+	};
+	
+	/* Basic task to record stack pointer */
+	TASK TaskSPSave1 {
+		PRIORITY = 10;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		STACKSIZE = 180;
+	};
+
+	/* Extended task to record kernel saved stack pointer */	
+	TASK TaskKSSP {
+		PRIORITY = 11;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = Dummy;
+		STACKSIZE = 180;
+	};
+	
+	/* Extended task that is the same as TaskKSSP except it gets triggered by an event */
+	TASK TaskKSSP_E {
+		PRIORITY = 12;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = E1;
+		STACKSIZE = 180;
+	};
+};

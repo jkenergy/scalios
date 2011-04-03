@@ -1,0 +1,352 @@
+/* Test OIL File */
+
+
+OIL_VERSION="2.5";
+
+
+CPU TestApp {
+
+	NM hello:"A dummy description";
+	
+	APPLICATION appl {
+		TRUSTED = TRUE {
+			TRUSTED_FUNCTION = TRUE {
+				NAME = "get_length";
+			};
+			TRUSTED_FUNCTION = FALSE;				
+			TRUSTED_FUNCTION = TRUE {
+				NAME = "get_height";
+			};			
+		};
+		
+		TASK = TaskB;
+		ISR = T1;
+		ISR = T2;
+		
+		RESOURCE = ResA;
+		RESOURCE = ResC;	
+		
+		ERRORHOOK = FALSE;
+		SHUTDOWNHOOK = FALSE;
+		HAS_RESTARTTASK = TRUE { RESTARTTASK = TaskA; };
+		STARTUPHOOK = FALSE;
+	
+	};
+	
+	APPLICATION appl2 {
+		
+		TASK = TaskB;
+		ISR = T1;
+		ISR = T2;
+		
+		RESOURCE = ResA;
+		RESOURCE = ResC;	
+		
+		ERRORHOOK = FALSE;
+		SHUTDOWNHOOK = FALSE;
+		HAS_RESTARTTASK = TRUE { RESTARTTASK = TaskA; };
+		STARTUPHOOK = FALSE;	
+	};	
+	
+	OS ExampleOS {
+		STATUS = EXTENDED;
+		STARTUPHOOK = TRUE;
+		ERRORHOOK = TRUE;
+		SHUTDOWNHOOK = TRUE;
+		PRETASKHOOK = TRUE : "PRETASKHOOK_ExampleOS";
+		POSTTASKHOOK = TRUE;
+		USEGETSERVICEID = FALSE;
+		USEPARAMETERACCESS = FALSE;
+		USERESSCHEDULER = TRUE;
+		RESTARTABLE = TRUE;
+		STACKMONITORING = TRUE;
+	};
+
+	APPMODE modeA {};
+	
+	APPMODE modeB {};
+
+	RESOURCE ResA {
+		RESOURCEPROPERTY = INTERNAL;
+	};
+	
+	RESOURCE ResB {
+		RESOURCEPROPERTY = STANDARD;
+	};	
+	
+	RESOURCE ResC {
+		RESOURCEPROPERTY = STANDARD;
+	};	
+	
+	RESOURCE ResD {
+		RESOURCEPROPERTY = LINKED {
+			LINKEDRESOURCE = ResB;
+			}:"a comment";
+	};
+
+	EVENT EventA {
+		MASK = AUTO:"MaskEventA";
+	};
+	
+	EVENT EventB {
+		MASK = AUTO;
+	};	
+
+	EVENT EventC {
+		MASK = 0x7ff;
+	} : "Specify our own mask for this one!";	
+
+	EVENT EventD {
+		MASK = AUTO;
+	};	
+	
+	EVENT EventE {
+		MASK = AUTO;
+	};		
+
+	EVENT EventF {
+		MASK = AUTO;
+	};
+
+	TASK TaskA {
+		PRIORITY = 6;
+		SCHEDULE = NON;
+		ACTIVATION = 1;
+		AUTOSTART = FALSE;
+		EVENT = EventA;
+		EVENT = EventB;
+		EVENT = EventC;
+		STACKSIZE = 12;	
+		RESOURCE = 	ResA;
+		ACCESSING_APPLICATION = appl:"ACCESSING_APPLICATION_TaskA";
+		ACCESSING_APPLICATION = appl2:"ACCESSING_APPLICATION2_TaskA";
+	};
+	
+	TASK TaskB {
+		PRIORITY = 6;
+		SCHEDULE = FULL;
+		ACTIVATION = 1;
+		RESOURCE = 	ResA;
+		AUTOSTART = TRUE {
+			APPMODE = modeA;
+		};
+		EVENT = EventB;
+		EVENT = EventD;
+	};
+	
+	TASK TaskC {
+		PRIORITY = 5;
+		SCHEDULE = FULL;
+		ACTIVATION = 1;
+		AUTOSTART = FALSE;
+		EVENT = EventA;
+		EVENT = EventE;
+	};
+	
+	TASK TaskD {
+		PRIORITY = 8;
+		SCHEDULE = FULL;
+		ACTIVATION = 1;
+		AUTOSTART = TRUE {
+			APPMODE = modeA;
+		};
+//		EVENT = EventA;
+	};	
+
+	
+	ISR T1 {
+		CATEGORY = 2;
+		PRIORITY = 1;
+		RESOURCE = 	ResD;
+		STACKSIZE = 38;
+		DISABLE_STACKMONITORING = TRUE;
+		VECTOR = "Timer1";
+	};
+
+	ISR T2 {
+		CATEGORY = 2;
+		PRIORITY = 2;
+		RESOURCE = 	ResD;
+	};
+	
+	COUNTER SysCounter {
+		MINCYCLE = 100;
+		MAXALLOWEDVALUE = 200;
+		TICKSPERBASE = 1;
+		//DEVICE = TIMER_A1 { OPTIONS="driver=Timer"; };
+		TYPE = SOFTWARE;
+	};
+	
+	COUNTER TickCounter {
+		MINCYCLE = 33;
+		MAXALLOWEDVALUE = 600;
+		TICKSPERBASE = 2;
+		TYPE = SOFTWARE;
+	};	
+	
+	ALARM tickAlarm {
+		COUNTER = TickCounter;
+		ACTION = ACTIVATETASK {
+			TASK = TaskA;
+		};
+		AUTOSTART = FALSE;
+	};
+
+	ALARM Alarm2 {
+		COUNTER = SysCounter;
+		ACTION = SETEVENT {
+			TASK = TaskB;
+			EVENT = EventB;
+		};
+		AUTOSTART = FALSE;
+	};	
+
+	ALARM yoAlarm {
+		COUNTER = TickCounter;
+		ACTION = SETEVENT {
+			TASK = TaskB;
+			EVENT = EventB;
+		};
+		AUTOSTART = FALSE;
+	};	
+	
+	SCHEDULETABLE table1 {
+		COUNTER = TickCounter;
+		PERIODIC = FALSE;
+		LENGTH = 1000;
+		ACTION = ACTIVATETASK {
+			OFFSET = 0;
+			TASK = TaskA;
+		};
+		ACTION = SETEVENT {
+			OFFSET = 100;
+			TASK = TaskB;
+			EVENT = EventB;
+		};
+		
+		AUTOSTART = TRUE {
+			OFFSET = 10;
+			APPMODE = modeA;		
+		};
+	};
+	
+	SCHEDULETABLE table2 {
+		COUNTER = TickCounter;
+		PERIODIC = FALSE;
+		LENGTH = 1000;
+		ACTION = ACTIVATETASK {
+			OFFSET = 0;
+			TASK = TaskA;
+		};		
+		AUTOSTART = FALSE;
+	};	
+	
+	COM com {
+		COMSTATUS = COMEXTENDED;
+		COMAPPMODE = "Normal";
+		COMAPPMODE = "Diagnostic":"Diagnostic mode for com";
+		COMAPPMODE = "comappmode1":"comappmode1 mode for com";
+	};
+	
+	MESSAGE sender1 {
+		MESSAGEPROPERTY = SEND_STATIC_INTERNAL {
+			CDATATYPE = "my_type1";
+		}; 
+	};
+	
+	MESSAGE sender2 {
+		MESSAGEPROPERTY = SEND_STATIC_INTERNAL {
+			CDATATYPE = "my_type2";
+		}; 
+	};
+	MESSAGE sender3 {
+		MESSAGEPROPERTY = SEND_ZERO_INTERNAL;
+	};
+	
+
+	MESSAGE receiver1A {
+		MESSAGEPROPERTY = RECEIVE_QUEUED_INTERNAL {
+			SENDINGMESSAGE = sender1;
+			QUEUESIZE = 10;
+			DEVICE=soft {OPTIONS="yo";};
+		};
+		
+		NOTIFICATION = SETEVENT {
+			TASK = TaskB;
+			EVENT = EventB;		
+		};
+	};
+	
+	MESSAGE receiver1B {
+		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {
+			SENDINGMESSAGE = sender1;
+		}; 
+		NOTIFICATION = ACTIVATETASK {
+			TASK = TaskA;
+		};		
+	};
+	
+	MESSAGE receiver1C {
+		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {
+			SENDINGMESSAGE = sender1;
+			INITIALVALUE=999;
+		}; 
+		
+		NOTIFICATION = COMCALLBACK {
+			CALLBACKROUTINENAME = "rec1C_handler";
+		};
+	};	
+	
+	MESSAGE receiver2A {
+		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {
+			SENDINGMESSAGE = sender2;
+		}; 
+		
+		NOTIFICATION = FLAG {
+			FLAGNAME = "rec2A_flag";
+		};			
+	};	
+	
+	MESSAGE receiver1D {
+		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {
+			SENDINGMESSAGE = sender1;
+		}; 
+		
+		NOTIFICATION = FLAG {
+			FLAGNAME = "rec1D_flag";
+		};			
+	};	
+	
+	MESSAGE receiver1E {
+		MESSAGEPROPERTY = RECEIVE_UNQUEUED_INTERNAL {
+			SENDINGMESSAGE = sender1;
+		}; 
+		
+		NOTIFICATION = FLAG {
+			FLAGNAME = "rec2A_flag";
+		};			
+	};	
+	
+	MESSAGE receiver1F {
+		MESSAGEPROPERTY = RECEIVE_QUEUED_INTERNAL {
+			SENDINGMESSAGE = sender1;
+			QUEUESIZE = 10;
+		}; 
+		
+		NOTIFICATION = FLAG {
+			FLAGNAME = "rec2A_flag":"flagtest";
+		};			
+	};
+	
+	MESSAGE receiver1G {
+		MESSAGEPROPERTY = RECEIVE_ZERO_INTERNAL {
+			SENDINGMESSAGE = sender3;
+		}; 
+		
+		NOTIFICATION = FLAG {
+			FLAGNAME = "rec2A_flag";
+		};			
+	};
+	
+	
+};

@@ -1,0 +1,238 @@
+"Artifact ID","Title","Description","Submitted By","Submitted On","Last Modified","Closed","Group","Status","Category","Priority","Assigned To","In code","Item Link"
+"artf1375","OS424","OS424: The first call to StartOS() (for starting the Operating System) shall not return. ","Ken Tindell","02/07/2008 9:56 PM","02/29/2008 6:05 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1375/"
+"artf1376","OS425","OS425:  If ShutdownOS() is called and ShutdownHook() returns then the operating system shall disable all interrupts and enter an endless loop. ","Ken Tindell","02/07/2008 9:57 PM","02/29/2008 6:11 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1376/"
+"artf1371","OS412","OS412: The OS shall process all task activations on an expiry point first and then set events.","Ken Tindell","02/07/2008 9:54 PM","02/26/2008 2:44 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1371/"
+"artf1366","OS407","OS407: An expiry point shall activate at least one task OR set at least one event","Ken Tindell","02/07/2008 9:52 PM","02/27/2008 11:41 AM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1366/"
+"artf1207","OSTICKDURATION generated","The constant OSTICKDURATION shall be generated that indicates in integer nanoseconds the duration of the system counter tick. [OSEK124]
+","Ken Tindell","03/08/2007 1:04 PM","03/15/2007 7:51 PM","","OSEK OS","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1207/"
+"artf1344","OS358: Schedule tables","OS358: The Operating System shall provide a service to start the processing of a schedule table at an absolute value “Start” on the underlying counter. (The Initial Expiry Point shall be processed when the value of the underlying counter equals Start + InitialOffset). 
+
+","Ken Tindell","02/07/2008 9:36 PM","02/27/2008 11:56 AM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1344/"
+"artf1345","OS359: Schedule tables","OS359: The Operating System shall provide a service to query the state of a schedule table.","Ken Tindell","02/07/2008 9:37 PM","02/27/2008 12:00 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1345/"
+"artf1330","Dynamic flag API","Dynamic counterparts to the flag API (artf1280 artf1282) shall be provided. These are compatible with the static versions; see wiki1027.","Ken Tindell","03/15/2007 8:17 PM","03/15/2007 8:17 PM","","OSEK COM","Open","","4","None","","http://10.211.55.3/sf/go/artf1330/"
+"artf1256","The RTOS shall implement zero length internal messages.","The RTOS shall implement zero length internal messages. An extension to the OSEK COM spec.","Ken Tindell","03/08/2007 6:58 PM","03/15/2007 2:44 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1256/"
+"artf1075","E_OS_ID returned from NextScheduleTable()","If schedule table <ScheduleTableID_next> is driven by different counter than schedule table <ScheduleTableID_current> than shall return an error E_OS_ID. [OS330]","Ken Tindell","03/05/2007 10:33 PM","03/15/2007 3:42 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1075/"
+"artf1079","E_OS_ID returned from StartScheduleTableAbs()","If the schedule table <ScheduleTableID> is not valid, StartScheduleTable() shall return E_OS_ID. [OS348]","Ken Tindell","03/05/2007 10:39 PM","03/15/2007 3:43 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1079/"
+"artf1053","E_OS_ID returned from StartScheduleTableRel()","If the schedule table <ScheduleTableID> is not valid, StartScheduleTable() shall return E_OS_ID. [OS275]
+","Ken Tindell","03/05/2007 10:11 PM","03/15/2007 3:43 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1053/"
+"artf1361","OS399","OS399: The OS shall provide an API call to increment a software counter. ","Ken Tindell","02/07/2008 9:49 PM","02/27/2008 12:09 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1361/"
+"artf1082","StartScheduleTableAbs() processing","If its input parameters are valid, StartScheduleTable() shall start the processing of schedule table <ScheduleTableID> at its first expiry point after the underlaying counter reaches <Tickvalue>. [OS351]
+
+Derived from artf1078.","Ken Tindell","03/08/2007 10:54 AM","03/15/2007 4:33 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1082/"
+"artf1078","Schedule table processing","The Operating System shall provide a service to start the processing of a schedule table at the first expiry point at an absolute time on the underlying counter (The first expiry point shall be processed wmatches the value specified by the service). [OS347]
+
+See also artf1082.
+","Ken Tindell","03/05/2007 10:39 PM","03/15/2007 4:35 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1078/"
+"artf1291","E_COM_ID returned from ReceiveMessage()","ReceiveMessage() shall in extended status return E_COM_ID if the message is invalid, the message is configured as a send message, the message is dynamic length, or the message is zero length. See 2.9.2.4.2 p51 doc1004.
+","Ken Tindell","03/08/2007 7:20 PM","03/15/2007 4:44 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1291/"
+"artf1285","E_COM_ID returned from SendMessage()","SendMessage() shall in extended status return E_COM_ID if the message is invalid, the message is a dynamic length message, or a zero length message. See 2.9.2.4.1 p50 (doc1004).","Ken Tindell","03/08/2007 7:16 PM","03/15/2007 4:45 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1285/"
+"artf1273","E_COM_ID returned from StartCOM()","StartCOM() shall in extended status return E_COM_ID if the specified COM application mode is out of range. See 2.9.2.2.1 p45 (doc1004).","Ken Tindell","03/08/2007 7:10 PM","03/15/2007 4:46 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1273/"
+"artf1329","No visibility of OS_x_STATUS is permitted from oslib.h","After including oslib.h it is not permitted for OS_EXTENDED_STATUS or OS_STANDARD_STATUS to be defined. This is because libraries cannot obtain compile-time visibility of the build-time environment.","Ken Tindell","03/15/2007 5:28 PM","03/15/2007 5:28 PM","","AUTOSAR OS 2.0","Open","","4","None","","http://10.211.55.3/sf/go/artf1329/"
+"artf1255","The RTOS shall implement internal messages status information.","The RTOS shall implement internal messages status information. Derived from artf1251.","Ken Tindell","03/08/2007 6:58 PM","03/15/2007 2:31 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1255/"
+"artf1363","OS402","OS402: An expiry point shall contain a (possibly empty) set of tasks to activate.","Ken Tindell","02/07/2008 9:50 PM","02/27/2008 12:19 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1363/"
+"artf1276","GetCOMApplicationMode()","GetCOMApplicationMode() shall return the current COM application mode. See 2.9.2.2.2 p46 (doc1004).
+","Ken Tindell","03/08/2007 7:11 PM","03/15/2007 1:08 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1276/"
+"artf1074","NextScheduleTable() processing"," If the input parameters are valid AND the <ScheduleTableID_current> is running AND NextScheduleTable() was previously successful called the new  <ScheduleTableID_next> shall replace the previous next value. [OS324]","Ken Tindell","03/05/2007 10:32 PM","03/15/2007 1:38 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1074/"
+"artf1103","Non preemptive task implementation","Non preemptive tasks shall be implemented as preemptive tasks that access the internal resource RES_SCHEDULER. [OSEK019]
+
+This requirement is implemented by the offline tool adding RES_SCHEDULER as a locked internal resource when the task is marked as ""non preemptive""","Ken Tindell","03/08/2007 11:25 AM","03/15/2007 1:44 AM","","Code generation tool","Open","","4","None","No","http://10.211.55.3/sf/go/artf1103/"
+"artf1048","Periodic schedule tables","If PERIODIC=TRUE, the Operating System shall repeat the processing of the schedule table from its start after the period has expired. [OS194]","Ken Tindell","03/05/2007 10:08 PM","03/15/2007 1:52 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1048/"
+"artf1240","ReceiveMessage() and ReceiveDynamicMessage().","Message object data shall be copied into the application data space by the ReceiveMessage() and ReceiveDynamicMessage() calls. See 2.2.4 p14 (doc1004).
+","Ken Tindell","03/08/2007 6:42 PM","03/15/2007 1:55 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1240/"
+"artf1288","ReceiveMessage() behaviour","ReceiveMessage() shall in standard status return E_COM_NOMSG if the receive message object is a queued message and there are no messages available. See 2.9.2.4.2 p51 (doc1004).","Ken Tindell","03/08/2007 7:18 PM","03/15/2007 1:59 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1288/"
+"artf1289","ReceiveMessage() behaviour","ReceiveMessage() shall in standard status return E_COM_LIMIT if the receive message object is a queue message and at least one message has been discarded since the message queue filled. See 2.9.2.4.2 p51 (doc1004).","Ken Tindell","03/08/2007 7:19 PM","03/15/2007 2:00 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1289/"
+"artf1364","OS403","OS403: An expiry point shall contain a (possibly empty) set of events to set. ","Ken Tindell","02/07/2008 9:50 PM","02/27/2008 12:21 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1364/"
+"artf1056","Schedule table processing","If its input parameters are valid, StartScheduleTable() shall start the processing of a schedule table <ScheduleTableID> at its first expiry point after offset <Offset> ticks have elapsed. [OS278]
+","Ken Tindell","03/05/2007 10:13 PM","03/15/2007 2:13 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1056/"
+"artf1284","SendMessage() shall in standard status return E_OK","SendMessage() shall in standard status return E_OK. See 2.9.2.4.1 p50 (doc1004).","Ken Tindell","03/08/2007 7:15 PM","03/15/2007 2:17 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1284/"
+"artf1059","StopScheduleTable() service","If its input parameters are valid, StopScheduleTable() shall stop the schedule table <ScheduleTableID> from processing any further expiry points and shall return E_OK. [OS281]
+","Ken Tindell","03/05/2007 10:22 PM","03/15/2007 2:27 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1059/"
+"artf1258","The RTOS shall implement notification flags","The RTOS shall implement notification flags. Included in CCCB but not CCCA. See table 4-1 doc1004 (footnote 5).","Ken Tindell","03/08/2007 6:59 PM","03/15/2007 2:36 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1258/"
+"artf1254","The RTOS shall implement queued internal messages.","The RTOS shall implement queued internal messages. See 2.2.5.1 p14 (doc1004). Derived from artf1251.
+
+Applies to fixed sized messages only.","Ken Tindell","03/08/2007 6:57 PM","03/15/2007 2:38 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1254/"
+"artf1252","The RTOS shall implement unqueued internal messages.","The RTOS shall implement unqueued internal messages. Derived from artf1251.","Ken Tindell","03/08/2007 6:55 PM","03/15/2007 2:38 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1252/"
+"artf1241","Zero length messages","Zero length messages shall not be copied by ReceiveMessage() and ReceiveDynamicMessage(). See 2.2.4 p14 (doc1004).
+
+","Ken Tindell","03/08/2007 6:43 PM","03/15/2007 2:50 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1241/"
+"artf1068","E_OS_ID returned from GetScheduleTableStatus()","If the identifier ScheduleID is not valid, GetScheduleTableStatus() shall return E_OS_ID. [OS293]","Ken Tindell","03/05/2007 10:28 PM","03/15/2007 3:37 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1068/"
+"artf1060","E_OS_ID returned from NextScheduleTable()","If the input parameter <ScheduleTableID_current> or <ScheduleTableID_next> is not valid,  shall return E_OS_ID. [OS282]","Ken Tindell","03/05/2007 10:23 PM","03/15/2007 3:41 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1060/"
+"artf1057","E_OS_ID returned from StopScheduleTable()","If the schedule table identifier <ScheduleTableID> is not valid, StopScheduleTable() shall return E_OS_ID. [OS279]
+","Ken Tindell","03/05/2007 10:15 PM","03/15/2007 3:44 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1057/"
+"artf1268","COM error hook API calls permitted","The COM error hook routine shall be able to call GetMessageStatus(), COMErrorGetServiceId() and the parameter access macros COMError_x_y(). See 2.7.2.2 p35 (doc1004).","Ken Tindell","03/08/2007 7:08 PM","03/15/2007 12:58 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1268/"
+"artf1367","OS408","OS408: The delay between adjacent expiry points shall be in the range OsCounterMinCycle .. OsCounterMaxAllowedValue of the underlying counter. ","Ken Tindell","02/07/2008 9:52 PM","02/27/2008 12:27 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1367/"
+"artf1047","Hardware counter driving schedule tables","The Operating System shall allow the processing of a schedule table to be driven by a hardware counter. [OS192]
+","Ken Tindell","03/05/2007 10:07 PM","03/15/2007 1:09 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1047/"
+"artf1369","OS410","OS410: The Operating System shall be able to process at least one schedule table per counter at any given time.","Ken Tindell","02/07/2008 9:53 PM","02/27/2008 12:31 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1369/"
+"artf1239","Message object receivers are static","Message data shall be copied into the statically mapped message object receivers (one or more). See 2.2.3 p14 (doc1004).
+","Ken Tindell","03/08/2007 6:41 PM","03/15/2007 1:30 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1239/"
+"artf1244","Message overwrite","The contents of an unqueued message object shall be overwritten by a copy of a newly arrived message. See 2.2.5.2 p15 (doc1004).
+","Ken Tindell","03/08/2007 6:44 PM","03/15/2007 1:31 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1244/"
+"artf1372","OS413","OS413: The schedule table shall be configurable as either single-shot or repeating.","Ken Tindell","02/07/2008 9:54 PM","02/27/2008 12:36 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1372/"
+"artf1062","NextScheduleTable() processing","If its input parameters are valid AND the schedule table <ScheduleTableID_current> is started, NextScheduleTable() shall start the processing of schedule table <ScheduleTableID_next> after <ScheduleTableID_current> reaches its period/length and shall return E_OK. [OS284]
+
+Here the term ""started"" means ""running"".","Ken Tindell","03/05/2007 10:24 PM","03/15/2007 1:38 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1062/"
+"artf1246","Notification binding","A given message reception object shall be statically bound to a single class 1 notification mechanism. See 2.6.2 p32 (doc1004).
+","Ken Tindell","03/08/2007 6:45 PM","03/15/2007 1:46 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1246/"
+"artf1036","One-shot schedule tables","If PERIODIC=FALSE, the Operating System shall stop the processing of the schedule table after the last expiry point has occurred. [OS009]
+","Ken Tindell","03/05/2007 9:58 PM","03/15/2007 1:48 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1036/"
+"artf1373","OS414","OS414: When a schedule table switch is requested, the OS shall continue to process expiry points on the current schedule table up and including the Final Expiry Point then delay for Final Delay ticks before processing the Initial Expiry Point on the  switched-to schedule table (after the initial offset).
+","Ken Tindell","02/07/2008 9:55 PM","02/27/2008 12:39 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1373/"
+"artf1032","Processing each expiry point on a schedule table","The OS shall include a mechanism for processing each expiry point on a schedule table in turn. [OS002]","Ken Tindell","03/05/2007 9:54 PM","03/15/2007 1:52 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1032/"
+"artf1286","ReceiveMessage() behaviour","ReceiveMessage() shall take data from the given reception message object and place it in the application data area at the place specified. See 2.9.2.4.2 p51 (doc1004).","Ken Tindell","03/08/2007 7:17 PM","03/15/2007 1:55 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1286/"
+"artf1287","ReceiveMessage() behaviour","ReceiveMessage() shall in standard status return E_OK if the data in the message was available and copied successfully. See 2.9.2.4.2 p51 (doc1004).","Ken Tindell","03/08/2007 7:18 PM","03/15/2007 1:57 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1287/"
+"artf1290","ReceiveMessage() behaviour","ReceiveMessage() shall in standard status, if returning E_COM_LIMIT, clear the overflow condition on the message queue. See 2.9.2.4.2 p51 (doc1004).","Ken Tindell","03/08/2007 7:19 PM","03/15/2007 2:01 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1290/"
+"artf1237","Sending messages shall be routed directly to the receiver side.","Sending messages shall be routed directly to the receiver side. See 2.1.2 p10 (doc1004).","Ken Tindell","03/08/2007 6:21 PM","03/15/2007 2:15 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1237/"
+"artf1283","SendMessage() behaviour","SendMessage() shall take data from the application and copy the data to the receive message objects statically bound to the given sending message object. See 2.9.2.4.1 p50 (doc1004).
+","Ken Tindell","03/08/2007 7:15 PM","03/15/2007 2:16 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1283/"
+"artf1037","Software counter driven schedule tables","The Operating System shall allow the processing of a schedule table to be driven by a software counter. [OS012]
+","Ken Tindell","03/05/2007 9:59 PM","03/15/2007 2:19 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1037/"
+"artf1383","OS453","OS453: If the <ScheduleTableID_From> is stopped, the “next” schedule table does not start and its state changes to SCHEDULETABLE_STOPPED. ","Ken Tindell","02/07/2008 10:02 PM","02/27/2008 1:09 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1383/"
+"artf1274","StopCOM() shall immediately stop the operation of the COM service.","StopCOM() shall immediately stop the operation of the COM service. 2.9.2.2.2 p46 (doc1004).","Ken Tindell","03/08/2007 7:11 PM","03/15/2007 2:24 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1274/"
+"artf1275","StopCOM() shall return E_OK.","In standard status StopCOM() shall return E_OK or a system-specific status code. See 2.9.2.2.2 p46 (doc1004).","Ken Tindell","03/08/2007 7:11 PM","03/15/2007 2:26 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1275/"
+"artf1238","The configuration of messages shall be static","The configuration of messages shall be static. See 2.1.3 p11 (doc1004).","Ken Tindell","03/08/2007 6:21 PM","03/15/2007 2:30 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1238/"
+"artf1248","Flags shall be supported for notification class 1.","Flags shall be supported for notification class 1.
+","Ken Tindell","03/08/2007 6:48 PM","03/14/2007 3:49 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1248/"
+"artf1324","ReadMessage() shall clear all notification class 1 flags","ReadMessage() shall clear all notification class 1 flags. See 2.9.2.4.2 doc1004.","Ken Tindell","03/14/2007 3:54 PM","03/14/2007 3:59 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1324/"
+"artf1046","Switching schedule tables at the end","The Operating System shall provide a service to switch the processing from one schedule table to another schedule table (the switch is performed at the end of the current schedule table). [OS191]
+","Ken Tindell","03/05/2007 10:06 PM","03/14/2007 4:16 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1046/"
+"artf1272","StartCOM() status codes","StartCOM() shall in standard status return E_OK unless failing (in which case an implementation-specific code shall be returned). See 2.9.2.2.1 p45 (doc1004).","Ken Tindell","03/08/2007 7:10 PM","03/14/2007 4:19 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1272/"
+"artf1271","StartCOM() shall perform initialization of configured message objects.","StartCOM() shall perform initialization of configured message objects.","Ken Tindell","03/08/2007 7:09 PM","03/14/2007 4:21 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1271/"
+"artf1297","GetMessageStatus()","GetMessageStatus() shall in standard and extended status return E_COM_NOMSG if the message queue is empty. See 2.9.2.4.6 p55 doc1004.
+","Ken Tindell","03/08/2007 7:24 PM","03/14/2007 4:40 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1297/"
+"artf1065","GetScheduleTableStatus() processing","If the schedule table <ScheduleID> is not yet started, GetScheduleTableStatus() shall pass back SCHEDULETABLE_NOT_STARTED via the reference parameter <ScheduleStatus> and shall return E_OK. [OS289]
+
+Note that ""not yet started"" is taken to me ""not running and not nexted"" otherwise there are inconsistencies in the AUTOSAR OS spec.","Ken Tindell","03/05/2007 10:26 PM","03/15/2007 12:36 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1065/"
+"artf1083","GetScheduleTableStatus() processing","If the schedule table <ScheduleID>  was used in a NextScheduleTable() call and waits for the end of the current schedule table, GetScheduleTableStatus() shall return SCHEDULETABLE_NEXT via the reference parameter <ScheduleStatus> and shall return E_OK. [OS353]","Ken Tindell","03/08/2007 10:55 AM","03/15/2007 12:37 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1083/"
+"artf1067","GetScheduleTableStatus() processing","If the schedule table <ScheduleID> is started, but it is not synchronous (deviation is not within the precision interval or the global time is not available), GetScheduleTableStatus() shall pass back SCHEDULETABLE_RUNNING via the reference parameter ScheduleStatus and shall return E_OK. [OS291]
+","Ken Tindell","03/05/2007 10:27 PM","03/15/2007 12:42 AM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1067/"
+"artf1380","OS442","OS442: Each expiry point on a given schedule table shall have a unique offset. ","Ken Tindell","02/07/2008 10:00 PM","02/27/2008 12:49 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1380/"
+"artf1243","Full message queue discard","An attempt to copy a message to a full queued message object queue shall result in the discarding of the message copy and the noting of the discard. See 2.2.5.1 p14 (doc1004).
+","Ken Tindell","03/08/2007 6:44 PM","03/15/2007 12:57 AM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1243/"
+"artf1249","Task activation shall be supported for notification class 1.","Task activation shall be supported for notification class 1.
+","Ken Tindell","03/08/2007 6:53 PM","03/14/2007 3:46 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1249/"
+"artf1301","StartCOMExtension()","StartCOMExtension() shall be declared according to the specification in 2.9.3.1 doc1004.
+","Ken Tindell","03/08/2007 7:26 PM","03/14/2007 4:17 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1301/"
+"artf1270","StartCOM() shall call the application function StartCOMExtension()","StartCOM() shall call the application function StartCOMExtension(). See 2.9.2.2.1 p45 (doc1004).","Ken Tindell","03/08/2007 7:09 PM","03/14/2007 4:19 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1270/"
+"artf1242","FIFO queueing of messages","Messages sent to a queued message object shall be queued in a FIFO order. See 2.2.5.1 p14 (doc1004).
+","Ken Tindell","03/08/2007 6:43 PM","03/14/2007 4:33 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1242/"
+"artf1298","GetMessageStatus()","GetMessageStatus() shall in standard and extended status return E_COM_LIMIT if an overflow of the message queue occurred since the last call to ReceiveMessage(). See 2.9.2.4.6 p55 doc1004.
+","Ken Tindell","03/08/2007 7:25 PM","03/14/2007 4:41 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1298/"
+"artf1295","SendZeroMessage()","SendZeroMessage() shall behave as SendMessage() except that a zero-length message shall be sent. See 2.9.2.4.5 p54 doc1004. This is an extension to the OSEK COM spec. because zero-length messages are not included in CCCB.
+","Ken Tindell","03/08/2007 7:24 PM","03/14/2007 4:05 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1295/"
+"artf1262","StartCOM() initialization of queued messages","StartCOM() shall initialize the received queued message objects to zero messages. See 2.7.1 p34 (doc1004).","Ken Tindell","03/08/2007 7:04 PM","03/14/2007 4:21 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1262/"
+"artf1261","StartCOM() initialization","StartCOM() shall initialize received non-queued reception message objects to initial values defined in OIL or zero if no initial values are specified in OIL. See 2.7.1 p34 (doc1004).
+","Ken Tindell","03/08/2007 7:03 PM","03/14/2007 4:22 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1261/"
+"artf1296","GetMessageStatus()","GetMessageStatus() shall return the current status of the specified message. See 2.9.2.4.6 p55 doc1004.
+","Ken Tindell","03/08/2007 7:24 PM","03/14/2007 4:34 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1296/"
+"artf1300","GetMessageStatus()","GetMessageStatus() shall in extended status return E_COM_ID if the message is invalid or if the message is not queued. See 2.9.2.4.6 p55 doc1004.","Ken Tindell","03/08/2007 7:26 PM","03/14/2007 4:39 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1300/"
+"artf1299","GetMessageStatus()","GetMessageStatus() shall in standard and extended status return E_OK if none of the other conditions apply. See 2.9.2.4.6 p55 doc1004.","Ken Tindell","03/08/2007 7:25 PM","03/14/2007 4:42 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1299/"
+"artf1351","OS376","OS376: If the input parameter <CounterID> is not valid, the service should return E_OS_ID. 
+
+","Ken Tindell","02/07/2008 9:43 PM","02/28/2008 12:11 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1351/"
+"artf1352","OS377","OS377: If its input parameter is valid, GetCounterValue() shall return the current tick value of the counter via <Value> and return E_OK. ","Ken Tindell","02/07/2008 9:44 PM","02/28/2008 12:12 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1352/"
+"artf1353","OS381","OS381: If the input parameter <CounterID> is not valid the service will return E_OS_ID. 
+
+","Ken Tindell","02/07/2008 9:45 PM","02/28/2008 12:16 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1353/"
+"artf1384","OS460","OS460: In the <Value> parameter the current tick value of the counter is returned. 
+
+","Ken Tindell","02/07/2008 10:02 PM","02/28/2008 12:17 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1384/"
+"artf1357","OS391","OS391: If the <Value> is larger than the max allowed value of the <CounterID>, the service will return E_OS_VALUE. 
+
+","Ken Tindell","02/07/2008 9:47 PM","02/28/2008 12:19 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1357/"
+"artf1354","OS382","OS382: If its input parameter are valid, GetElapsedCounterValue() shall return the number of elapsed ticks since the given <Value> value via <ElapsedValue> and shall return E_OK. 
+
+","Ken Tindell","02/07/2008 9:45 PM","02/28/2008 12:21 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1354/"
+"artf1355","OS383","OS383: The Operating System shall provide a service to read the current count value of a counter (returning either the hardware timer ticks if counter is driven by hardware or the software ticks when user drives counter).  ","Ken Tindell","02/07/2008 9:46 PM","02/28/2008 12:59 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1355/"
+"artf1247","Callback routines shall be supported for notification class 1","Callback routines shall be supported for notification class 1.","Ken Tindell","03/08/2007 6:47 PM","03/14/2007 3:02 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1247/"
+"artf1034","Cancel scheduling table service","The Operating System shall provide a service to cancel the processing of a schedule table immediately at any point while the schedule table is running. [OS006]
+","Ken Tindell","03/05/2007 9:56 PM","03/14/2007 3:07 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1034/"
+"artf1259","COM API can be called from notification callbacks","The system shall support calls to all COM API services (except the StartCOM() and StopCOM() services) from notification callbacks. See 2.6.2 p32 (doc1004).","Ken Tindell","03/08/2007 7:02 PM","03/14/2007 3:09 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1259/"
+"artf1303","COMErrorHook()","COMErrorHook() shall be defined according to the specification in 2.9.3.3 doc1004.
+","Ken Tindell","03/08/2007 7:27 PM","03/14/2007 3:14 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1303/"
+"artf1269","COMErrorGetServiceId()","The function COMErrorGetServiceId() shall return service codes named according to the pattern COMServiceId_x where x is the name of the API call. See 2.7.2.2 p35 (doc1004).","Ken Tindell","03/08/2007 7:08 PM","03/14/2007 3:16 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1269/"
+"artf1265","COM error hook called","The COM error hook routine shall be called when a COM service call returns with a status code not equal to E_OK. See 2.7.2.2 p35 (doc1004).","Ken Tindell","03/08/2007 7:06 PM","03/14/2007 3:23 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1265/"
+"artf1061","E_OS_NOFUNC returned from NextScheduleTable()","If the schedule table <ScheduleTableID_current> is not started, NextScheduleTable() shall return E_OS_NOFUNC. [OS283]","Ken Tindell","03/05/2007 10:24 PM","03/14/2007 3:25 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1061/"
+"artf1058","E_OS_NOFUNC returned from StopScheduleTable()","If the schedule table with identifier <ScheduleTableID> was not started, StopScheduleTable() shall return E_OS_NOFUNC. [OS280]","Ken Tindell","03/05/2007 10:21 PM","03/14/2007 3:27 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1058/"
+"artf1072","E_OS_STATE returned by NextScheduleTable()","If the schedule table <ScheduleTableID_next> is already started or next then NextScheduleTable() shall return E_OS_STATE. [OS309]","Ken Tindell","03/05/2007 10:30 PM","03/14/2007 3:28 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1072/"
+"artf1081","E_OS_STATE returned from StartScheduleTableAbs()","If the schedule table <ScheduleTableID> was already started, StartScheduleTable() shall return E_OS_STATE. [OS350]","Ken Tindell","03/08/2007 10:52 AM","03/14/2007 3:29 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1081/"
+"artf1055","E_OS_STATE returned from StartScheduleTableRel()","If the schedule table <ScheduleTableID> was already started, StartScheduleTable() shall return E_OS_STATE. [OS277]
+","Ken Tindell","03/05/2007 10:13 PM","03/14/2007 3:29 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1055/"
+"artf1054","E_OS_VALUE returned from StartScheduleTableRel()","If the offset <Offset> is greater than MAXALLOWEDVALUE, StartScheduleTable() shall return E_OS_VALUE. [OS276]
+","Ken Tindell","03/05/2007 10:12 PM","03/14/2007 3:30 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1054/"
+"artf1076","E_OS_VALUE returned from StartScheduleTableRel()","If <Offset> is zero StartScheduleTable() shall return E_OS_VALUE. [OS332]","Ken Tindell","03/05/2007 10:33 PM","03/14/2007 3:31 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1076/"
+"artf1080","Tickvalue range check in StartScheduleTableAbs","If the <Tickvalue> is greater than MAXALLOWEDVALUE, StartScheduleTable() shall return E_OS_VALUE. [OS349]
+","Ken Tindell","03/08/2007 10:51 AM","03/14/2007 3:40 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1080/"
+"artf1347","OS368","OS368: If a Category 2 OsIsr calls DisableAllInterupts() / SuspendAllInterrupts() / SuspendOSInterrupts() and ends (returns) without calling the corresponding EnableAllInterrupts() / ResumeAllInterrupts() / ResumeOSInterrupts(), the Operating System shall perform the missing service and shall call the ErrorHook() (if configured) with the status E_OS_DISABLEDINT. ","Ken Tindell","02/07/2008 9:39 PM","02/29/2008 5:17 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1347/"
+"artf1348","OS369","OS369: If a Category 2 OsIsr calls GetResource() and ends (returns) without calling the corresponding ReleaseResource(), the Operating System shall perform the ReleaseResource() call and shall call the ErrorHook() (if configured) with the status E_OS_RESOURCE.
+
+","Ken Tindell","02/07/2008 9:40 PM","02/29/2008 5:37 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1348/"
+"artf1358","OS392","OS392: The Operating System shall provide a service to get the number of ticks between the current tick value and a previously read tick value. 
+
+","Ken Tindell","02/07/2008 9:47 PM","02/29/2008 5:54 PM","","AUTOSAR OS 3.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1358/"
+"artf1382","OS444","OS444: The value of Final Delay shall be in the range OsCounterMinCycle .. OsCounterMaxAllowedValue of the underlying counter. 
+
+","Ken Tindell","02/07/2008 10:01 PM","02/07/2008 10:01 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1382/"
+"artf1111","Error hook called if not E_OK returned","The error hook shall be called if a service call returns a value not equal to E_OK. See 11.2 p40 and 13.8.2.1 p68 (doc1002). [OSEK027]","Ken Tindell","03/08/2007 11:31 AM","03/14/2007 12:51 PM","","OSEK OS","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1111/"
+"artf1172","GetEvent() call environment","GetEvent() shall be callable from task level, interrupt level, and from the hook routines (see Figure 12-1). See 13.5.3.3 p61 (doc1002). [OSEK089].","Ken Tindell","03/08/2007 12:36 PM","03/14/2007 12:51 PM","","OSEK OS","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1172/"
+"artf1266","The COM error hook routine shall run as OS level.","The COM error hook routine shall run as OS level. See 2.7.2.2 p35 (doc1004).
+
+This means that no category 2 ISR can interrupt the COM error hook.","Ken Tindell","03/08/2007 7:06 PM","03/19/2007 3:53 PM","","OSEK COM","Open","","4","None","No","http://10.211.55.3/sf/go/artf1266/"
+"artf1387","If no expiry point with an offset of zero exists, create one","A dummy expiry point with a zero offset and with no tasks and no events should be created if no specified one with a zero offset exists.","Ken Tindell","02/26/2008 2:06 PM","02/26/2008 2:06 PM","","","Open","","4","None","No","http://10.211.55.3/sf/go/artf1387/"
+"artf1033","Absolute time start of schedule table","The Operating System shall provide a service to start the processing of a schedule table at the first expiry point at an absolute time on the underlying counter (The first expiry point shall be processed wmatches the value specified by the service). [OS005]
+","Ken Tindell","03/05/2007 9:55 PM","03/14/2007 12:51 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1033/"
+"artf1381","OS443","OS443: The Initial Offset shall be zero OR in the range OsCounterMinCycle .. OsCounterMaxAllowedValue of the underlying counter. 
+
+","Ken Tindell","02/07/2008 10:00 PM","02/07/2008 10:00 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1381/"
+"artf1282","ResetFlag_x() shall reset the declared flag 'x' to the value COM_FALSE.","ResetFlag_x() shall reset the declared flag 'x' to the value COM_FALSE. See 2.9.2.3.1 p49 (doc1004).","Ken Tindell","03/08/2007 7:14 PM","03/14/2007 12:39 PM","","OSEK COM","Open","","4","None","No","http://10.211.55.3/sf/go/artf1282/"
+"artf1280","ReadFlag_x()","ReadFlag_x() shall return COM_TRUE if the declared flag called 'x' is set and COM_FALSE otherwise. See 2.9.2.3.1 p49 (doc1004).
+","Ken Tindell","03/08/2007 7:13 PM","03/14/2007 12:39 PM","","OSEK COM","Open","","4","None","No","http://10.211.55.3/sf/go/artf1280/"
+"artf1250","Event setting shall be supported for notification class 1.","Event setting shall be supported for notification class 1.
+","Ken Tindell","03/08/2007 6:53 PM","03/14/2007 3:44 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1250/"
+"artf1236","Create a standard DSP context resource","Create a standard resource (if requested in the tool) for protecting access to the DSP context. See wiki1026.","Ken Tindell","03/08/2007 4:02 PM","03/14/2007 12:39 PM","","Code generation tool","Open","","4","None","No","http://10.211.55.3/sf/go/artf1236/"
+"artf1109","CCCB shall be supported","The RTOS shall support CCCB communications. [OSEK025]. See 10 p38 (doc1002). [OSEK025]","Ken Tindell","03/08/2007 11:29 AM","03/14/2007 12:39 PM","","OSEK OS","Open","","4","None","No","http://10.211.55.3/sf/go/artf1109/"
+"artf1279","E_COM_ID returned from InitMessage()","InitMessage() shall in extended status return E_COM_ID if the specified message is invalid. See 2.9.2.2.4 p47 (doc1004).","Ken Tindell","03/08/2007 7:13 PM","03/20/2007 1:18 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1279/"
+"artf1035","Concurrent schedule table processing","The Operating System shall permit multiple schedule tables to be processed concurrently. [OS007]
+","Ken Tindell","03/05/2007 9:57 PM","03/14/2007 12:38 PM","","AUTOSAR OS 2.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1035/"
+"artf1051","Scalability class requirements","The operating system shall support the features according to the configured scalability class. [OS241]
+","Ken Tindell","03/05/2007 10:10 PM","03/14/2007 12:38 PM","","AUTOSAR OS 2.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1051/"
+"artf1260","COM callback declarations","Callbacks shall be declared according to the syntax defined in 2.6.3 (doc1004).
+","Ken Tindell","03/08/2007 7:03 PM","03/19/2007 2:01 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1260/"
+"artf1356","OS384","OS384: The Operating System shall adjust the read out values of hardware timers (which drive counters) in such that the lowest value is zero and consecutive reads return an increasing count value until the timer wraps at its modulus.  ","Ken Tindell","02/07/2008 9:46 PM","02/07/2008 9:46 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1356/"
+"artf1050","Scalability class features","If an implementation of a lower scalability class supports features of higher classes then the interfaces for the features must comply with this specification. [OS240]
+","Ken Tindell","03/05/2007 10:09 PM","03/14/2007 12:38 PM","","AUTOSAR OS 2.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1050/"
+"artf1278","InitMessage() shall in standard status return E_OK","InitMessage() shall in standard status return E_OK. See 2.9.2.2.4 p47 (doc1004).","Ken Tindell","03/08/2007 7:12 PM","03/20/2007 1:20 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1278/"
+"artf1267","The calling of the COM error hook shall be configured in OIL.","The calling of the COM error hook shall be configured in OIL. See 2.7.2.2 p35 (doc1004).","Ken Tindell","03/08/2007 7:07 PM","03/14/2007 12:38 PM","","OSEK COM","Open","","4","None","No","http://10.211.55.3/sf/go/artf1267/"
+"artf1359","OS393","OS393: The generator shall create conversation macros to convert counter ticks (given as argument) into real time. The format of the macro is OS_TICKS2<Unit>_<Counter>(ticks) whereas <Unit> is one of NS (nanoseconds), US (microseconds), MS (milliseconds) or SEC (seconds) and <Counter> is the name of the counter; E.g. OS_TICKS2MS_MyCounter()) 
+
+","Ken Tindell","02/07/2008 9:48 PM","02/07/2008 9:48 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1359/"
+"artf1360","OS398","OS398:  The OS shall not define the symbol LOCALMESSAGESONLY ","Ken Tindell","02/07/2008 9:49 PM","02/07/2008 9:49 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1360/"
+"artf1121","Permitted API call contexts","The RTOS shall ensure the API service calls can be made from the contexts defined in 12.2.2 figure 12-1 p45 (doc1002). [OSEK037]
+","Ken Tindell","03/08/2007 11:40 AM","03/14/2007 12:51 PM","","OSEK OS","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1121/"
+"artf1031","API backward compatible with OSEK OS","The Operating System shall provide an API that is backward compatible with the OSEK OS API [OS001]
+","Ken Tindell","03/05/2007 9:53 PM","03/14/2007 12:38 PM","","AUTOSAR OS 2.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1031/"
+"artf1362","OS401","OS401: A schedule table shall have at least one expiry point. 
+
+","Ken Tindell","02/07/2008 9:50 PM","02/07/2008 9:50 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1362/"
+"artf1332","Stream messages","The COM layer shall support a new type of message: a ""stream"" message, consisting of a stream of unstructured bytes in a pipe style of transmission.
+
+Extension to OSEK COM to support common DSP library functions.","Ken Tindell","03/19/2007 2:54 PM","03/19/2007 2:55 PM","","OSEK COM","Open","","4","None","","http://10.211.55.3/sf/go/artf1332/"
+"artf1365","OS404","OS404: An expiry point shall contain an offset in ticks from the start of the schedule table. ","Ken Tindell","02/07/2008 9:51 PM","02/07/2008 9:51 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1365/"
+"artf1264","Define behaviour of COM calls outside COM operation","The RTOS shall define the behavior of calling OSEK COM calls before StartCOM() and after StopCOM(). See 2.7.1 p34 (doc1004).","Ken Tindell","03/08/2007 7:05 PM","03/14/2007 12:38 PM","","OSEK COM","Open","","4","None","No","http://10.211.55.3/sf/go/artf1264/"
+"artf1281","COM_TRUE and COM_FALSE shall be C true and false values respectively.","COM_TRUE and COM_FALSE shall be C true and false values respectively. See 2.9.2.3.1 p49 (doc1004).
+","Ken Tindell","03/08/2007 7:14 PM","03/14/2007 2:59 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1281/"
+"artf1263","InitMessage() and non-queued messages","InitMessage() shall initialize a received non-queued message object to given values. See 2.7.1 p34 (doc1004).","Ken Tindell","03/08/2007 7:04 PM","03/20/2007 1:19 PM","","OSEK COM","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1263/"
+"artf1069","Disable/enable interrupt services","The Operating System shall provide the services DisableAllInterrupts(), EnableAllInterrupts(), SuspendAllInterrupts(), ResumeAllInterrupts() prior to calling StartOS() and after calling ShutdownOS() (It is assumed that the static variables of theses functions are initialized). [OS299]
+
+Note that ""After calling ShutdownOS()"" is meaningless with AUTOSAR 3.0 since ShutdownOS() doesn't return.","Ken Tindell","03/05/2007 10:29 PM","02/09/2008 6:18 PM","","AUTOSAR OS 2.0","Open","","4","None","Yes","http://10.211.55.3/sf/go/artf1069/"
+"artf1346","OS367","OS367: Operating System services which do not return a StatusType shall not raise the error hook(s). 
+
+","Ken Tindell","02/07/2008 9:38 PM","02/07/2008 9:38 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1346/"
+"artf1368","OS409","OS409: A schedule table shall be driven by exactly one counter.","Ken Tindell","02/07/2008 9:53 PM","02/07/2008 9:53 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1368/"
+"artf1349","OS370","OS370: The generator shall print out information about timers used internally by the OS during generation (e.g. on console, list file). 
+
+","Ken Tindell","02/07/2008 9:41 PM","02/07/2008 9:41 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1349/"
+"artf1350","OS374","OS374: The Operating System shall handle all the initialization and configuration of timers used directly by the OS and not handled by the GPT driver.","Ken Tindell","02/07/2008 9:42 PM","02/07/2008 9:42 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1350/"
+"artf1370","OS411","OS411: One tick on the counter shall correspond to one tick on the schedule table.
+","Ken Tindell","02/07/2008 9:53 PM","02/07/2008 9:53 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1370/"
+"artf1379","OS441","OS441:  If a GPT channel is configured as a hardware counter driver the consistency check shall issue an error if the selected GPT channel is not configured for continuous mode.  ","Ken Tindell","02/07/2008 9:59 PM","02/07/2008 9:59 PM","","AUTOSAR OS 3.0","Open","","4","None","No","http://10.211.55.3/sf/go/artf1379/"

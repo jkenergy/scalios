@@ -1,0 +1,31 @@
+# Test2 OIL File. See main.c for details of test.
+#
+# Copyright (C) 2004, 2005, 2006, 2007, 2008 JK Energy Ltd.
+# 
+# $LastChangedDate: 2008-03-24 08:00:55 +0000 (Mon, 24 Mar 2008) $
+# $LastChangedRevision: 694 $
+# $LastChangedBy: kentindell $
+# $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/test2/build.mf $
+# 
+# Makefile for building test2. See main.c for details of test. This makefile is mostly the same as
+# for other tests, but notice that it requires "INCLUDE_HANDLE_NAME_MAP" to be set this way to
+# ensure the map is included from the auto-generated C. No API errors are expected so "EXPECTSERRORS"
+# is set to indicate this (an API error that results in the error hook being called will cause
+# the test to report failure).
+
+INSTALL=../..
+
+-include $(INSTALL)/builds/common/defaults.mf
+
+# The test doesn't expect errors. Keep the error hook in to fail the test if any errors
+# occur.
+USEERRORHOOK=USEERRORHOOK
+
+# The test requires the startup hook to be enabled so that the sequence of events can be checked
+# $Req: artf1215 $
+USESTARTUPHOOK=USESTARTUPHOOK
+
+# Brings in standard makefile for building all four library variants of a test (generic
+# across all tests).
+-include $(INSTALL)/builds/common/makeall.mf
+

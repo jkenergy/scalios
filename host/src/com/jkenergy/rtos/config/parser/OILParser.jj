@@ -1,0 +1,820 @@
+/*
+  	OIL 2.5 and OIL 3.0 Grammar defintion for use with JavaCC
+  
+  	Mark Dixon, 9 Feb 2006
+
+	Based on the OIL Specification version 2.5 (OSEK) and OIL 3.0 (AUTOSAR)
+	
+	see -
+	
+	http://www.osek-vdx.org/mirror/oil25.pdf
+	http://http://www.autosar.org 	(AUTOSAR_SWS_OS.pdf)
+	
+	NOTES:	
+	
+		Strings are allowed to contain escaped characters, e.g. \"
+		Names are Identifiers as defined by ANSI C.
+		#include directives must have been pre-processed prior to parse
+	
+		
+	$LastChangedDate: 2007-06-12 16:42:47 +0100 (Tue, 12 Jun 2007) $
+	$LastChangedRevision: 428 $
+	$LastChangedBy: markdixon $
+	$HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/host/src/com/jkenergy/rtos/config/parser/OILParser.jj $		
+*/
+
+options {
+  STATIC = false;
+}
+
+
+PARSER_BEGIN(OILParser)
+
+package com.jkenergy.rtos.config.parser;
+
+import com.jkenergy.rtos.config.Problem;
+import com.jkenergy.rtos.config.oilmodel.*;
+import java.math.*;
+import java.util.*;
+
+@SuppressWarnings("unchecked")	// prevent Java 5.0 Compiler warnings for generics
+  public class OILParser{
+
+	// Keep a cache of a token, used when reporting ParseExceptions after token has been consumed
+	private Token cachedToken;
+
+    // Run the parser
+    public static void main ( String args [ ] ) {
+
+      OILParser parser ;
+
+      if(args.length == 0){
+        System.out.println("OIL Parser Version 0.2Alpha:  Reading from standard input . . .");
+        parser = new OILParser(System.in);
+      }
+      else if(args.length == 1){
+        System.out.println("OIL Parser Version 0.2Alpha:  Reading from file " + args[0] + " . . ." );
+      try {
+        parser = new OILParser(new java.io.FileInputStream(args[0]));
+      }
+      catch(java.io.FileNotFoundException e){
+        System.out.println("OIL Parser Version 0.2:  File " + args[0] + " not found.");
+        return ;
+        }
+      }
+      else {
+        System.out.println("OIL Parser Version 0.2Alpha:  Usage is one of:");
+        System.out.println("         java OILParser < inputfile");
+        System.out.println("OR");
+        System.out.println("         java OILParser inputfile");
+        return ;
+      }
+      try {
+      	OILDefinition model=new OILDefinition();
+      	
+      	parser.OILDefinition(model,false);		// call root non-terminal, passing OILDefinition model to be populated
+      	
+      	System.out.println("OIL Parser Version 0.2Alpha:  OIL definition syntax check completed successfully.");
+      	        
+        // Do semantic check of the model
+        List problems=new ArrayList();
+        
+        model.doModelCheck(problems,true);
+        
+        if ( problems.size()>0 ) {
+        	
+        	System.out.println("OIL Parser Version 0.2Alpha:  Semantic problems detected.");
+        	
+	        Iterator iter=problems.iterator();
+	        
+	        while ( iter.hasNext() ) {
+	        	Problem next = (Problem)iter.next();
+	        	
+	        	System.out.println(next.getMessage());
+	        }
+        }
+        else
+        	System.out.println("OIL Parser Version 0.2Alpha:  OIL definition parsed successfully.");
+      }
+      catch(ParseException e){
+        System.out.println("OIL Parser Version 0.2Alpha:  Encountered errors during parse.");
+        System.out.println(e.getMessage());
+      }
+    }
+
+
+   /* 
+    * Creates a ParseException using the given message and given token
+    */
+   private static ParseException generateParseExceptionWithToken(String msg,Token token) {
+		
+		ParseException theException = new ParseException(msg);   	
+		
+		// Setup the currentToken member of the ParseException (stores line no. etc.)
+		theException.currentToken=token;
+		
+		return theException;
+   }
+
+   /* 
+    * Creates a ParseException using the given message and the cachedToken token
+    */
+   private ParseException generateParseExceptionUsingCachedToken(String msg) {
+
+	   	return generateParseExceptionWithToken(msg,cachedToken);
+   }
+
+   /* 
+    * Creates a ParseException using the given message and the current token
+    */
+   private ParseException generateParseException(String msg) {
+   	
+   		return generateParseExceptionWithToken(msg,token);   	
+   }
+   
+   // Stores the current token in the cachedToken attribute, allows processed tokens to be used to
+   // generate ParseExceptions
+   private void cacheToken() {
+		cachedToken=token;
+   }
+   
+   /**
+    * Performs a parse using the stream specified during construction. The given model is populated
+    * during the parse process. 
+    *
+    * @param the OILDefinition model populated by the parsed input    
+    */
+   public void doParse(OILDefinition model) throws ParseException {
+
+		// Pass false so that IMPLEMENTATION not ignored
+   		OILDefinition(model,false);		// call root non-terminal, passing OILDefinition model to be populated
+   }
+   
+   /**
+    * Performs a parse using the stream specified during construction. The given model is populated
+    * during the parse process.The contents of the IMPLEMENTATION section are parsed but not included
+    * within the generated OILDefinition model, thus allowing a predefined implementation
+    * to be placed within the model prior to the parse.
+    *
+    * @param the OILDefinition model populated by the parsed input    
+    */
+   public void doApplicationParse(OILDefinition model) throws ParseException {
+
+		// Pass true so that IMPLEMENTATION parsed but not placed in OILModel
+   		OILDefinition(model,true);		// call root non-terminal, passing OILDefinition model to be populated
+   }   
+      
+  }
+
+PARSER_END(OILParser)
+
+SKIP : {
+	" "
+|	"\t"
+|	"\n"
+|	"\r"
+|	<"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+|	<"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
+}
+
+TOKEN : {
+	<OS: "OS">
+| 	<TASK: "TASK">
+| 	<COUNTER: "COUNTER">
+|	<ALARM:	"ALARM">
+|	<RESOURCE: "RESOURCE">
+|	<EVENT: "EVENT">
+|	<ISR: "ISR">
+|	<MESSAGE: "MESSAGE">
+|	<COM: "COM">
+|	<APPMODE: "APPMODE">
+|	<NM: "NM">
+|	<IPDU: "IPDU">
+|	<APPLICATION: "APPLICATION">				/* $Req: AUTOSAR??? $ */
+|	<SCHEDULETABLE: "SCHEDULETABLE">			/* $Req: AUTOSAR??? $ */
+}
+
+TOKEN : {
+	<OS_TYPE: "OS_TYPE">
+| 	<TASK_TYPE: "TASK_TYPE">
+| 	<COUNTER_TYPE: "COUNTER_TYPE">
+|	<ALARM_TYPE:	"ALARM_TYPE">
+|	<RESOURCE_TYPE: "RESOURCE_TYPE">
+|	<EVENT_TYPE: "EVENT_TYPE">
+|	<ISR_TYPE: "ISR_TYPE">
+|	<MESSAGE_TYPE: "MESSAGE_TYPE">
+|	<COM_TYPE: "COM_TYPE">
+|	<APPMODE_TYPE: "APPMODE_TYPE">
+|	<NM_TYPE: "NM_TYPE">
+|	<IPDU_TYPE: "IPDU_TYPE">
+|	<APPLICATION_TYPE: "APPLICATION_TYPE">		/* $Req: AUTOSAR??? $ */
+|	<SCHEDULETABLE_TYPE: "SCHEDULETABLE_TYPE">	/* $Req: AUTOSAR??? $ */
+}
+
+TOKEN : {
+	<NO_DEFAULT: "NO_DEFAULT">
+|	<AUTO: "AUTO">
+|	<WITH_AUTO: "WITH_AUTO">
+|	<IMPLEMENTATION: "IMPLEMENTATION">
+|	<OIL_VERSION: "OIL_VERSION">
+|	<CPU: "CPU">
+|	<TRUE: "TRUE">
+|	<FALSE: "FALSE">
+}
+
+
+TOKEN : {
+	<UINT32: "UINT32">
+|	<INT32: "INT32">
+|	<UINT64: "UINT64">
+|	<INT64: "INT64">
+|	<FLOAT: "FLOAT">
+|	<ENUM: "ENUM">
+|	<STRING: "STRING">
+|	<BOOLEAN: "BOOLEAN">
+}
+
+
+TOKEN : {
+	<NAME: <LETTER> (<LETTER> | <DIGIT>)*>
+|	<#LETTER: ["A"-"Z","_","a"-"z"]>
+|	<#DIGIT: ["0"-"9"]>
+|	<STRING_LITERAL: "\"" (~["\"","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\"">
+|	<SEARCH_FILENAME:  "<" (~[">","\n","\r"])* ">">
+}
+
+TOKEN : {
+	<NUMBER_LITERAL: <DECIMAL_NUMBER> | <HEX_NUMBER>>
+|	<#DECIMAL_NUMBER: (["+","-"])? ("0" | ["1"-"9"] (["0"-"9"])*)>
+|	<#HEX_NUMBER: "0x" (["0"-"9","a"-"f","A"-"F"])+>
+|	<FLOAT_LITERAL: (["+","-"])? (["0"-"9"])+ "." (["0"-"9"])+ (<EXPONENT>)?>
+|	<#EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+>
+}
+
+// Define these so the <UNEXPECTED_CHAR> token does not match them first
+TOKEN : {
+	<COMMA: ",">
+|	<COLON: ":">
+|	<SEMICOLON: ";">
+|	<EQUALS: "=">
+|	<LBRACKET: "[">
+|	<RBRACKET: "]">
+|	<LBRACE: "{">
+|	<RBRACE: "}">
+|	<RANGE: "..">
+}
+
+// Prevent a TokenMgrError being thrown when unecpected token is found.
+< * > TOKEN : { 
+	< UNEXPECTED_CHAR : ~[] > 
+}  
+
+
+void OILDefinition(OILDefinition definition,boolean ignoreImplementation) : {}
+{
+	
+	OILVersion(definition)
+	
+	/* Make ImplementationDefinition optional, even though mandatory in BNF */
+	(ImplementationDefinition(definition,ignoreImplementation))?
+	
+	/* Make ApplicationDefinition optional, even though mandatory in BNF */
+	(ApplicationDefinition(definition))?
+	
+	<EOF>
+}
+
+void OILVersion(OILDefinition definition) : {}
+{
+	<OIL_VERSION> "=" Version() Description() ";"
+}
+
+void Version() : {}
+{
+	String()
+}
+
+void ImplementationDefinition(OILDefinition definition,boolean ignoreImplementation) :
+{
+	String name,desc;
+	ImplementationDefinition implDef;
+}
+{
+	<IMPLEMENTATION> name=Name() {implDef = new ImplementationDefinition(name,token.beginLine);} "{" 
+	
+	ImplementationSpecList(implDef) "}" desc=Description() ";"
+	{
+		implDef.setDescription(desc);
+		
+		// If IMPLEMENTATION is not being ignored then inform OILDefinition of the new ImplementationDefinition
+		if ( !ignoreImplementation )
+			definition.setImplDef(implDef);
+	}
+	
+}
+
+void ImplementationSpecList(ImplementationDefinition implDef) : {}
+{
+	(ImplementationSpec(implDef))*
+}
+
+void ImplementationSpec(ImplementationDefinition implDef) :
+{
+	ObjectKind objType;
+	ObjectTypeDefinition objTypeDef;	
+	String desc;
+}
+{
+	objType=Object() {objTypeDef=implDef.getObjectTypeDefinition(objType); objTypeDef.setLineNo(token.beginLine);}
+	
+	"{" ImplementationList(objTypeDef) "}" desc=Description() ";"
+	
+	{objTypeDef.setDescription(desc);}
+	
+}
+
+ObjectKind Object() :
+{
+	ObjectKind objType;
+}
+{
+	( <OS> {objType=ObjectKind.OS_LITERAL;}
+	| <TASK> {objType=ObjectKind.TASK_LITERAL;}
+	| <COUNTER> {objType=ObjectKind.COUNTER_LITERAL;}
+	| <ALARM> {objType=ObjectKind.ALARM_LITERAL;}
+	| <RESOURCE> {objType=ObjectKind.RESOURCE_LITERAL;}
+	| <EVENT> {objType=ObjectKind.EVENT_LITERAL;}
+	| <ISR> {objType=ObjectKind.ISR_LITERAL;}
+	| <MESSAGE> {objType=ObjectKind.MESSAGE_LITERAL;}
+	| <COM> {objType=ObjectKind.COM_LITERAL;}
+	| <NM> {objType=ObjectKind.NM_LITERAL;}
+	| <APPMODE> {objType=ObjectKind.APPMODE_LITERAL;}
+	| <IPDU> {objType=ObjectKind.IPDU_LITERAL;}
+	| <APPLICATION> {objType=ObjectKind.APPLICATION_LITERAL;}			/* $Req: AUTOSAR??? $ */
+	| <SCHEDULETABLE> {objType=ObjectKind.SCHEDULETABLE_LITERAL;}		/* $Req: AUTOSAR??? $ */
+	)
+	
+	{ return objType; }
+}
+
+String ObjectLiteral() :
+{
+	Token t;
+}
+{
+	( t=<OS>
+	| t=<TASK>
+	| t=<COUNTER>
+	| t=<ALARM>
+	| t=<RESOURCE>
+	| t=<EVENT>
+	| t=<ISR>
+	| t=<MESSAGE>
+	| t=<COM>
+	| t=<NM>
+	| t=<APPMODE>
+	| t=<IPDU>
+	| t=<APPLICATION>			/* $Req: AUTOSAR??? $ */
+	| t=<SCHEDULETABLE>			/* $Req: AUTOSAR??? $ */
+	)
+	
+	{ return t.image; }
+}
+
+
+
+void ImplementationList(ObjectTypeDefinition objTypeDef) :
+{
+	FeatureDefinition featureDef;
+}
+{
+	(
+	featureDef=ImplementationDef()
+	{
+		if ( objTypeDef.addFeature(featureDef)==false )
+			throw generateParseExceptionUsingCachedToken("Attempt redefine existing Parameter '"+featureDef.getName()+"'");
+	}
+
+	)*
+}
+
+FeatureDefinition ImplementationDef() :
+{
+	FeatureDefinition featureDef;
+}
+{
+	( featureDef=ImplAttrDef() | featureDef=ImplRefDef() )
+	
+	{ return featureDef; }
+}
+
+AttributeDefinition ImplAttrDef() :
+{
+	String name,desc;
+	AttributeDefinition attribDef;
+}
+{
+	(
+		(	( <UINT32> {attribDef=new IntegerAttributeDef(true,32,token.beginLine);} // UINT32
+			| <INT32> {attribDef=new IntegerAttributeDef(false,32,token.beginLine);} // INT32
+			| <UINT64> {attribDef=new IntegerAttributeDef(true,64,token.beginLine);} // UINT64	
+			| <INT64> {attribDef=new IntegerAttributeDef(false,64,token.beginLine);} // INT64
+			) AutoSpecifier(attribDef) [NumberRange((IntegerAttributeDef)attribDef)] name=AttributeName() {cacheToken();} [MultipleSpecifier(attribDef)] [DefaultNumber((IntegerAttributeDef)attribDef)]
+		)
+		
+		| (<FLOAT> {attribDef=new FloatAttributeDef(token.beginLine);} AutoSpecifier(attribDef) [FloatRange((FloatAttributeDef)attribDef)] name=AttributeName() {cacheToken();} [MultipleSpecifier(attribDef)] [DefaultFloat((FloatAttributeDef)attribDef)])
+		| (<ENUM> {attribDef=new EnumerationAttributeDef(token.beginLine);} AutoSpecifier(attribDef) Enumeration((EnumerationAttributeDef)attribDef) name=AttributeName() {cacheToken();} [MultipleSpecifier(attribDef)] [DefaultName((EnumerationAttributeDef)attribDef)])
+		| (<STRING> {attribDef=new StringAttributeDef(token.beginLine);} AutoSpecifier(attribDef) name=AttributeName() {cacheToken();} [MultipleSpecifier(attribDef)] [DefaultString((StringAttributeDef)attribDef)])
+		| (<BOOLEAN> {attribDef=new BoolAttributeDef(token.beginLine);} AutoSpecifier(attribDef) [BoolValues((BoolAttributeDef)attribDef)] name=AttributeName() {cacheToken();} [MultipleSpecifier(attribDef)] [DefaultBool((BoolAttributeDef)attribDef)])
+	
+	) desc=Description() ";"
+
+	{
+		attribDef.setName(name);
+		attribDef.setDescription(desc);
+	
+		return attribDef;
+	}
+}
+
+void ImplParameterList(ParameterizedAttributeDef paramDef) : {}
+{
+	"{" ImplDefList(paramDef) "}"
+}
+
+void ImplDefList(ParameterizedAttributeDef paramDef) :
+{
+	FeatureDefinition featureDef;
+}
+{
+	(
+	featureDef=ImplementationDef()
+	{
+		if ( paramDef.addSubFeature(featureDef)==false )
+			throw generateParseExceptionUsingCachedToken("Attempt redefine existing Parameter '"+featureDef.getName()+"'");			
+	}
+	)*
+}
+
+void AutoSpecifier(AttributeDefinition attribDef) : {}
+{
+	(<WITH_AUTO> {attribDef.isWithAuto(true);})?
+}
+
+void NumberRange(IntegerAttributeDef attribDef) :
+{
+	BigInteger minValue,maxValue;
+}
+{
+	"[" minValue=Number() ( ".." maxValue=Number() {attribDef.setRange(minValue,maxValue);} | {attribDef.addListValue(minValue);} NumberList(attribDef) ) "]"
+}
+
+void NumberList(IntegerAttributeDef attribDef) :
+{
+	BigInteger value;
+}
+{
+	("," value=Number() {attribDef.addListValue(value);})*
+}
+
+void DefaultNumber(IntegerAttributeDef attribDef) :
+{
+	BigInteger value;
+}
+{
+	"=" (value=Number() {attribDef.setDefaultValue(value);}|<NO_DEFAULT>|<AUTO> {attribDef.isAuto(true);})
+}
+
+String Description() : { String s; }
+{
+	(":" s=String() { return s; } )?
+	
+	{return null;}
+}
+
+void FloatRange(FloatAttributeDef attribDef) :
+{
+	BigDecimal minValue,maxValue;
+}
+{
+	"[" minValue=Float() ".." maxValue=Float() "]" {attribDef.setRange(minValue,maxValue);}
+}
+
+void DefaultFloat(FloatAttributeDef attribDef) :
+{
+	BigDecimal value;
+}
+{
+	"=" (value=Float() {attribDef.setDefaultValue(value);}|<NO_DEFAULT>|<AUTO> {attribDef.isAuto(true);})
+}
+
+void Enumeration(EnumerationAttributeDef attribDef) : {}
+{
+	"[" EnumeratorList(attribDef) "]"
+}
+
+void EnumeratorList(EnumerationAttributeDef attribDef) : {}
+{
+	Enumerator(attribDef) ("," Enumerator(attribDef))*
+}
+
+void Enumerator(EnumerationAttributeDef attribDef) :
+{
+	EnumeratorDef enumDef;
+	String name,desc;
+}
+{
+	name=Name() {enumDef=new EnumeratorDef(name,token.beginLine); cacheToken();} [ImplParameterList(enumDef)] desc=Description()
+	{
+		enumDef.setDescription(desc);
+		
+		if ( attribDef.addEnumerator(enumDef)==false )
+			throw generateParseExceptionUsingCachedToken("Attempt to define a duplicate enumerator value '"+name+"'");		
+	}
+}
+
+void BoolValues(BoolAttributeDef attribDef) :
+{
+	String desc;
+	BoolValueDef trueValue,falseValue;
+}
+{
+	"[" "TRUE" {trueValue=attribDef.getTrueValue(); trueValue.setLineNo(token.beginLine);} [ImplParameterList(trueValue)] desc=Description() {trueValue.setDescription(desc);}
+	"," "FALSE" {falseValue=attribDef.getFalseValue(); falseValue.setLineNo(token.beginLine);} [ImplParameterList(falseValue)] desc=Description() {falseValue.setDescription(desc);} "]"
+}
+
+void DefaultName(EnumerationAttributeDef attribDef) :
+{
+	String value;
+}
+{
+	"=" (value=Name() {attribDef.setDefaultValue(value);}|<NO_DEFAULT>|<AUTO> {attribDef.isAuto(true);})
+}
+
+void DefaultString(StringAttributeDef attribDef) :
+{
+	String value;
+}
+{
+	"=" (value=String() {attribDef.setDefaultValue(value);}|<NO_DEFAULT>|<AUTO> {attribDef.isAuto(true);})
+}
+
+void DefaultBool(BoolAttributeDef attribDef) :
+{
+	boolean value;
+}
+{
+	"=" (value=Boolean() {attribDef.setDefaultValue(value);}|<NO_DEFAULT>|<AUTO> {attribDef.isAuto(true);})
+}
+
+ReferenceDef ImplRefDef() :
+{
+	ObjectKind objType;
+	String name,desc;
+	ReferenceDef refDef;
+}
+{
+	objType=ObjectRefType() name=ReferenceName() {refDef=new ReferenceDef(objType,name,token.beginLine); cacheToken();} [MultipleSpecifier(refDef)] desc=Description() ";"
+	{
+		refDef.setDescription(desc);
+	
+		return refDef;
+	}
+}
+
+ObjectKind ObjectRefType() :
+{
+	ObjectKind objType;
+}
+{
+	( <OS_TYPE> {objType=ObjectKind.OS_LITERAL;}
+	| <TASK_TYPE> {objType=ObjectKind.TASK_LITERAL;}
+	| <COUNTER_TYPE> {objType=ObjectKind.COUNTER_LITERAL;}
+	| <ALARM_TYPE> {objType=ObjectKind.ALARM_LITERAL;}
+	| <RESOURCE_TYPE> {objType=ObjectKind.RESOURCE_LITERAL;}
+	| <EVENT_TYPE> {objType=ObjectKind.EVENT_LITERAL;}
+	| <ISR_TYPE> {objType=ObjectKind.ISR_LITERAL;}
+	| <MESSAGE_TYPE> {objType=ObjectKind.MESSAGE_LITERAL;}
+	| <COM_TYPE> {objType=ObjectKind.COM_LITERAL;}
+	| <NM_TYPE> {objType=ObjectKind.NM_LITERAL;}
+	| <APPMODE_TYPE> {objType=ObjectKind.APPMODE_LITERAL;}
+	| <IPDU_TYPE> {objType=ObjectKind.IPDU_LITERAL;}
+	| <APPLICATION_TYPE> {objType=ObjectKind.APPLICATION_LITERAL;}			/* $Req: AUTOSAR??? $ */
+	| <SCHEDULETABLE_TYPE> {objType=ObjectKind.SCHEDULETABLE_LITERAL;}		/* $Req: AUTOSAR??? $ */
+	)
+	{ return objType; }
+}
+
+String ReferenceName() :
+{
+	String name;
+}
+{
+	( name=Name() | name=ObjectLiteral() )
+	 
+	{ return name; } 
+}
+
+void MultipleSpecifier(FeatureDefinition featureDef) : {}
+{
+	("[" "]")
+	{ featureDef.isMultiple(true); }
+}
+
+void ApplicationDefinition(OILDefinition definition) :
+{
+	ApplicationDefinition appDef;
+	String name,desc;
+}
+{
+	<CPU> name=Name() {appDef=new ApplicationDefinition(definition,name,token.beginLine);} "{"
+	
+	ObjectDefinitionList(appDef) "}" desc=Description() ";"
+	
+	{
+		appDef.setDescription(desc);
+		
+		definition.setApplicationDef(appDef);	// inform OILDefinition of the new ApplicationDefinition
+	}
+	
+}
+
+void ObjectDefinitionList(ApplicationDefinition appDef) : {}
+{
+	(ObjectDefinition(appDef))*
+}
+
+void ObjectDefinition(ApplicationDefinition appDef) :
+{
+	String desc;
+	ObjectDefinition obj;	
+}
+{
+	obj=ObjectName(appDef) ["{" ParameterList(obj) "}"] desc=Description() ";"
+	
+	{
+		obj.setDescription(desc);
+	}
+}
+
+ObjectDefinition ObjectName(ApplicationDefinition appDef) :
+{
+	ObjectKind objType;
+	String name;
+}
+{
+	objType=Object() name=Name()
+	{
+		// Attempt to get an existing ObjectDefinition with the specified name
+		// This is done since the splitting of object definitions is allowed (providing they refer to same object type)
+		ObjectDefinition obj = appDef.findNamedObjectDefinition(name);
+		
+		if ( obj==null ) {
+			// An ObjectDefinition with the given name does not exist, so create one and add to ApplicationDefinition
+			obj=new ObjectDefinition(appDef,objType,name,token.beginLine);
+			appDef.addObjectDefinition(obj);
+		}
+		else {
+			// An ObjectDefinition with the given name does exist, so ensure that it represents same object type
+			if ( !objType.equals(obj.getObjectType()) )
+				throw generateParseException("Attempt to define an Object using an existing name '"+name+"'");			
+		}
+			
+		return obj;
+	}
+}
+
+void ParameterList(ObjectDefinition obj) :
+{
+	Parameter param;
+}
+{
+	(param=Parameter(obj) {obj.addParameter(param);})*
+}
+
+void SubParameterList(ParameterizedValue paramValue) :
+{
+	Parameter param;
+}
+{
+	(param=Parameter(paramValue) {paramValue.addSubParameter(param);})*
+}
+
+Parameter Parameter(OILElement owner) :
+{
+	String name,desc;
+	Parameter param;
+}
+{
+	name=AttributeName() {param=new Parameter(owner,name,token.beginLine);} "=" AttributeValue(param) desc=Description() ";"
+
+	{
+		param.setDescription(desc);
+		
+		return param;
+	}
+}
+
+String AttributeName() :
+{
+	String name;
+}
+{
+	( name=Name() | name=ObjectLiteral() )
+	 
+	{ return name; }
+}
+
+void AttributeValue(Parameter param) :
+{
+	FeatureValue featureVal;
+	String strVal;
+	boolean boolVal;
+	BigInteger intVal;
+	BigDecimal floatVal;
+}
+{
+	( <AUTO> {featureVal=new AutoValue(param,token.beginLine);}
+	| strVal=String() {featureVal=new StringValue(param,strVal,token.beginLine);}
+	| boolVal=Boolean() {featureVal=new BooleanValue(param,boolVal,token.beginLine);} ["{" SubParameterList((ParameterizedValue)featureVal) "}"]
+	| strVal=Name() {featureVal=new NameValue(param,strVal,token.beginLine);} ["{" SubParameterList((ParameterizedValue)featureVal) "}"]
+	| intVal=Number() {featureVal=new IntegerValue(param,intVal,token.beginLine);}
+	| floatVal=Float() {featureVal=new FloatValue(param,floatVal,token.beginLine);}
+	)
+	
+	{param.setValue(featureVal);}
+}
+
+String Name() : { Token t; }
+{
+	t=<NAME>
+	{
+	  return t.image;
+	}	
+}
+
+String String() : { Token t; }
+{
+	t=<STRING_LITERAL>
+	{
+	  String s = t.image;
+	  
+	  // strip leading and trailing quotes
+	  s = s.substring(1,s.length()-1);
+	  
+	  return s;
+	}	
+}
+
+boolean Boolean() : {}
+{
+	<FALSE> {return false;} | <TRUE> {return true;}
+}
+
+BigInteger Number() :
+{
+	Token t;
+	BigInteger value;
+}
+{
+	t=<NUMBER_LITERAL>
+	{
+		try {
+			String number=t.image;
+			
+			if ( number.startsWith("0x") ) {
+				// parse as base 16 number, stripping 0x from start of the number string
+				value = new BigInteger(number.substring(2),16);
+			}
+			else {
+				// parse as decimal number
+				value = new BigInteger(number);
+			}
+				
+			return value;
+		}
+		catch (NumberFormatException e) {
+			// throw exception to report syntax error since invalid integer value
+			throw generateParseException("Invalid integer number format");			
+		}
+	}
+}
+
+BigDecimal Float() :
+{
+	Token t;
+	BigDecimal value;
+}
+{
+	t=<FLOAT_LITERAL>
+	{
+		try {
+			value = new BigDecimal(t.image);
+			return value;
+		}
+		catch (NumberFormatException e) {
+			// throw exception to report syntax error since invalid float value
+			throw generateParseException("Invalid float number format");
+		}
+	}	
+}

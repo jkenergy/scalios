@@ -1,0 +1,88 @@
+/* Test1 OIL File 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2007-12-21 02:35:27 +0000 (Fri, 21 Dec 2007) $
+ * $LastChangedRevision: 509 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/calib1/main.oil $
+ */
+
+OIL_VERSION="2.5";
+
+CPU TestApp {
+	
+	OS TestOS {
+#include <os.oil>
+	};
+	
+	EVENT E1 {
+		MASK = AUTO;
+	};
+	
+#ifdef ET_ONLY
+	EVENT Dummy {
+		MASK = AUTO;
+	};
+#endif
+	
+	TASK TaskA {
+		PRIORITY = 1;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		STACKSIZE = 180;
+#ifdef ET_ONLY
+		EVENT = Dummy;
+#endif
+	};
+	
+	TASK TaskB {
+		PRIORITY = 3;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		STACKSIZE = 180;
+#ifdef ET_ONLY
+		EVENT = Dummy;
+#endif
+	};
+	
+	TASK TaskC {
+		PRIORITY = 2;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = E1;
+		STACKSIZE = 180;
+	};
+	
+	TASK TaskD {
+		PRIORITY = 4;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = E1;
+		STACKSIZE = 180;
+	};
+	
+	TASK TaskE {
+		PRIORITY = 5;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = NON;
+		STACKSIZE = 180;
+		EVENT = E1;
+	};
+	
+	TASK TaskF {
+		PRIORITY = 6;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		STACKSIZE = 180;
+#ifdef ET_ONLY
+		EVENT = Dummy;
+#endif
+	};
+};

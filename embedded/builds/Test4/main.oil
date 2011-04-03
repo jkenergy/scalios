@@ -1,0 +1,173 @@
+/* Test4 OIL File 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-01-27 20:40:25 +0000 (Sun, 27 Jan 2008) $
+ * $LastChangedRevision: 598 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/Test4/main.oil $
+ */
+
+OIL_VERSION="2.5";
+
+CPU TestApp {
+	OS TestOS {
+		/* Fragment of OIL file shared across all tests to select OS-wide configuration
+		 * parameters.
+		 */
+#include <os.oil>
+	};
+	
+	RESOURCE Res_ceilA {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res_ceilB {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res_ceilC {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res_ceilD {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res_ceilD_linked {
+		RESOURCEPROPERTY = LINKED {
+			LINKEDRESOURCE = Res_ceilD;
+		};
+	};
+	RESOURCE Res_ceilE {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res_DE {
+		RESOURCEPROPERTY = INTERNAL;
+	};
+	RESOURCE Res_ceilX {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res_IJ {
+		RESOURCEPROPERTY = INTERNAL;
+	};
+				
+	EVENT Dummy {
+		MASK = AUTO;
+	};
+
+	TASK TaskA {
+		PRIORITY = 10;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res_ceilA;
+#ifdef ET_ONLY
+		EVENT = Dummy;
+#endif
+	};
+
+	TASK TaskB {
+		PRIORITY = 20;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res_ceilB;
+		RESOURCE = Res_ceilC;
+		RESOURCE = Res_ceilD_linked;
+#ifdef ET_ONLY
+		EVENT = Dummy;
+#endif
+	};
+	
+	TASK TaskC {
+		PRIORITY = 30;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res_ceilC;
+#ifdef ET_ONLY
+		EVENT = Dummy;
+#endif
+ 	};
+ 	
+ 	TASK TaskD {
+		PRIORITY = 40;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res_ceilD;
+		RESOURCE = Res_DE;
+#ifdef ET_ONLY
+		EVENT = Dummy;
+#endif
+	};
+
+ 	TASK TaskE {
+		PRIORITY = 50;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res_ceilE;
+		RESOURCE = Res_DE;
+#ifdef ET_ONLY
+		EVENT = Dummy;
+#endif
+	};
+	
+ 	TASK TaskF {
+		PRIORITY = 25;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = NON;
+#include <stacksize.oil>
+#ifdef ET_ONLY
+		EVENT = Dummy;
+#endif
+ 	};
+
+#ifndef ET_ONLY	
+#ifndef OPTIMIZED_QUEUEING
+ 	 TASK TaskG {
+		PRIORITY = 45;
+		AUTOSTART = FALSE;
+		ACTIVATION = 3;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+ 	};
+ 	
+ 	TASK TaskH {
+		PRIORITY = 45;
+		AUTOSTART = FALSE;
+		ACTIVATION = 7;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+ 	};
+#endif 	
+ 	TASK TaskI {
+		PRIORITY = 55;
+		AUTOSTART = FALSE;
+		ACTIVATION = 5;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res_IJ;
+ 	};
+
+ 	TASK TaskJ {
+		PRIORITY = 15;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res_IJ;
+ 	};
+ 	 	
+ 	ISR ISRX {
+#include <isr.oil>
+		CATEGORY = 2;
+		RESOURCE = Res_ceilX;
+#include <stacksize.oil>
+	};
+#endif
+};

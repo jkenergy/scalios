@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.1.0?>
+
+<ManagedProjectBuildInfo>
+<project id="COM.cdt.managedbuild.target.gnu.cygwin.lib.333036674" name="Static Library (Gnu on Windows)" projectType="cdt.managedbuild.target.gnu.cygwin.lib">
+<configuration id="cdt.managedbuild.config.gnu.cygwin.lib.debug.955128816" name="COM Extended" description="" parent="cdt.managedbuild.config.gnu.cygwin.lib.debug" artifactName="COM" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="a" cleanCommand="rm -rf">
+<toolChain superClass="cdt.managedbuild.toolchain.gnu.cygwin.lib.debug" id="cdt.managedbuild.toolchain.gnu.cygwin.lib.debug.727947572" name="GCC Tool Chain">
+<tool superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.lib.debug" id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.lib.debug.1278355741" name="GCC C++ Compiler"/>
+<tool superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.lib.debug" id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.lib.debug.1791303353" name="GCC C Compiler" command="pic30-gcc">
+<option superClass="gnu.c.compiler.option.preprocessor.def.symbols" id="gnu.c.compiler.option.preprocessor.def.symbols.289446328" valueType="definedSymbols">
+<listOptionValue value="COM_CCCB" builtIn="false"/>
+<listOptionValue value="COM_EXTENDED_STATUS" builtIn="false"/>
+</option>
+<option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.1873337546" valueType="includePath">
+<listOptionValue value="&quot;${workspace_loc:/OS}&quot;" builtIn="false"/>
+<listOptionValue value="&quot;${workspace_loc:/OS/dsPIC}&quot;" builtIn="false"/>
+<listOptionValue value="&quot;${workspace_loc:/COM}&quot;" builtIn="false"/>
+</option>
+</tool>
+<tool superClass="cdt.managedbuild.tool.gnu.archiver.cygwin.lib.debug" id="cdt.managedbuild.tool.gnu.archiver.cygwin.lib.debug.1113545308" name="GCC Archiver" command="pic30-ar"/>
+<tool superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.lib.debug" id="cdt.managedbuild.tool.gnu.assembler.cygwin.lib.debug.2094666755" name="GCC Assembler" command="pic30-as"/>
+<macros/>
+</toolChain>
+</configuration>
+<configuration id="cdt.managedbuild.config.gnu.cygwin.lib.debug.1111280011" name="COM Standard" description="" parent="cdt.managedbuild.config.gnu.cygwin.lib.debug" artifactName="COM" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="a" cleanCommand="rm -rf">
+<toolChain superClass="cdt.managedbuild.toolchain.gnu.cygwin.lib.debug" id="cdt.managedbuild.toolchain.gnu.cygwin.lib.debug.1661217482" name="GCC Tool Chain">
+<tool superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.lib.debug" id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.lib.debug.207954962" name="GCC C++ Compiler"/>
+<tool superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.lib.debug" id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.lib.debug.1682825405" name="GCC C Compiler" command="pic30-gcc">
+<option superClass="gnu.c.compiler.option.preprocessor.def.symbols" id="gnu.c.compiler.option.preprocessor.def.symbols.1498529221" name="Defined symbols (-D)" valueType="definedSymbols">
+<listOptionValue value="COM_CCCB" builtIn="false"/>
+<listOptionValue value="NDEBUG" builtIn="false"/>
+<listOptionValue value="COM_STANDARD_STATUS" builtIn="false"/>
+</option>
+<option superClass="gnu.c.compiler.option.include.paths" id="gnu.c.compiler.option.include.paths.2107667465" name="Include paths (-I)" valueType="includePath">
+<listOptionValue value="&quot;${workspace_loc:/OS}&quot;" builtIn="false"/>
+<listOptionValue value="&quot;${workspace_loc:/OS/dsPIC}&quot;" builtIn="false"/>
+<listOptionValue value="&quot;${workspace_loc:/COM}&quot;" builtIn="false"/>
+</option>
+<option superClass="gnu.c.compiler.option.misc.other" id="gnu.c.compiler.option.misc.other.315056532" value="-c -fmessage-length=0" valueType="string"/>
+</tool>
+<tool superClass="cdt.managedbuild.tool.gnu.archiver.cygwin.lib.debug" id="cdt.managedbuild.tool.gnu.archiver.cygwin.lib.debug.498392232" name="GCC Archiver" command="pic30-ar"/>
+<tool superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.lib.debug" id="cdt.managedbuild.tool.gnu.assembler.cygwin.lib.debug.1409505556" name="GCC Assembler" command="pic30-as"/>
+<macros/>
+</toolChain>
+</configuration>
+<macros/>
+</project>
+</ManagedProjectBuildInfo>

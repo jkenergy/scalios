@@ -1,0 +1,33 @@
+# Test8 OIL File. See main.c for details of test.
+#
+# Copyright (C) 2004, 2005, 2006, 2007, 2008 JK Energy Ltd.
+# 
+# $LastChangedDate: 2008-03-24 08:00:55 +0000 (Mon, 24 Mar 2008) $
+# $LastChangedRevision: 694 $
+# $LastChangedBy: kentindell $
+# $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/Test8/build.mf $
+# 
+# Makefile for building test3. INCLUDE_HANDLE_NAME must be set for this test to link properly.
+# The test expects errors to be generated and requires the error hook. EXPECTSERRORS and USEERRORHOOK
+# are set appropriately.
+#
+# test8 checks the RTOS scales to the minimum requirements.
+
+INSTALL=../..
+
+-include $(INSTALL)/builds/common/defaults.mf
+
+# This test will not generate errors, and should not call the error hook.
+EXPECTSERRORS=NO_EXPECTSERRORS
+USEERRORHOOK=USEERRORHOOK
+
+# Test doesn't use interrupts
+USECAT2ISR=NO_USECAT2ISR
+
+# Tests pre/post task hook functions
+USEPRETASKHOOK=USEPRETASKHOOK
+USEPOSTTASKHOOK=USEPOSTTASKHOOK
+
+# Brings in standard makefile for building all four library variants of a test (generic
+# across all tests).
+-include $(INSTALL)/builds/common/makeall.mf

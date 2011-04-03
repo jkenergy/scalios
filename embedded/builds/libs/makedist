@@ -1,0 +1,54 @@
+# This makefile builds the six libraries (three levels, with and without assertion checking). The TARGET parameter is set to the appropriate
+# target (e.g. dsPIC). It is the main driving makefile for making a complete distribution, including header files.
+
+include $(WORKSPACE)/embedded/builds/common/$(TARGET)/target.mf
+
+# Build 3 libraries, then the same libraries again but with assertion checking turned on (used in testing)
+DISTRIB=$(WORKSPACE)/embedded/distrib
+LIBDIR=$(DISTRIB)/$(TARGET)
+SRC=$(WORKSPACE)/embedded/src
+
+LIBS=$(LIBDIR)/lib1.$(LIB) $(LIBDIR)/lib2.$(LIB) $(LIBDIR)/lib3.$(LIB) $(LIBDIR)/lib1a.$(LIB) $(LIBDIR)/lib2a.$(LIB) $(LIBDIR)/lib3a.$(LIB)
+
+all : clean libs
+	 
+clean : 
+	rm -f $(DISTRIB)/*.h
+	rm -f $(DISTRIB)/$(TARGET)/*.h
+	rm -f $(LIBS)
+
+libs:
+	make -f makelib clean
+	make -f makelib LIBRARYLEVEL=1 ASSERTS=
+	mv lib1.$(LIB) $(LIBDIR)
+	make -f makelib clean
+	make -f makelib LIBRARYLEVEL=2 ASSERTS=
+	mv lib2.$(LIB) $(LIBDIR)
+	make -f makelib clean
+	make -f makelib LIBRARYLEVEL=3 ASSERTS=
+	mv lib3.$(LIB) $(LIBDIR)
+
+	make -f makelib clean
+	make -f makelib LIBRARYLEVEL=1 ASSERTS=$(D)ASSERTION_CHECKS
+	mv lib1.$(LIB) $(LIBDIR)/lib1a.$(LIB)
+	make -f makelib clean
+	make -f makelib LIBRARYLEVEL=2 ASSERTS=$(D)ASSERTION_CHECKS
+	mv lib2.$(LIB) $(LIBDIR)/lib2a.$(LIB)
+	make -f makelib clean
+	make -f makelib LIBRARYLEVEL=3 ASSERTS=$(D)ASSERTION_CHECKS
+	mv lib3.$(LIB) $(LIBDIR)/lib3a.$(LIB)
+
+	make -f makelib clean
+
+# Application code headers
+	cp $(SRC)/apicore.h $(DISTRIB)
+	cp $(SRC)/$(TARGET)/apicompiler.h $(DISTRIB)/$(TARGET)
+	cp $(SRC)/$(TARGET)/apitarget.h $(DISTRIB)/$(TARGET)
+	
+# System build headers
+	cp $(SRC)/core.h $(DISTRIB)
+	cp $(SRC)/$(TARGET)/compiler.h $(DISTRIB)/$(TARGET)
+	cp $(SRC)/$(TARGET)/target.h $(DISTRIB)/$(TARGET)
+	
+# Extra target header files needed due to target-specific builds
+	$(COPYTARGETHEADERS)

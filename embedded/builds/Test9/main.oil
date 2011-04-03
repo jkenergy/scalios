@@ -1,0 +1,320 @@
+/* Test8 OIL File 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-03-24 04:46:58 +0000 (Mon, 24 Mar 2008) $
+ * $LastChangedRevision: 689 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/Test9/main.oil $
+ * 
+ * Test8 declares 16 tasks, 16 priority levels, 8 resources and 2 internal resources. These are
+ * declared in two application modes.
+ */
+
+OIL_VERSION="2.5";
+
+CPU TestApp {
+	OS TestOS {
+		/* Fragment of OIL file shared across all tests to select OS-wide configuration
+		 * parameters.
+		 */
+#include <os.oil>
+	};
+	
+	/* Hardware counter; used to drive alarm that increments software counter */
+	COUNTER Counter_HW {
+#include <counterhw.oil>
+	};
+	
+	COUNTER Counter_SW {
+		MINCYCLE = 0;
+		MAXALLOWEDVALUE = 4999;
+		TICKSPERBASE = 1000;
+		TYPE = SOFTWARE;
+		UNIT = TICKS;
+	};
+	
+	ALARM Alarm_HW {
+		COUNTER = Counter_HW;
+		AUTOSTART = FALSE;
+		ACTION = INCREMENTCOUNTER {
+			COUNTER = Counter_SW;
+		};
+	};
+	
+	EVENT X1 {
+		MASK = AUTO;
+	};
+	
+	EVENT X2 {
+		MASK = AUTO;
+	};
+	
+	TASK Init {
+		PRIORITY = 10;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+
+	TASK Idle {
+		PRIORITY = 0;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	
+	/* Order of table B running out on a co-incident expiry point should be:
+	 * 
+	 * TaskB_1
+	 * TaskB_3
+	 * TaskB_2
+	 * TaskB_4
+	 * 
+	 * The first task has a higher priority than the remainder, which are
+	 * scheduled according to FIFO ordering, so ought to run in the order
+	 * that the schedule table processing activates/wakes them (activations
+	 * ahead of events).
+	 */
+	TASK TaskB_1 {
+		PRIORITY = 5;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+
+	TASK TaskB_2 {
+		PRIORITY = 2;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = X1;
+#include <stacksize.oil>
+	};
+	TASK TaskB_3 {
+		PRIORITY = 2;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	TASK TaskB_4 {
+		PRIORITY = 2;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = X2;
+#include <stacksize.oil>
+	};
+	
+	TASK TaskA_1 {
+		PRIORITY = 1;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	
+	TASK TaskA_2 {
+		PRIORITY = 2;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+
+	TASK TaskA_3 {
+		PRIORITY = 3;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = X1;
+#include <stacksize.oil>
+	};
+
+	TASK TaskC_1 {
+		PRIORITY = 10;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+
+	TASK TaskC_2 {
+		PRIORITY = 2;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = X1;
+#include <stacksize.oil>
+	};
+	TASK TaskC_3 {
+		PRIORITY = 3;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+    TASK TaskC_4 {
+		PRIORITY = 4;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = X2;
+#include <stacksize.oil>
+	};
+	TASK TaskD_1 {
+		PRIORITY = 1;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	TASK TaskD_2 {
+		PRIORITY = 2;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	TASK TaskE_1 {
+		PRIORITY = 1;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	TASK TaskE_2 {
+		PRIORITY = 2;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	ISR Timer {
+		CATEGORY = 2;
+#include <isr.oil>
+#include <stacksize.oil>
+	};
+	
+	/* Schedule table definitions; see main.c for details */
+	
+	/* Periodic */
+	SCHEDULETABLE A {
+		AUTOSTART = FALSE;
+		COUNTER = Counter_SW;
+		PERIODIC = TRUE;
+		LENGTH = 997;
+		ACTION = ACTIVATETASK {
+			OFFSET = 0;
+			TASK = TaskA_1;
+		};
+		ACTION = SETEVENT {
+			OFFSET = 392;
+			EVENT = X1;
+			TASK = TaskA_3;
+		};
+		ACTION = ACTIVATETASK {
+			OFFSET = 245;
+			TASK = TaskA_2;
+		};
+	};
+	
+	/* One-shot */
+	SCHEDULETABLE B {
+		AUTOSTART = FALSE;
+		COUNTER = Counter_SW;
+		PERIODIC = FALSE;
+		LENGTH = 991;
+		ACTION = ACTIVATETASK {
+			OFFSET = 0;
+			TASK = TaskB_1;
+		};
+		ACTION = SETEVENT {
+			OFFSET = 0;
+			EVENT = X1;
+			TASK = TaskB_2;
+		};
+		ACTION = ACTIVATETASK {
+			OFFSET = 0;
+			TASK = TaskB_3;
+		};
+		ACTION = SETEVENT {
+			OFFSET = 0;
+			EVENT = X2;
+			TASK = TaskB_4;
+		};
+	};
+
+	/* Periodic */
+	SCHEDULETABLE C {
+		AUTOSTART = FALSE;
+		COUNTER = Counter_SW;
+		PERIODIC = TRUE;
+		LENGTH = 983;
+		ACTION = ACTIVATETASK {
+			OFFSET = 445;
+			TASK = TaskC_1;
+		};
+		ACTION = SETEVENT {
+			OFFSET = 445;
+			EVENT = X1;
+			TASK = TaskC_2;
+		};
+		ACTION = ACTIVATETASK {
+			OFFSET = 665;
+			TASK = TaskC_3;
+		};
+		ACTION = SETEVENT {
+			OFFSET = 666;
+			EVENT = X2;
+			TASK = TaskC_4;
+		};
+	};
+
+	/* Autostarted periodic schedule table that runs in parallel to the other three on the same counter */
+	SCHEDULETABLE D {
+		COUNTER = Counter_SW;
+		/*
+		AUTOSTART = TRUE {
+			OFFSET = 1;
+		};
+		*/
+		AUTOSTART = FALSE;
+		PERIODIC = TRUE;
+		LENGTH = 977;
+		ACTION = ACTIVATETASK {
+			OFFSET = 123;
+			TASK = TaskD_1;
+		};
+		ACTION = ACTIVATETASK {
+			OFFSET = 777;
+			TASK = TaskD_2;
+		};
+	};
+
+	/* Autostarted periodic schedule table that runs in parallel to other tables */
+	SCHEDULETABLE E {
+		COUNTER = Counter_HW;
+		/*
+		AUTOSTART = TRUE {
+			OFFSET = 500;
+		};
+		*/
+		AUTOSTART = FALSE;
+		PERIODIC = TRUE;
+		LENGTH = 977;
+		ACTION = ACTIVATETASK {
+			OFFSET = 111;
+			TASK = TaskE_1;
+		};
+		ACTION = ACTIVATETASK {
+			OFFSET = 888;
+			TASK = TaskE_2;
+		};
+	};
+};
+

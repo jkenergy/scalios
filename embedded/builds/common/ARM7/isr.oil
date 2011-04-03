@@ -1,0 +1,51 @@
+/* Target-specific OIL for ISR definition. 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-04-09 07:29:58 +0100 (Wed, 09 Apr 2008) $
+ * $LastChangedRevision: 700 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/common/ARM7/isr.oil $
+ *
+ * Fragment of OIL file that defines the vector and hardware priority of the ISR used for
+ * testing.
+ * 
+ * Valid vectors for the LPC21xx/22xx are described below:
+ * 
+ * Vector string		Bit
+ * "CAN4_RX"			29
+ * "CAN3_RX"			28
+ * "CAN2_RX"			27
+ * "CAN1_RX"			26
+ * "CAN4_TX"			23
+ * "CAN3_TX"			22
+ * "CAN2_TX"			21
+ * "CAN1_TX"			20
+ * "CAN_common"			19
+ * "ADC"				18
+ * "EINT3"				17
+ * "EINT2"				16
+ * "EINT1"				15
+ * "EINT0"				14
+ * "RTC"				13
+ * "PLL"				12
+ * "SPI1_SSP"			11
+ * "SPI0"				10
+ * "I2C"				9
+ * "PWM"				8
+ * "UART1"				7
+ * "UART0"				6
+ * "TIMER1"				5
+ * "TIMER0"				4
+ * "ARMCore1"			3
+ * "ARMCore0"			2
+ * "WDT"				0
+ */
+
+VECTOR = "TIMER0";		/* Name of device, which implies a bit number with PrimeCell VIC in LPC21xx/22xx;
+						 * see table 37 p44 "LPC21xx and LPC22xx User manual"
+						 */
+PRIORITY = 1;			/* 0 	= Default IRQ ISR. All priority 0 interrupts are handled by the same Cat 2 ISR.
+						 * 1-16 = Vector IRQ ISRs; 1 = lowest prority; 16 = highest.
+						 * 17	= FIQ. All FIQ interrupts are handled by the same Cat 1 ISR.
+						 */

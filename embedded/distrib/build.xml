@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     13-April-2007 09:46:06                                                        
+
+     RTOS OS/Configuration Tool Ant Distribution creation script
+        
+     For ANT manual see http://ant.apache.org/manual/index.html
+      
+        
+     NOTE: in order for this script to be executed correctly by ANT, ensure
+     that the JRE option within the build configuration is set to
+     "Run in same JRE as the workspace" 
+     
+     If this is not set, then an error will be generated that specifies 
+     that the "eclipse.convertPath" task cannot be executed.
+                                                              
+     ====================================================================== -->
+
+<project name="distrib" basedir="." default="build">
+	
+	<description>
+    	RTOS OS/Configuration Tool Ant Distribution creation.
+    </description>
+
+    <!-- ================================= 
+          target: build (copies all the distrib files from various project locations)              
+         ================================= -->	
+	<target name="build">
+	
+		<!-- create a property to refer to the "distrib" project within the eclipse workspace -->
+		<eclipse.convertPath resourcepath="distrib" property="distribPath"/>
+		
+		<!-- create a property to refer to the "OS" project within the eclipse workspace -->
+		<eclipse.convertPath resourcepath="OS" property="OSPath"/>
+		
+		<!-- create a property to refer to the "host" project within the eclipse workspace -->
+		<eclipse.convertPath resourcepath="host" property="configPath"/>		
+
+		<property name="distribLibs" value="${distribPath}/lib"/>
+		<property name="OSSTDLibs" value="${OSPath}/Standard"/>
+		<property name="OSEXTLibs" value="${OSPath}/Extended"/>
+
+		<!-- copy the C headers -->
+		<copy todir="${distribPath}/h">
+	    	<fileset dir="${OSPath}">
+		      	<include name="**/osapp*.h"/>
+	    		<include name="**/osgen*.h"/>
+	    		<include name="**/oslib*.h"/>
+		    	<include name="**/*.inc"/>
+	    	</fileset>
+		</copy>
+		
+		<!-- copy the dsPIC libs -->
+		<copy file="${OSSTDLibs}/libOS.a" tofile="${distribLibs}/dsPIC/libosstd.a"/>		
+		<copy file="${OSEXTLibs}/libOS.a" tofile="${distribLibs}/dsPIC/libosext.a"/>
+		
+		<!-- copy the config tool generator -->
+		<copy file="${configPath}/generator.jar" todir="${distribPath}/bin"/>
+		
+		<!-- Refresh the distro directory -->
+		<eclipse.refreshLocal resource="distrib" depth="infinite"/>
+		
+	</target>
+	
+</project>

@@ -1,0 +1,30 @@
+# Test3 OIL File. See main.c for details of test.
+#
+# Copyright (C) 2004, 2005, 2006, 2007, 2008 JK Energy Ltd.
+# 
+# $LastChangedDate: 2008-03-24 08:00:55 +0000 (Mon, 24 Mar 2008) $
+# $LastChangedRevision: 694 $
+# $LastChangedBy: kentindell $
+# $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/Test5b/build.mf $
+# 
+# Makefile for building test4.
+#
+# Test4 checks that the priority mechanism operates correctly.
+
+INSTALL=../..
+
+-include $(INSTALL)/builds/common/defaults.mf
+
+# Use the shutdown hook, since this is called when a stack fault occurs
+USESHUTDOWNHOOK=USESHUTDOWNHOOK
+
+# TEST_BASIC_STACKOVERFLOW
+# TEST_EXTENDED_STACKOVERFLOW
+# TEST_ISR_STACKOVERFLOW
+TESTSTACKOVERFLOW=TEST_ISR_STACKOVERFLOW
+
+EXTVPATH=../test5
+
+# Brings in standard makefile for building all four library variants of a test (generic
+# across all tests).
+-include $(INSTALL)/builds/common/makeall.mf

@@ -1,0 +1,66 @@
+/* Generic OIL for configuring test OIL files.
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-01-27 08:36:36 +0000 (Sun, 27 Jan 2008) $
+ * $LastChangedRevision: 595 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/common/os.oil $
+ *
+ * Fragment of OIL file shared across all tests to select OS-wide configuration
+ * parameters.
+ */
+ 
+#ifdef STANDARDSTATUS
+		STATUS = STANDARD;
+#else
+		STATUS = EXTENDED;
+#endif
+#ifdef USESTARTUPHOOK
+		STARTUPHOOK = TRUE;
+#else
+		STARTUPHOOK = FALSE;
+#endif
+#ifdef USEERRORHOOK
+		ERRORHOOK = TRUE;
+#else
+		ERRORHOOK = FALSE;
+#endif
+#ifdef USESHUTDOWNHOOK
+		SHUTDOWNHOOK = TRUE;
+#else
+		SHUTDOWNHOOK = FALSE;
+#endif
+#ifdef USEPRETASKHOOK		
+		PRETASKHOOK = TRUE;
+#else
+		PRETASKHOOK = FALSE;
+#endif
+#ifdef USEPOSTTASKHOOK
+		POSTTASKHOOK = TRUE;
+#else
+		POSTTASKHOOK = FALSE;
+#endif
+#ifdef USEGETSERVICEID
+		USEGETSERVICEID = TRUE;
+#else
+		USEGETSERVICEID = FALSE;
+#endif
+#ifdef USEPARAMETERACCESS
+		USEPARAMETERACCESS = TRUE;
+#else
+		USEPARAMETERACCESS = FALSE;
+#endif
+#ifdef USERESSCHEDULER
+		USERESSCHEDULER = TRUE;
+#else
+		USERESSCHEDULER = FALSE;
+#endif
+#ifdef USESTACKMONITORING
+		STACKMONITORING = TRUE;
+#else
+		STACKMONITORING = FALSE;
+#endif 
+		PRETASKHOOK_STACKSIZE = 40;
+		POSTTASKHOOK_STACKSIZE = 40;
+		

@@ -1,0 +1,18 @@
+/* Target-specific OIL for hardware counter definition 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-03-11 23:35:25 +0000 (Tue, 11 Mar 2008) $
+ * $LastChangedRevision: 677 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/common/dsPIC/counterhw.oil $
+ *
+ * Fragment of OIL file that defines a hardware counter for tests.
+ */
+
+MINCYCLE = 0;
+MAXALLOWEDVALUE = 65535;
+TICKSPERBASE = 1000;
+TYPE = HARDWARE;
+UNIT = TICKS;
+OPTIONS = "driver=dsPIC30F_tmr1";

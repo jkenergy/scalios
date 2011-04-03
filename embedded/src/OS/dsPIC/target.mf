@@ -1,0 +1,24 @@
+# This is a dsPIC/C30 makefile fragment that parameterizes the makefile for the C30 and dsPIC
+
+CC=pic30-gcc
+AR=pic30-ar
+AS=pic30-as
+TESTEXEC=test.cof
+LIBNAME=libOS.a
+TARGETBUILDFLAGS=-T p30f6011a.gld -momf=elf
+
+CFLAGS=-g -finline -Wall
+
+TARGETOBJS=\
+$(BUILD)/$(TARGET)/etaskasm.o\
+$(BUILD)/$(TARGET)/flihksasm.o\
+$(BUILD)/$(TARGET)/flihnksasm.o\
+$(BUILD)/$(TARGET)/fsetjmpasm.o\
+$(BUILD)/$(TARGET)/iflihasm.o\
+$(BUILD)/$(TARGET)/iflihnasm.o\
+$(BUILD)/$(TARGET)/iflihnsasm.o\
+$(BUILD)/$(TARGET)/iflihsasm.o\
+$(BUILD)/$(TARGET)/kernelasm.o\
+$(BUILD)/$(TARGET)/target.o\
+$(BUILD)/$(TARGET)/osintcompiler.o\
+$(BUILD)/$(TARGET)/drivers/timer1.o

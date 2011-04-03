@@ -1,0 +1,20 @@
+/* Test1 OIL File 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2007-12-21 02:35:27 +0000 (Fri, 21 Dec 2007) $
+ * $LastChangedRevision: 509 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/test1/main.oil $
+ */
+
+OIL_VERSION="2.5";
+
+CPU Test1App {
+	OS TestOS {
+		/* Fragment of OIL file shared across all tests to select OS-wide configuration
+		 * parameters.
+		 */
+#include <os.oil>
+	};
+};

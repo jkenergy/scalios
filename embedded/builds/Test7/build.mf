@@ -1,0 +1,34 @@
+# Test3 OIL File. See main.c for details of test.
+#
+# Copyright (C) 2004, 2005, 2006, 2007, 2008 JK Energy Ltd.
+# 
+# $LastChangedDate: 2008-03-24 08:00:55 +0000 (Mon, 24 Mar 2008) $
+# $LastChangedRevision: 694 $
+# $LastChangedBy: kentindell $
+# $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/Test7/build.mf $
+# 
+# Makefile for building test4.
+#
+# Test4 checks that the priority mechanism operates correctly.
+
+INSTALL=../..
+
+-include $(INSTALL)/builds/common/defaults.mf
+
+# Don't use any hooks: these add too many events and the test buffer isn't big enough for it
+# to fit (it currently uses more than 1K RAM to store the events and there is a danger that
+# the available RAM isn't enough to run the whole test).
+
+# Test needs RESSCHEDULER
+USERESSCHEDULER=USERESSCHEDULER
+
+# Enable the error hook so that the test will fail if errors are raised.
+USEERRORHOOK=USEERRORHOOK
+
+# Make sure that there are no tasks that share a priority so that we are testing the
+# fast queueing code.
+OPTIMIZED_QUEUEING=NO_OPTIMIZED_QUEUEING
+
+# Brings in standard makefile for building all four library variants of a test (generic
+# across all tests).
+-include $(INSTALL)/builds/common/makeall.mf

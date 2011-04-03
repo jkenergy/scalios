@@ -1,0 +1,15 @@
+/* Target-specific OIL for ISR definition. 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-03-11 23:35:25 +0000 (Tue, 11 Mar 2008) $
+ * $LastChangedRevision: 677 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/common/dsPIC/isr.oil $
+ *
+ * Fragment of OIL file that defines the vector and hardware priority of the ISR used for
+ * testing.
+ */
+
+VECTOR = "INT0";
+PRIORITY = 1;

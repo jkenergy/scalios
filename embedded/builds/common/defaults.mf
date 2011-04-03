@@ -1,0 +1,52 @@
+# Test6 OIL File. See main.c for details of test.
+#
+# Copyright (C) 2004, 2005, 2006, 2007, 2008 JK Energy Ltd.
+# 
+# $LastChangedDate: 2008-02-20 19:12:23 +0000 (Wed, 20 Feb 2008) $
+# $LastChangedRevision: 622 $
+# $LastChangedBy: kentindell $
+# $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/common/defaults.mf $
+# 
+# Default settings for a test build. May be overriden in a test's build.mf file.
+
+INSTALL=../..
+TARGET=dsPIC
+
+# These are the parameters for the test build to determine what the OIL configuration looks like
+#
+INCLUDE_HANDLE_NAME_MAP=INCLUDE_HANDLE_NAME_MAP
+# Assumes test will generate errors to be handled. EXPECTSERRORS when set ensures the ErrorHook() in the framework
+# expects to be called for correct operation (NO_EXPECTSERRORS causes the ErrorHook() to call test_failed() if
+# it does get called).
+EXPECTSERRORS=NO_EXPECTSERRORS
+
+# The test code in main.c will automatically adapt to these settings (consistent with the OIL
+# settings). This can be used to test that the OIL is properly handled to call hooks, etc.
+# Assumes by default no hooks are called (except error hook).
+USERESSCHEDULER=NO_USERESSCHEDULER
+USEPRETASKHOOK=NO_USEPRETASKHOOK
+USEPOSTTASKHOOK=NO_USEPOSTTASKHOOK
+USESTARTUPHOOK=NO_USESTARTUPHOOK
+USESHUTDOWNHOOK=NO_USESHUTDOWNHOOK
+USEERRORHOOK=NO_USEERRORHOOK
+USECAT2ISR=USECAT2ISR
+
+# Set to off or one of three states for stack overflow checking; only used by Test5
+#
+# NO_TESTSTACKOVERFLOW				Off
+# TEST_BASIC_STACKOVERFLOW			Get a basic task to overflow its stack
+# TEST_EXTENDED_STACKOVERFLOW		Get an extended task to overflow its stack
+# TEST_ISR_STACKOVERFLOW			Get an ISR to overflow its stack
+#
+
+TESTSTACKOVERFLOW=NO_TESTSTACKOVERFLOW
+
+# Set to enable test to use optimized queueing.
+OPTIMIZED_QUEUEING=OPTIMIZED_QUEUEING
+
+# Don't pull in a fake timer driver
+USE_FAKE_COUNTER_DRIVER=NO_USE_FAKE_COUNTER_DRIVER
+
+# Don't use a singleton counter/alarm combination (i.e. test multiple alarms on a single counter)
+SINGLETON_ALARMCOUNTER=NO_SINGLETON_ALARMCOUNTER
+

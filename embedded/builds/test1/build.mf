@@ -1,0 +1,17 @@
+# Makefile for building test1.
+
+INSTALL=../..
+
+-include $(INSTALL)/builds/common/defaults.mf
+
+# Turn off everything for a minimal link test
+INCLUDE_HANDLE_NAME_MAP=NO_INCLUDE_HANDLE_NAME_MAP
+
+# (by default all the hooks are off)
+
+# Brings in standard makefile for building all four library variants of a test (generic
+# across all tests).
+-include $(INSTALL)/builds/common/makeall.mf
+
+# Test doesn't use interrupts
+USECAT2ISR=NO_USECAT2ISR

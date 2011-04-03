@@ -1,0 +1,5 @@
+
+all:	oshandles.h osgen.c osgenasm.s
+
+oshandles.h osgen.c osgenasm.s:	main.oil $(generator)
+	java -jar $(generator) main.oil

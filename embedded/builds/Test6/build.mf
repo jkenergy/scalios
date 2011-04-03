@@ -1,0 +1,36 @@
+# Test6 OIL File. See main.c for details of test.
+#
+# Copyright (C) 2004, 2005, 2006, 2007, 2008 JK Energy Ltd.
+# 
+# $LastChangedDate: 2008-03-24 08:00:55 +0000 (Mon, 24 Mar 2008) $
+# $LastChangedRevision: 694 $
+# $LastChangedBy: kentindell $
+# $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/Test6/build.mf $
+# 
+# Makefile for building test6. INCLUDE_HANDLE_NAME must be set for this test to link properly.
+# The test expects errors to be generated and requires the error hook. EXPECTSERRORS and USEERRORHOOK
+# are set appropriately.
+#
+# test6 checks the counter API for error returns. It also tests that the alarm and counter API
+# behave correctly.
+
+INSTALL=../..
+
+-include $(INSTALL)/builds/common/defaults.mf
+
+# This test will generate errors to be handled. EXPECTSERRORS when set ensures the ErrorHook() in the framework
+# expects to be called for correct operation (NO_EXPECTSERRORS causes the ErrorHook() to call test_failed() if
+# it does get called).
+EXPECTSERRORS=EXPECTSERRORS
+USEERRORHOOK=USEERRORHOOK
+USERESSCHEDULER=USERESSCHEDULER
+
+# Pull in a fake timer driver
+USE_FAKE_COUNTER_DRIVER=USE_FAKE_COUNTER_DRIVER
+
+# Use multiple alarms on a single counter
+SINGLETON_ALARMCOUNTER=NO_SINGLETON_ALARMCOUNTER
+
+# Brings in standard makefile for building all four library variants of a test (generic
+# across all tests).
+-include $(INSTALL)/builds/common/makeall.mf

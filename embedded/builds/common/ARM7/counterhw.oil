@@ -1,0 +1,18 @@
+/* Target-specific OIL for hardware counter definition 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-04-09 07:29:58 +0100 (Wed, 09 Apr 2008) $
+ * $LastChangedRevision: 700 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/common/ARM7/counterhw.oil $
+ *
+ * Fragment of OIL file that defines a hardware counter for tests.
+ */
+
+MINCYCLE = 0;
+MAXALLOWEDVALUE = 4294967295;			/* 0xFFFFFFFF */
+TICKSPERBASE = 1000;
+TYPE = HARDWARE;
+UNIT = TICKS;
+OPTIONS = "driver=lpc21xx_timer01";

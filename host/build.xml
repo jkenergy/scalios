@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     10-Feb-2006 09:46:06                                                        
+
+     RTOS OS Configuration Tool Ant build file
+         
+	 For ANT manual see http://ant.apache.org/manual/index.html    
+         
+     NOTE: in order for this script to be executed correctly by ANT, ensure
+     that the JRE option within the build configuration is set to
+     "Run in same JRE as the workspace" 
+     
+     Also ensure that the VM being used to run eclipse is capable of compiling
+     the source, i.e. don't use 1.4.2 to compile 6.0 source. The JDK
+     shown by Eclipse is not necessarily the VM being used, to find this see
+     Help|About Eclipse SDK|Configuration details
+     
+     Use the -vm option on the command line to force eclipse.exe to use a specific
+     JVM, e.g. A windows shortcut target would be something like -
+     
+     "C:\Program Files\Eclipse3.3M5\eclipse\eclipse.exe" -vm "C:/Program Files/Java/jre1.5.0_11/bin/javaw"
+                  
+                  
+     or in the eclipse.ini add the following to the file (note: speech marks not required) -
+     
+     -vm C:/Program Files/Java/jre1.5.0_11/bin/javaw
+       
+       
+     Finally: the JAVA_HOME environment variable must be setup to point to the JDK (not JRE).
+     
+     This should be set within the outer OS environment rather than from within Eclipse IDE.
+       
+       
+     Mark Dixon                                                                
+     ====================================================================== -->
+<project name="ConfigTool" basedir="." default="lib">
+	
+    <description>
+		RTOS OS Configuration Tool.
+    </description>
+
+	<!-- Create a property that stores the name of the Resource of the project -->
+	<eclipse.convertPath 
+		filesystempath="${basedir}"
+		property="theResource"
+	/>	
+	
+    <!-- ================================= 
+          target: parserGenerator
+          
+          Generates the java source files for the parser using JavaCC
+         ================================= -->
+    <target name="parserGenerator" >
+    	
+		<!-- Define a build property that identifies the parser resource directory -->
+    	<property name="parserPath" value="src/com/jkenergy/rtos/config/parser"/>
+    	
+    	<!-- Task to create the parser source files from the .jj grammar definition file -->
+    	<javacc
+    	    target="${parserPath}/OILParser.jj"
+    	    javacchome="c:/program files/javacc-4.0"
+    	/>
+    	
+    	<!-- Task to refresh the Eclipse workspace to show created java source files --> 
+    	<eclipse.refreshLocal resource="${theResource}/${parserPath}" depth="infinite"/>
+    </target>
+	
+    <!-- ================================= 
+          target: bin (build the .class files from the .java source files )              
+         ================================= -->
+	<target name="bin" depends="parserGenerator">
+		
+		<property name="sourcePath" value="src"/>
+		<property name="binPath" value="bin"/>
+		
+		<!-- note, can use "source" and "target" options to specify source version and required target version -->
+		<javac srcdir="${sourcePath}" destdir="${binPath}"/>
+		
+		<eclipse.refreshLocal resource="${theResource}/${binPath}" depth="infinite"/>
+	</target>
+	
+	
+    <!-- ================================= 
+          target: lib (the .jar file)              
+         ================================= -->	
+	<target name="lib" depends="bin">
+	
+
+		<!-- Create a JAR in the root directory of the project -->
+		
+		<property name="jarName" value="generator.jar"/>
+		<!-- 
+		No longer needed in this framework, will delete when sure not required.
+		<property name="libPath" value="."/>
+			
+		<jar destfile="${libPath}/${jarName}" basedir="${binPath}">		
+				<manifest>
+					<attribute name="Built-By" value="${user.name}"/>
+					<attribute name="Main-Class" value="com.jkenergy.rtos.config.generator.OSGen"/>
+				</manifest>
+		</jar>
+			
+		<eclipse.refreshLocal resource="${libPath}"/>
+		-->
+		
+		<!-- Also create JAR in the distribution -->
+		<eclipse.convertPath 
+			resourcepath="distrib"
+			property="distribPath"
+		/>		
+		
+		<jar destfile="${distribPath}/bin/${jarName}" basedir="${binPath}">		
+				<manifest>
+					<attribute name="Built-By" value="${user.name}"/>
+					<attribute name="Main-Class" value="com.jkenergy.rtos.config.generator.OSGen"/>
+				</manifest>
+		</jar>		
+		
+		
+		<eclipse.refreshLocal resource="${distribPath}/bin" depth="infinite"/>
+		
+	</target>
+	
+	
+</project>

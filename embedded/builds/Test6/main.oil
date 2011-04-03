@@ -1,0 +1,267 @@
+/* Test6 OIL File 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-03-11 22:36:26 +0000 (Tue, 11 Mar 2008) $
+ * $LastChangedRevision: 671 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/Test6/main.oil $
+ */
+
+OIL_VERSION="2.5";
+
+CPU TestApp {
+	OS TestOS {
+		/* Fragment of OIL file shared across all tests to select OS-wide configuration
+		 * parameters.
+		 */
+#include <os.oil>
+	};
+	
+	COUNTER Counter_HW {
+#include <counterhw.oil>
+	};
+	
+	COUNTER Counter_SW {
+		MINCYCLE = 0;
+		MAXALLOWEDVALUE = 4999;
+		TICKSPERBASE = 1000;
+		TYPE = SOFTWARE;
+		UNIT = TICKS;
+	};
+	
+	COUNTER Counter_SW_NegTests {
+		MINCYCLE = 590;
+		MAXALLOWEDVALUE = 5999;
+		TICKSPERBASE = 1000;
+		TYPE = SOFTWARE;
+		UNIT = TICKS;
+	};
+	
+	COUNTER Counter_SW_multi {
+		MINCYCLE = 0;
+		MAXALLOWEDVALUE = 7999;
+		TICKSPERBASE = 1000;
+		TYPE = SOFTWARE;
+		UNIT = TICKS;
+	};
+	
+	ALARM AlarmX2_SW_callback {
+		COUNTER = Counter_SW_multi;
+		AUTOSTART = FALSE;
+		ACTION = ALARMCALLBACK {
+			ALARMCALLBACKNAME = "AlarmX2_SW_callback";
+		};
+	};
+	
+	ALARM AlarmB1_SW {
+		COUNTER = Counter_SW_multi;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskB1_SW;
+		};
+	};
+	
+	ALARM AlarmB2_SW {
+		COUNTER = Counter_SW_multi;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskB2_SW;
+		};
+	};
+	
+	ALARM AlarmB_SW {
+		COUNTER = Counter_SW;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskB1_SW;
+		};
+	};
+	
+	ALARM AlarmB_HW {
+		COUNTER = Counter_HW;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskB;
+		};
+	};
+	
+	ALARM AlarmX2_SW_multi {
+		COUNTER = Counter_SW_multi;
+		AUTOSTART = FALSE;
+		ACTION = SETEVENT {
+			EVENT = X2;
+			TASK = TaskX2;
+		};
+	};
+	
+	ALARM AlarmNegTests {
+		COUNTER = Counter_SW_NegTests;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskB1_SW;
+		};
+	};
+	
+	RESOURCE ResISR {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	
+	EVENT X2 {
+		MASK = AUTO;
+	};
+
+#ifndef SINGLETON_ALARMCOUNTER
+	ALARM AlarmC_HW {
+		COUNTER = Counter_HW;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskC;
+		};
+	};
+	
+	ALARM AlarmC_SW {
+		COUNTER = Counter_SW;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskC;
+		};
+	};	
+	
+	ALARM AlarmD_HW {
+		COUNTER = Counter_HW;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskD;
+		};
+	};
+	ALARM AlarmE_HW {
+		COUNTER = Counter_HW;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskE;
+		};
+	};
+	ALARM AlarmF_HW {
+		COUNTER = Counter_HW;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskF;
+		};
+	};
+	
+	ALARM AlarmX1_HW {
+		COUNTER = Counter_HW;
+		AUTOSTART = FALSE;
+		ACTION = ALARMCALLBACK {
+			ALARMCALLBACKNAME = "AlarmX1_HW_callback";
+		};
+	};
+	
+	ALARM AlarmX2_HW {
+		COUNTER = Counter_HW;
+		AUTOSTART = FALSE;
+		ACTION = SETEVENT {
+			EVENT = X2;
+			TASK = TaskX2;
+		};
+	};
+
+	ALARM AlarmX3_SW {
+		COUNTER = Counter_SW;
+		AUTOSTART = FALSE;
+		ACTION = ACTIVATETASK {
+			TASK = TaskB;
+		};
+	};
+
+	ALARM AlarmX4_HW {
+		COUNTER = Counter_HW;
+		AUTOSTART = FALSE;
+		ACTION = INCREMENTCOUNTER {
+			COUNTER = Counter_SW;
+		};
+	};
+#endif
+
+	TASK TaskA {
+		PRIORITY = 1;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = ResISR;
+	};
+	
+	TASK TaskB {
+		PRIORITY = 2;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+
+	TASK TaskB1_SW {
+		PRIORITY = 2;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+
+	TASK TaskB2_SW {
+		PRIORITY = 3;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+			
+	TASK TaskC {
+		PRIORITY = 3;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+
+	TASK TaskD {
+		PRIORITY = 3;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	
+	TASK TaskE {
+		PRIORITY = 3;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};	
+
+	TASK TaskF {
+		PRIORITY = 4;
+		AUTOSTART = FALSE;
+		ACTIVATION = 2;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	
+	TASK TaskX2 {
+		PRIORITY = 4;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		EVENT = X2;
+	};
+		
+	ISR Timer {
+		CATEGORY = 2;
+#include <isr.oil>
+#include <stacksize.oil>
+		RESOURCE = ResISR;
+	};
+};

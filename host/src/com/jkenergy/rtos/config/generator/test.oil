@@ -1,0 +1,129 @@
+/* Test OIL File */
+
+
+OIL_VERSION="2.5";
+
+
+CPU TestApp {
+
+	NM hello:"A dummy description";
+	
+	OS ExampleOS {
+		STATUS = STANDARD;
+		STARTUPHOOK = TRUE;
+		ERRORHOOK = TRUE;
+		SHUTDOWNHOOK = TRUE;
+		PRETASKHOOK = TRUE;
+		POSTTASKHOOK = TRUE;
+		USEGETSERVICEID = FALSE;
+		USEPARAMETERACCESS = FALSE;
+		USERESSCHEDULER = TRUE;
+		RESTARTABLE = TRUE;
+		STACKMONITORING = TRUE;
+	};
+
+	APPMODE modeA {};
+	
+	APPMODE modeB {};
+
+	RESOURCE ResA {
+		RESOURCEPROPERTY = INTERNAL;
+	};
+	
+	RESOURCE ResB {
+		RESOURCEPROPERTY = STANDARD;
+	};	
+	
+	RESOURCE ResC {
+		RESOURCEPROPERTY = STANDARD;
+	};	
+	
+	RESOURCE ResD {
+		RESOURCEPROPERTY = LINKED {
+			LINKEDRESOURCE = ResB;
+			};
+	};
+
+	EVENT EventA {
+		MASK = AUTO;
+	};
+	
+	EVENT EventB {
+		MASK = AUTO;
+	};	
+
+	EVENT EventC {
+		MASK = 0x7ff;
+	};	
+
+	EVENT EventD {
+		MASK = AUTO;
+	};	
+	
+	EVENT EventE {
+		MASK = AUTO;
+	};		
+
+	EVENT EventF {
+		MASK = AUTO;
+	};
+
+	TASK TaskA {
+		PRIORITY = 6;
+		SCHEDULE = NON;
+		ACTIVATION = 1;
+		AUTOSTART = FALSE;
+		EVENT = EventA;
+		EVENT = EventB;
+		EVENT = EventC;
+		STACKSIZE = 12;	
+		RESOURCE = 	ResA;
+	};
+	
+	TASK TaskB {
+		PRIORITY = 6;
+		SCHEDULE = FULL;
+		ACTIVATION = 10;
+		RESOURCE = 	ResA;
+		AUTOSTART = TRUE {
+			APPMODE = modeA;
+		};
+		EVENT = EventB;
+		EVENT = EventD;
+	};
+	
+	TASK TaskC {
+		PRIORITY = 5;
+		SCHEDULE = FULL;
+		ACTIVATION = 1;
+		AUTOSTART = FALSE;
+		EVENT = EventA;
+		EVENT = EventE;
+	};
+	
+	TASK TaskD {
+		PRIORITY = 8;
+		SCHEDULE = FULL;
+		ACTIVATION = 1;
+		AUTOSTART = TRUE {
+			APPMODE = modeA;
+		};
+//		EVENT = EventA;
+	};	
+
+	
+	ISR T1 {
+		CATEGORY = 2;
+		PRIORITY = 1;
+		RESOURCE = 	ResD;
+		STACKSIZE = 38;
+		DISABLE_STACKMONITORING = TRUE;
+		VECTOR = "T1";
+	};
+
+	ISR T2 {
+		CATEGORY = 2;
+		PRIORITY = 2;
+		RESOURCE = 	ResD;
+	};
+};

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 3.1.0?>
+
+<ManagedProjectBuildInfo>
+<project id="test1.cdt.managedbuild.target.gnu.cygwin.exe.1721694500" name="Executable (Gnu on Windows)" projectType="cdt.managedbuild.target.gnu.cygwin.exe">
+<configuration artifactExtension="exe" artifactName="test1" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.cygwin.exe.release.1064065937" name="Standard" parent="cdt.managedbuild.config.gnu.cygwin.exe.release" postbuildStep="" preannouncebuildStep="Making generator output" prebuildStep="make -C .. -f &quot;${workspace_loc:/distrib/makegen}&quot; generator=&quot;${workspace_loc:/distrib/bin/generator.jar}&quot;">
+<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.exe.release.1120210277" name="GCC Tool Chain" superClass="cdt.managedbuild.toolchain.gnu.cygwin.exe.release">
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.release.1565715768" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.release"/>
+<tool command="pic30-gcc" id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release.813623939" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release">
+<option id="gnu.c.compiler.option.include.paths.100791221" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/distrib/h}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test1}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/distrib/h/dsPIC}&quot;"/>
+</option>
+<option id="gnu.c.compiler.cygwin.exe.release.option.debugging.level.1959418197" superClass="gnu.c.compiler.cygwin.exe.release.option.debugging.level" value="gnu.c.debugging.level.default" valueType="enumerated"/>
+<option id="gnu.c.compiler.option.misc.other.1425917840" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -finline" valueType="string"/>
+</tool>
+<tool command="pic30-gcc" id="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.release.500002665" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.release">
+<option id="gnu.c.link.option.libs.1165311318" superClass="gnu.c.link.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="osstd"/>
+</option>
+<option id="gnu.c.link.option.paths.1379082322" superClass="gnu.c.link.option.paths" valueType="stringList">
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/distrib/lib/dsPIC}&quot;"/>
+</option>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.release.661894643" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.release"/>
+<tool command="pic30-as" id="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.release.1207829817" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.release">
+<option id="gnu.both.asm.option.include.paths.974821526" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/distrib/h/dsPIC}&quot;"/>
+</option>
+</tool>
+<macros/>
+</toolChain>
+<resourceConfiguration exclude="true" id="cdt.managedbuild.config.gnu.cygwin.exe.release.1064065937./test1/fakegen.c" name="fakegen.c" rcbsApplicability="disable" resourcePath="/test1/fakegen.c" toolsToInvoke="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release.813623939./test1/fakegen.c">
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release.813623939./test1/fakegen.c" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release.813623939"/>
+</resourceConfiguration>
+</configuration>
+<macros/>
+</project>
+</ManagedProjectBuildInfo>

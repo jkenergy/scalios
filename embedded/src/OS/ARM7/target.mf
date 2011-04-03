@@ -1,0 +1,22 @@
+# This is an ARM7 makefile fragment that parameterizes the makefile for gcc and the ARM7
+
+CC=arm-elf-gcc
+AR=arm-elf-ar
+AS=arm-elf-as
+LD=arm-elf-ld
+TESTEXEC=test.elf
+LIBNAME=libOS.a
+CFLAGS=-O0 -gdwarf-2 -Wall -mcpu=arm7tdmi -msoft-float
+#Use -Ttext=0x00000000,-Tdata=0x40000000 to execute from flash
+TARGETBUILDFLAGS=-Ttext=0x40000000 -Tdata=0x40003000 --gc-sections -nostartfiles
+TARGETAFLAGS=-mcpu=arm7tdmi -mfloat-abi=soft
+
+
+TARGETOBJS=\
+$(BUILD)/$(TARGET)/irqwrapper.o\
+$(BUILD)/$(TARGET)/etaskasm.o\
+$(BUILD)/$(TARGET)/kernelasm.o\
+$(BUILD)/$(TARGET)/target.o\
+$(BUILD)/$(TARGET)/osintcompiler.o\
+$(BUILD)/$(TARGET)/panic.o\
+$(BUILD)/$(TARGET)/startup.o

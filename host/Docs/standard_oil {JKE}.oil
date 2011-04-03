@@ -1,0 +1,341 @@
+/**
+ * This OIL file contains the default definition of core OIL objects and standard attributes.
+ * For the OSEK/AUTOSAR JKEnergy OS implementation.
+ *
+ * This is the Subset for internal communication (CCCA and CCCB only).
+ *
+ * This is an extension of version 3.0 of OIL as defined for AUTOSAR.
+ * Where required, default values have been added to both AUTOSAR and JKE Extensions in order to
+ * allow parsing of this using the pure OSEK (OIL 2.5) standard.
+ 
+ * Author: Mark Dixon.
+ */
+ 
+OIL_VERSION="3.0";
+
+IMPLEMENTATION Standard {
+
+	OS {
+		ENUM [STANDARD, EXTENDED] STATUS;
+		BOOLEAN STARTUPHOOK;
+		BOOLEAN ERRORHOOK;
+		BOOLEAN SHUTDOWNHOOK;
+		BOOLEAN PRETASKHOOK;
+		BOOLEAN POSTTASKHOOK;
+		BOOLEAN USEGETSERVICEID;
+		BOOLEAN USEPARAMETERACCESS;
+		BOOLEAN USERESSCHEDULER = TRUE;
+		BOOLEAN PROTECTIONHOOK = FALSE;									// (AUTOSAR only)
+		ENUM WITH_AUTO [SC1, SC2, SC3, SC4] SCALABILITYCLASS = AUTO;	// (AUTOSAR only)
+		BOOLEAN STACKMONITORING = TRUE;									// (AUTOSAR only)
+		UINT32 WITH_AUTO PRETASKHOOK_STACKSIZE = AUTO;					// EXTENSION, specifies stacksize for the pretask hook, AUTO causes target specific stack size to be used.
+		UINT32 WITH_AUTO POSTTASKHOOK_STACKSIZE = AUTO;					// EXTENSION, specifies stacksize for the posttask hook, AUTO causes target specific stack size to be used.
+		BOOLEAN RESTARTABLE = FALSE;									// EXTENSION, specifies whether StartOS call be called more than once (causes reinit during shutdown)	
+		BOOLEAN HANDLE_OSCFAILURE = FALSE;								// EXTENSION, specifies whether OS provides handler for Oscillator Failure. 
+		BOOLEAN HANDLE_ADDRERROR = FALSE;								// EXTENSION, specifies whether OS provides handler for Address Error.
+		BOOLEAN HANDLE_MATHERROR = FALSE;								// EXTENSION, specifies whether OS provides handler for Math Error.
+	};
+
+	APPMODE {
+	};
+	
+	APPLICATION {														// (AUTOSAR only)
+		BOOLEAN [
+			TRUE {
+				BOOLEAN [
+					TRUE {STRING NAME;},
+					FALSE
+				] TRUSTED_FUNCTION[];
+			},
+			FALSE
+		] TRUSTED = FALSE;
+		BOOLEAN STARTUPHOOK;
+		BOOLEAN SHUTDOWNHOOK;
+		BOOLEAN ERRORHOOK;
+		BOOLEAN [
+			TRUE {TASK_TYPE RESTARTTASK;},
+			FALSE
+		] HAS_RESTARKTASK;
+		TASK_TYPE TASK[];
+		ISR_TYPE ISR[];
+		ALARM_TYPE ALARM[];
+		SCHEDULETABLE_TYPE SCHEDULETABLE[];
+		COUNTER_TYPE COUNTER[];
+		RESOURCE_TYPE RESOURCE[];
+		MESSAGE_TYPE MESSAGE[];
+	};
+
+	TASK {
+		BOOLEAN [
+			TRUE {
+				APPMODE_TYPE APPMODE[];
+			},
+			FALSE
+		] AUTOSTART;
+		
+		UINT32 PRIORITY;
+		UINT32 ACTIVATION;
+		ENUM [NON, FULL] SCHEDULE;
+		EVENT_TYPE EVENT[];
+		RESOURCE_TYPE RESOURCE[];
+		MESSAGE_TYPE MESSAGE[];
+		
+		BOOLEAN [														// (AUTOSAR only)
+			TRUE {
+				UINT64 EXECUTIONBUDGET;
+				UINT64 TIMEFRAME;
+				UINT64 TIMELIMIT;
+				ENUM [
+					RESOURCELOCK {
+						RESOURCE_TYPE RESOURCE;
+						UINT64 RESOURCELOCKTIME;
+					},
+					INTERRUPTLOCK {
+						UINT64 OSINTERRUPTLOCKTIME;
+						UINT64 ALLINTERRUPTLOCKTIME;
+					}
+				] LOCKINGTIME [];
+			},
+			FALSE
+		] TIMING_PROTECTION = FALSE;									// Default value added for 2.5 compatability
+		
+		APPLICATION_TYPE ACCESSING_APPLICATION[];						// (AUTOSAR only)
+		
+		UINT32 WITH_AUTO STACKSIZE = AUTO;								// EXTENSION, specifies stacksize for the task. AUTO causes target specific stack size to be used.				
+	};
+
+	ISR {
+		UINT32 [1, 2] CATEGORY;
+		RESOURCE_TYPE RESOURCE[];
+		MESSAGE_TYPE MESSAGE[];
+		
+		BOOLEAN [														// (AUTOSAR only)
+			TRUE {
+				UINT64 EXECUTIONBUDGET;
+				UINT32 COUNTLIMIT;
+				UINT64 TIMELIMIT;
+				ENUM [
+					RESOURCELOCK {
+						RESOURCE_TYPE RESOURCE;
+						UINT64 RESOURCELOCKTIME;
+					},
+					INTERRUPTLOCK {
+						UINT64 OSINTERRUPTLOCKTIME;
+						UINT64 ALLINTERRUPTLOCKTIME;
+					}
+				] LOCKINGTIME [];
+			},
+			FALSE
+		] TIMING_PROTECTION =  FALSE;									// Default value added for 2.5 compatability
+			
+		UINT32 PRIORITY = 1;											// EXTENSION, specifies priority for the ISR.
+		BOOLEAN DISABLE_STACKMONITORING = FALSE;						// EXTENSION, specifies whether stack checking should be disabled for this specific ISR (if enabled globally)
+		UINT32 WITH_AUTO STACKSIZE = AUTO;								// EXTENSION, specifies stacksize for the ISR. AUTO causes target specific stack size to be used.
+		STRING WITH_AUTO VECTOR = AUTO;									// EXTENSION, specifies vector info. for the ISR. AUTO causes name of ISR to be used as the VECTOR
+				
+	};
+	
+	COUNTER {
+		UINT32 MINCYCLE;
+		UINT32 MAXALLOWEDVALUE;
+		UINT32 TICKSPERBASE;
+		
+		ENUM [															// (AUTOSAR only)
+			SOFTWARE,
+			HARDWARE
+		] TYPE  = HARDWARE;												// Default value added for 2.5 compatability
+		
+		ENUM [															// (AUTOSAR only)
+			TICKS,
+			NANOSECONDS
+		] UNIT = TICKS;													// Default value added for 2.5 compatability
+		
+		APPLICATION_TYPE ACCESSING_APPLICATION[];						// (AUTOSAR only)
+		
+		ENUM [															// EXTENSION,identifies the driver for the counter (device specific)
+			TIMER_A1 {STRING OPTIONS;},
+			TIMER_A2 {STRING OPTIONS;},
+			TIMER_B1 {STRING OPTIONS;},
+			TIMER_B2 {STRING OPTIONS;}
+		] DEVICE = TIMER_A1; 
+	};
+	
+	ALARM {
+		COUNTER_TYPE COUNTER;
+		ENUM [
+			ACTIVATETASK {
+				TASK_TYPE TASK;
+			},
+			SETEVENT {
+				TASK_TYPE TASK;
+				EVENT_TYPE EVENT;
+			},
+			ALARMCALLBACK {
+				STRING ALARMCALLBACKNAME;
+			},
+			INCREMENTCOUNTER {											// (AUTOSAR only)
+				COUNTER_TYPE COUNTER;
+			}
+		] ACTION;
+		BOOLEAN [
+			TRUE {
+				UINT32 ALARMTIME;
+				UINT32 CYCLETIME;
+				APPMODE_TYPE APPMODE[];
+			},
+			FALSE
+		] AUTOSTART;
+		
+		APPLICATION_TYPE ACCESSING_APPLICATION[];
+	};
+	
+	EVENT {
+		UINT64 WITH_AUTO MASK;
+	};
+	
+	RESOURCE {
+		ENUM [
+			STANDARD,
+			LINKED {
+				RESOURCE_TYPE LINKEDRESOURCE;
+			},
+			INTERNAL
+		] RESOURCEPROPERTY;
+		
+		APPLICATION_TYPE ACCESSING_APPLICATION[];
+	};	
+
+	MESSAGE {
+		ENUM [
+			SEND_STATIC_INTERNAL {
+				STRING CDATATYPE;
+			},
+			RECEIVE_UNQUEUED_INTERNAL {
+				MESSAGE_TYPE SENDINGMESSAGE;
+				UINT64 INITIALVALUE = 0;
+			},
+			RECEIVE_QUEUED_INTERNAL {
+				MESSAGE_TYPE SENDINGMESSAGE;
+				UINT32 QUEUESIZE;
+			}
+			SEND_ZERO_INTERNAL { },								// EXTENSION, to support zero length COM messages
+			RECEIVE_ZERO_INTERNAL {								// EXTENSION, to support zero length COM messages
+				MESSAGE_TYPE SENDINGMESSAGE;
+				ENUM [
+					IPC {STRING OPTIONS;},
+					CAN {STRING OPTIONS;}
+				] DEVICE = IPC;				
+			},
+			SEND_STREAM_INTERNAL { }							// EXTENSION, to support stream COM messages
+			},
+			RECEIVE_STREAM_INTERNAL {							// EXTENSION, to support stream COM messages
+				MESSAGE_TYPE SENDINGMESSAGE;
+				UINT32 BUFFERSIZE;
+				UINT32 LOW_THRESHOLD = 0;
+				UINT32 HIGH_THRESHOLD = 0;
+				ENUM [
+					IPC {STRING OPTIONS;},
+					CAN {STRING OPTIONS;}
+				] DEVICE = IPC;					
+			}
+		] MESSAGEPROPERTY;
+
+		ENUM [
+			NONE,
+			ACTIVATETASK {
+				TASK_TYPE TASK;
+			},
+			SETEVENT {
+				TASK_TYPE TASK;
+				EVENT_TYPE EVENT;
+			},
+			COMCALLBACK {
+				STRING CALLBACKROUTINENAME;
+				MESSAGE_TYPE MESSAGE[];
+			},
+			FLAG {
+				STRING FLAGNAME;
+			}
+		] NOTIFICATION = NONE;
+		
+		ENUM [															// EXTENSION, to support stream COM messages low thresholds
+			NONE,
+			ACTIVATETASK {
+				TASK_TYPE TASK;
+			},
+			SETEVENT {
+				TASK_TYPE TASK;
+				EVENT_TYPE EVENT;
+			},
+			COMCALLBACK {
+				STRING CALLBACKROUTINENAME;
+				MESSAGE_TYPE MESSAGE[];
+			},
+			FLAG {
+				STRING FLAGNAME;
+			}
+		] LOW_NOTIFICATION = NONE;		
+		
+		APPLICATION_TYPE ACCESSING_APPLICATION[];						// (AUTOSAR only)
+	};			
+
+	COM {
+		BOOLEAN COMERRORHOOK = FALSE;
+		BOOLEAN COMUSEGETSERVICEID = FALSE;
+		BOOLEAN COMUSEPARAMETERACCESS = FALSE;
+		BOOLEAN COMSTARTCOMEXTENSION = FALSE;
+		STRING COMAPPMODE[];
+		ENUM [COMSTANDARD, COMEXTENDED] COMSTATUS = COMSTANDARD;
+	};
+	
+	NM {
+	};
+	
+	SCHEDULETABLE {														// (AUTOSAR only)
+		COUNTER_TYPE COUNTER;
+		
+		BOOLEAN [
+			TRUE {
+				UINT64 OFFSET;
+				APPMODE_TYPE APPMODE[];
+			},
+			FALSE
+		] AUTOSTART;
+		
+		BOOLEAN {
+			TRUE {
+				ENUM [HARD, SMOOTH] SYNC_STRATEGY = HARD;
+				UINT64 MAX_INCREASE;
+				UINT64 MAX_DECREASE;
+				UINT64 MAX_INCREASE_ASYNC;
+				UINT64 MAX_DECREASE_ASYNC;
+				UINT64 PRECISION;
+			},
+			FALSE
+		] LOCAL_TO_GLOBAL_TIME_SYNCHRONIZATION = FALSE;
+		
+		BOOLEAN PERIODIC;
+		UINT64 LENGTH;
+		
+		ENUM [
+			ACTIOVATETASK {
+				UINT64 OFFSET;
+				TASK_TYPE TASK;
+			},
+			SETEVENT {
+				UINT64 OFFSET;
+				EVENT_TYPE EVENT;
+				TASK_TYPE TASK;
+			}
+		] ACTION [];
+				
+		APPLICATION_TYPE ACCESSING_APPLICATION[];
+	};
+
+};
+
+CPU DummyApp {
+
+	/* No app specified, just implementation */
+
+};

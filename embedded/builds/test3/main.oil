@@ -1,0 +1,100 @@
+/* Test3 OIL File 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-02-12 02:35:49 +0000 (Tue, 12 Feb 2008) $
+ * $LastChangedRevision: 617 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/test3/main.oil $
+ */
+
+OIL_VERSION="2.5";
+
+CPU TestApp {
+	OS TestOS {
+		/* Fragment of OIL file shared across all tests to select OS-wide configuration
+		 * parameters.
+		 */
+#include <os.oil>
+	};
+	
+	RESOURCE ResA {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE ResD {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE ResD_inner {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE ResX {
+		RESOURCEPROPERTY = STANDARD;
+	};
+			
+	EVENT E1 {
+		MASK = AUTO;
+	};
+	
+	EVENT E2 {
+		MASK = AUTO;
+	};
+	
+	EVENT E3 {
+		MASK = AUTO;
+	};
+	
+	TASK TaskA {
+		PRIORITY = 1;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = ResA;
+	};
+
+	TASK TaskB {
+		PRIORITY = 0;
+		AUTOSTART = FALSE;
+		ACTIVATION = 2;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+	};
+	
+	TASK TaskC {
+		PRIORITY = 2;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = E2;
+#include <stacksize.oil>
+		RESOURCE = ResD;
+ 	};
+ 	
+ 	TASK TaskD {
+ 		PRIORITY = 3;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = E1;
+		EVENT = E3;
+#include <stacksize.oil>
+		RESOURCE = ResD;
+		RESOURCE = ResD_inner;
+ 	};
+ 	
+	TASK TaskE {
+		PRIORITY = 1;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+		EVENT = E2;
+#include <stacksize.oil>
+ 	};
+	
+	ISR ISRX {
+#include <isr.oil>
+		CATEGORY = 2;
+		RESOURCE = ResX;
+#include <stacksize.oil>
+	};
+};

@@ -1,0 +1,212 @@
+#Parameters:
+#
+#BUILD set to where library lives
+# Copyright (C) 2004, 2005, 2006, 2007 JK Energy Ltd.
+# 
+# $LastChangedDate: 2008-04-09 07:37:25 +0100 (Wed, 09 Apr 2008) $
+# $LastChangedRevision: 701 $
+# $LastChangedBy: kentindell $
+# $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/src/OS/makeversion.mf $
+#  
+#
+#TARGET set to dsPIC or ARM7
+#STATUS set to OS_STANDARD_STATUS or OS_EXTENDED_STATUS
+#STACK set to STACK_CHECKING or NO_STACK_CHECKING
+#TRACE set to TRACING or NO_TRACING
+#DEBUG set to DEBUG or NDEBUG
+#DEVICE set to __PIC24__ or __dsPIC30__ or __LPC21xx__
+#
+
+vpath % $(TARGET) counters devices events hooks kernel resources schedtables tasks testing trace $(TARGET)/drivers
+
+-include $(TARGET)/target.mf
+
+ARFLAGS=-r
+CPPFLAGS=-D$(STATUS) -D$(STACK) -D$(TRACE) -I. -I$(TARGET) -D$(DEBUG) -D$(DEVICE)
+AFLAGS=-I $(TARGET) -defsym $(DEBUG)=1 -defsym $(STACK)=1 -defsym $(TRACE)=1 $(TARGETAFLAGS)
+
+OBJS=\
+$(TARGETOBJS)\
+$(BUILD)/counters/alarmact.o\
+$(BUILD)/counters/alarmcb.o\
+$(BUILD)/counters/alarmincrc.o\
+$(BUILD)/counters/alarmsetev.o\
+$(BUILD)/counters/camulti.o\
+$(BUILD)/counters/cancelalarm.o\
+$(BUILD)/counters/casingle.o\
+$(BUILD)/counters/cexpmulti.o\
+$(BUILD)/counters/cexpsingle.o\
+$(BUILD)/counters/count.o\
+$(BUILD)/counters/countexp.o\
+$(BUILD)/counters/getcounter.o\
+$(BUILD)/counters/getelapsed.o\
+$(BUILD)/counters/getal.o\
+$(BUILD)/counters/getalbase.o\
+$(BUILD)/counters/inccounter.o\
+$(BUILD)/counters/setabsal.o\
+$(BUILD)/counters/setrelal.o\
+$(BUILD)/counters/sramulti.o\
+$(BUILD)/counters/srasingle.o\
+$(BUILD)/counters/swcount.o\
+$(BUILD)/devices/ctldevice.o\
+$(BUILD)/devices/defaultctl.o\
+$(BUILD)/devices/frameworkctl.o\
+$(BUILD)/events/clearev.o\
+$(BUILD)/events/getev.o\
+$(BUILD)/events/isetev.o\
+$(BUILD)/events/setev.o\
+$(BUILD)/events/waitev.o\
+$(BUILD)/hooks/herror.o\
+$(BUILD)/hooks/hpostt.o\
+$(BUILD)/hooks/hpret.o\
+$(BUILD)/hooks/hshutd.o\
+$(BUILD)/hooks/hstartup.o\
+$(BUILD)/hooks/serviceid.o\
+$(BUILD)/kernel/allsusp.o\
+$(BUILD)/kernel/autoalmmulti.o\
+$(BUILD)/kernel/autoalmsing.o\
+$(BUILD)/kernel/dispbt.o\
+$(BUILD)/kernel/dispet.o\
+$(BUILD)/kernel/dispmix.o\
+$(BUILD)/kernel/idle.o\
+$(BUILD)/kernel/ishutdown.o\
+$(BUILD)/kernel/kernel.o\
+$(BUILD)/kernel/ossusp.o\
+$(BUILD)/kernel/queueopt.o\
+$(BUILD)/kernel/queuestd.o\
+$(BUILD)/kernel/reinit.o\
+$(BUILD)/kernel/shutdown.o\
+$(BUILD)/kernel/slihns.o\
+$(BUILD)/kernel/slihs.o\
+$(BUILD)/kernel/startos.o\
+$(BUILD)/resources/lock.o\
+$(BUILD)/resources/schedule.o\
+$(BUILD)/resources/unlock.o\
+$(BUILD)/schedtables/getschedtabstatus.o\
+$(BUILD)/schedtables/nextschedtab.o\
+$(BUILD)/schedtables/schedtabcallback.o\
+$(BUILD)/schedtables/startschedtababs.o\
+$(BUILD)/schedtables/startschedtabrel.o\
+$(BUILD)/schedtables/stopschedtab.o\
+$(BUILD)/tasks/act.o\
+$(BUILD)/tasks/chain.o\
+$(BUILD)/tasks/iact.o\
+$(BUILD)/tasks/taskstate.o\
+$(BUILD)/tasks/term.o\
+$(BUILD)/testing/assert.o
+
+DERIVEDSRCS=\
+counters/setabsal.c\
+counters/setrelal.c\
+kernel/dispbt.c\
+kernel/dispet.c\
+kernel/dispmix.c\
+kernel/queueopt.c\
+kernel/queuestd.c\
+kernel/slihns.c\
+kernel/slihs.c\
+schedtables/startschedtababs.c\
+schedtables/startschedtabrel.c
+
+HDRS=\
+counters/osappcounter.h\
+counters/osintcounter.h\
+devices/osappdevices.h\
+devices/osintdevices.h\
+$(TARGET)/osappcompiler.h\
+$(TARGET)/osapptarget.h\
+$(TARGET)/osintcompiler.h\
+$(TARGET)/osinttarget.h\
+$(TARGET)/oslibcompiler.h\
+$(TARGET)/oslibtarget.h\
+events/osappevent.h\
+events/osintevent.h\
+fsetjmp.h\
+hooks/osapphook.h\
+hooks/osinthook.h\
+kernel/osappkernel.h\
+kernel/osintkernel.h\
+osapp.h\
+osappcore.h\
+osgen.h\
+osint.h\
+oslib.h\
+resources/osappresource.h\
+resources/osintresource.h\
+schedtables/osappschedtable.h\
+schedtables/osintschedtable.h\
+tasks/osapptask.h\
+tasks/osinttask.h\
+trace/osinttrace.h
+
+all: $(BUILD)/libOS.a
+
+clean:
+	rm -f $(BUILD)/libOS.a
+	rm -f $(OBJS)
+	rm -f $(DERIVEDSRCS)
+	
+$(BUILD)/libOS.a: $(OBJS)
+	$(AR) $(ARFLAGS) $@ $(OBJS)
+
+$(BUILD)/*/%.o: %.s
+	$(AS) $(AFLAGS) $< -o $@
+
+$(BUILD)/*/%.o $(BUILD)/*/*/%.o: %.c $(HDRS)
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+	
+# Some exceptions to standard building
+#
+# Counters:
+#  Set alarm
+# Kernel:
+#  Queues
+#  Dispatcher
+#  SLIH
+# Schedule tables:
+#  Start
+#
+# These files are compiled multiple times and the results as different .o files
+
+# First we need to copy any source code changes through so the source files with the
+# matching .o names are the same. This is because poorly-written debuggers cannot associate
+# the source for a given .o to the right source file (this would be unnecessary if debuggers
+# were better in general, but for embedded systems they are quite poor very often).
+#
+# These copied files are not held under version control: they do not form part of the source
+# code to the RTOS.
+#
+counters/setabsal.c: counters/setalarm.c
+	echo '#define SETABS' >$@
+	cat $< >>$@
+counters/setrelal.c: counters/setalarm.c
+	echo '#define SETREL' >$@
+	cat $< >>$@
+kernel/queueopt.c: kernel/queue.c
+	echo '#define OPTIMIZED_QUEUES' >$@
+	cat $< >>$@
+kernel/queuestd.c: kernel/queue.c
+	echo '#define STANDARD_QUEUES' >$@
+	cat $< >>$@
+kernel/dispbt.c: kernel/disp.c
+	echo '#define BASIC_TASKS_ONLY' >$@
+	cat $< >>$@
+kernel/dispet.c: kernel/disp.c
+	echo '#define EXTENDED_TASKS_ONLY' >$@
+	cat $< >>$@
+kernel/dispmix.c: kernel/disp.c
+	echo '#define MIXED_TASKS' >$@
+	cat $< >>$@
+kernel/slihns.c: kernel/slih.c
+	echo '#define NO_ISR_STACK_CHECKING' >$@
+	cat $< >>$@
+kernel/slihs.c: kernel/slih.c
+	echo '#define ISR_STACK_CHECKING' >$@
+	cat $< >>$@
+schedtables/startschedtababs.c: schedtables/startschedtab.c
+	echo '#define SETABS' >$@
+	cat $< >>$@
+schedtables/startschedtabrel.c: schedtables/startschedtab.c
+	echo '#define SETREL' >$@
+	cat $< >>$@
+

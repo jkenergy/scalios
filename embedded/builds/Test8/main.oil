@@ -1,0 +1,353 @@
+/* Test8 OIL File 
+ *
+ * Copyright (C) 2004, 2005, 2006 JK Energy Ltd.
+ * 
+ * $LastChangedDate: 2008-03-11 23:35:25 +0000 (Tue, 11 Mar 2008) $
+ * $LastChangedRevision: 677 $
+ * $LastChangedBy: kentindell $
+ * $HeadURL: http://10.211.55.3/svn/repos/ertcs/rtos/trunk/embedded/builds/Test8/main.oil $
+ * 
+ * Test8 declares 16 tasks, 16 priority levels, 8 resources and 2 internal resources. These are
+ * declared in two application modes.
+ */
+
+OIL_VERSION="2.5";
+
+CPU TestApp {
+	OS TestOS {
+		/* Fragment of OIL file shared across all tests to select OS-wide configuration
+		 * parameters.
+		 */
+#include <os.oil>
+	};
+	
+	APPMODE Mode1;
+	APPMODE Mode2;
+	
+	RESOURCE Res1 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res2 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res3 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res4 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res5 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res6 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res7 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res8 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res9 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res10 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res11 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res12 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res13 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res14 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res15 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res16 {
+		RESOURCEPROPERTY = STANDARD;
+	};
+	RESOURCE Res159 {
+		RESOURCEPROPERTY = INTERNAL;
+	};
+	RESOURCE Res248 {
+		RESOURCEPROPERTY = INTERNAL;
+	};
+	RESOURCE Res357 {
+		RESOURCEPROPERTY = INTERNAL;
+	};
+	
+	EVENT E1 {
+		MASK = AUTO;
+	};	
+	EVENT E2 {
+		MASK = AUTO;
+	};
+	EVENT E3 {
+		MASK = AUTO;
+	};
+	EVENT E4 {
+		MASK = AUTO;
+	};	
+	EVENT E5 {
+		MASK = AUTO;
+	};
+	EVENT E6 {
+		MASK = AUTO;
+	};
+	EVENT E7 {
+		MASK = AUTO;
+	};	
+	EVENT E8 {
+		MASK = AUTO;
+	};
+	EVENT E9 {
+		MASK = AUTO;
+	};
+	EVENT E10 {
+		MASK = AUTO;
+	};	
+	EVENT E11 {
+		MASK = AUTO;
+	};
+	EVENT E12 {
+		MASK = AUTO;
+	};
+	EVENT E13 {
+		MASK = AUTO;
+	};	
+	EVENT E14 {
+		MASK = AUTO;
+	};
+	EVENT E15 {
+		MASK = AUTO;
+	};
+	EVENT E16 {
+		MASK = AUTO;
+	};	
+	EVENT E17 {
+		MASK = AUTO;
+	};
+	EVENT E18 {
+		MASK = AUTO;
+	};
+	EVENT E19 {
+		MASK = AUTO;
+	};	
+	EVENT E20 {
+		MASK = AUTO;
+	};
+	EVENT E21 {
+		MASK = AUTO;
+	};
+	EVENT E22 {
+		MASK = AUTO;
+	};	
+	EVENT E23 {
+		MASK = AUTO;
+	};
+	EVENT E24 {
+		MASK = AUTO;
+	};
+
+	TASK Task1 {
+		PRIORITY = 1;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res1;
+		RESOURCE = Res159;
+		EVENT = E1;
+		EVENT = E2;
+		EVENT = E3;
+		EVENT = E4;
+		EVENT = E5;
+		EVENT = E6;
+		EVENT = E7;
+		EVENT = E8;
+		EVENT = E9;
+		EVENT = E10;
+		EVENT = E11;
+		EVENT = E12;
+		EVENT = E13;
+		EVENT = E14;
+		EVENT = E15;
+		/* Can't include EVENT = E16; because at most 15 events per task on a 16-bit EventMaskType platform */
+	};
+	TASK Task2 {
+		PRIORITY = 2;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res2;
+		RESOURCE = Res248;
+	};
+	TASK Task3 {
+		PRIORITY = 3;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res3;
+		RESOURCE = Res357;
+	};
+	TASK Task4 {
+		PRIORITY = 4;
+		AUTOSTART = TRUE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res4;
+		RESOURCE = Res248;
+		EVENT = E13;
+		EVENT = E14;
+		EVENT = E15;
+		EVENT = E16;
+		EVENT = E17;
+		EVENT = E18;
+		EVENT = E19;
+		EVENT = E20;
+	};
+	TASK Task5 {
+		PRIORITY = 5;
+		AUTOSTART = TRUE {
+			APPMODE = Mode1;
+		};
+		
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res5;
+		RESOURCE = Res159;
+		RESOURCE = Res357;
+		EVENT = E5;
+		EVENT = E6;
+		EVENT = E7;
+		EVENT = E8;
+		EVENT = E21;
+		EVENT = E22;
+		EVENT = E23;
+		EVENT = E24;
+	};
+	TASK Task6 {
+		PRIORITY = 6;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res6;
+	};
+	TASK Task7 {
+		PRIORITY = 7;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res7;
+		RESOURCE = Res357;
+	};
+	TASK Task8 {
+		PRIORITY = 8;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res8;
+		RESOURCE = Res248;
+	};
+	TASK Task9 {
+		PRIORITY = 9;
+		AUTOSTART = FALSE;
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res9;
+		RESOURCE = Res159;
+	};
+	TASK Task10 {
+		PRIORITY = 10;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res10;
+	};
+	TASK Task11 {
+		PRIORITY = 11;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res11;
+	};
+	TASK Task12 {
+		PRIORITY = 12;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res12;
+	};
+	TASK Task13 {
+		PRIORITY = 13;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res13;
+	};
+	TASK Task14 {
+		PRIORITY = 14;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res14;
+	};
+	TASK Task15 {
+		PRIORITY = 15;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res15;
+	};
+	TASK Task16 {
+		PRIORITY = 16;
+		AUTOSTART = TRUE {
+			APPMODE = Mode2;
+		};
+		ACTIVATION = 1;
+		SCHEDULE = FULL;
+#include <stacksize.oil>
+		RESOURCE = Res16;
+	};
+};
+

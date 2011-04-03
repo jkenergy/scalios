@@ -1,0 +1,58 @@
+# This is a makefile for the testing. All tests use this generic build makefile.
+#
+# BUILD is one of Standard, Extended, StandardNS, ExtendedNS
+
+# This brings in the target definitions (e.g. which compiler)
+-include $(INSTALL)/OS/$(TARGET)/target.mf
+
+# This is where the test build options are brought in for all tests. To add a new one, put it below,
+# then add a 'no' version to common/defaults.mf to disable it for all existing tests. Then in
+# the specific tests that use it, add a 'yes' version overriding the default. Then in common/makeall.mf
+# add it to MFLAGS to pass it through to this makefile.
+DFLAGS=-D$(INCLUDE_HANDLE_NAME_MAP) -D$(STATUS) -D$(USERESSCHEDULER) -D$(USEPRETASKHOOK)\
+-D$(USEPOSTTASKHOOK) -D$(USESTARTUPHOOK) -D$(USESHUTDOWNHOOK) -D$(USEERRORHOOK) -D$(USESTACKMONITORING)\
+-D$(EXPECTSERRORS) -D$(OPTIMIZED_QUEUEING) -D$(USE_FAKE_COUNTER_DRIVER) -D$(SINGLETON_ALARMCOUNTER) -D$(USECAT2ISR)\
+-D$(TESTSTACKOVERFLOW)
+
+-include $(INSTALL)/builds/common/$(TARGET)/target.mf
+LIB=$(INSTALL)/OS/$(BUILD)/$(LIBNAME)
+CFLAGS=-I$(INSTALL)/OS -I$(INSTALL)/OS/$(TARGET) -I./$(BUILD) -I$(INSTALL)/builds/common -I$(INSTALL)/builds/common/$(TARGET) -g -O $(DFLAGS)
+AFLAGS=-I $(INSTALL)/OS/$(TARGET) $(TARGETAFLAGS)
+
+GENERATED=$(BUILD)/osgen.c $(BUILD)/oshandles.h $(BUILD)/osgenasm.s
+
+vpath %.c ../common ../common/$(TARGET) $(EXTVPATH)
+vpath %.oil ../common ../common/$(TARGET) $(EXTVPATH)
+
+all: $(BUILD)/$(TESTEXEC)
+
+$(GENERATED): main.oil
+	java -ea -jar ../../distrib/bin/generator.jar $< -I$(INSTALL)/builds/common -I$(INSTALL)/builds/common/$(TARGET) -o $(BUILD) $(DFLAGS)
+
+HDRS=$(BUILD)/oshandles.h ../common/framework.h
+
+OBJS=$(BUILD)/framework.o\
+$(BUILD)/isr.o\
+$(BUILD)/main.o\
+$(BUILD)/osgen.o\
+$(BUILD)/osgenasm.o\
+$(BUILD)/targetasm.o
+
+%.o: %.s
+	echo asming..
+	$(AS) $(AFLAGS) $< -o $@
+
+$(BUILD)/targetasm.o: $(INSTALL)/builds/common/$(TARGET)/targetasm.s
+	echo asming2..
+	$(AS) $(AFLAGS) $< -o $@
+
+$(BUILD)/%.o: %.c $(HDRS)
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+	
+$(BUILD)/$(TESTEXEC): $(OBJS) $(LIB)
+	$(CC) $(TARGETBUILDFLAGS) -o $(BUILD)/$(TESTEXEC) $(OBJS) -g -L$(INSTALL)/OS/$(BUILD) -lOS
+
+clean:
+	rm -f $(GENERATED)
+	rm -f $(OBJS)
+	rm -f $(BUILD)/$(TESTEXEC)
